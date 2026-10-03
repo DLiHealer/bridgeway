@@ -102,3 +102,8 @@ Everything here runs on Cloudflare's free plan: unlimited static requests/bandwi
 ## 8. Out of scope (future work)
 
 A real backend (Cloudflare Pages Functions + D1, replacing the mocked `src/data/index.js` and `localStorage` writes with a shared, persistent database) was discussed separately and deliberately left out of this migration. Revisit when ready — it's a small, well-bounded addition on top of this setup, not a rewrite.
+
+## Backend (Step 16): Worker + D1 + magic-link login
+- Local: create `.dev.vars` (gitignored) with `DEV_MAGIC_LINK=true` and `RESPONDER_EMAILS=urzad@example.com`; `npm run build`, `npm run db:migrate:local`, `npm run dev:api` (serves site + API on :8787), or `npm run dev` + `npm run dev:api` (Vite proxies `/api`). With `DEV_MAGIC_LINK` the sign-in link is shown on the page instead of emailed.
+- Production: `npx wrangler d1 create bridgeway` (or let wrangler auto-provision), `npx wrangler d1 migrations apply bridgeway --remote`, then `wrangler secret put RESPONDER_EMAILS` (comma list) and set `MAIL_FROM` plus an `EMAIL` send binding (Cloudflare Email Service; sender domain must be onboarded). Never set `DEV_MAGIC_LINK` in production. `npx wrangler deploy` after `npm run build`.
+- Without the Worker (e.g. Netlify) the app runs as before; shared reports and login show a "no server / data is local" notice.

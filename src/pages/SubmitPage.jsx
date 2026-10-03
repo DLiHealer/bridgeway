@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { useApp } from '../context/AppContext.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
+import { api } from '../api.js';
 import { Button, Card, Chip, Input, Textarea, Select, Modal } from '../components/ui';
 import { categories, cities, loc, categoryName } from '../data';
 import { matchAll } from '../utils/matching';
@@ -19,6 +21,8 @@ export default function SubmitPage() {
   const { register, handleSubmit, watch, reset, formState: { errors } } = useForm();
   const { addSignal, addIdea, data } = useApp();
   const navigate = useNavigate();
+  const { backend, account } = useAuth();
+  const [shared, setShared] = useState(null);
 
   const title = watch('title', '');
   const category = watch('category', '');
@@ -45,6 +49,11 @@ export default function SubmitPage() {
     };
     if (isSensitive(payload)) payload.coords = coarsenCoords(payload.coords);
     if (tab === 'idea') addIdea(payload); else addSignal(payload);
+    if (tab === 'problem' && backend && account) {
+      // shared copy: no coordinates, no email — city only (see architecture §6)
+      api.createReport({ title: payload.title, description: payload.description, category: payload.category, city: payload.city, onBehalf: !!payload.onBehalf })
+        .then(() => setShared('ok')).catch(() => setShared('fail'));
+    } else setShared(tab === 'problem' && backend ? 'login' : null);
     setSuccess(true);
     reset();
     setTags([]);
@@ -212,6 +221,7 @@ export default function SubmitPage() {
 
       <Modal open={success} onClose={() => setSuccess(false)} title={t('submit.thanks')}>
         <p className="text-sm text-neutral-700">{t('submit.added')}</p>
+        {shared && <p role="status" className="mt-2 text-sm text-neutral-700">{shared === 'ok' ? <>{t('reports.published')} <Link className="underline" to="/zgloszenia">{t('reports.title')}</Link></> : shared === 'fail' ? t('reports.publishFailed') : <>{t('reports.loginToShare')} <Link className="underline" to="/logowanie">{t('nav.login')}</Link></>}</p>}
         <div className="mt-4 flex flex-wrap gap-2">
           <Button onClick={() => { setSuccess(false); navigate('/mapa'); }}>{t('submit.toMap')}</Button>
           <Button variant="secondary" onClick={() => setSuccess(false)}>{t('submit.addAnother')}</Button>

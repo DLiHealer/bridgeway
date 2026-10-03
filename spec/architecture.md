@@ -3,7 +3,7 @@
 > Source of truth for how the app is built. Update in the same change as any code change that affects it.
 
 ## 1. Overview
-Polish-language civic engagement SPA ("bridge between a problem and a solution"). Residents report problems (signals), pitch ideas, get matched to solutions/experts/NGOs/funding, and follow community projects on a map. MVP: fully client-side, mocked data, no backend. **Data honesty rule:** every seeded dataset is demo data and is labelled as such in the UI (`common.demo`, `common.demoNote`); no invented KPIs, ratings, "verified" claims, effects or contacts.
+Polish-language civic engagement SPA ("bridge between a problem and a solution"). Residents report problems (signals), pitch ideas, get matched to solutions/experts/NGOs/funding, and follow community projects on a map. MVP: client-side SPA with mocked/local data; since Step 16 an optional Cloudflare Worker + D1 backend shares problem reports across browsers (magic-link login). Without the backend the app stays local and says so. **Data honesty rule:** every seeded dataset is demo data and is labelled as such in the UI (`common.demo`, `common.demoNote`); no invented KPIs, ratings, "verified" claims, effects or contacts.
 
 ## 2. Stack
 | Concern | Choice |
@@ -15,6 +15,7 @@ Polish-language civic engagement SPA ("bridge between a problem and a solution")
 | Map | leaflet + react-leaflet |
 | i18n | i18next + react-i18next, languages `pl` (default) and `en`; inline resources in `src/i18n.js` |
 | Hosting | Cloudflare Workers Static Assets (`wrangler.jsonc`, SPA fallback); `netlify.toml` kept as alt. See `DEPLOYMENT.md` |
+| Backend | Cloudflare Worker `worker/index.js` (+ D1 `DB`, `migrations/`), `/api/*` only; assets via `ASSETS` binding (`run_worker_first: ["/api/*"]`). Dev: `npm run dev:api` (wrangler, 8787) + `npm run dev` (Vite proxies `/api`); `npm run db:migrate:local` |
 | Tests | none yet |
 
 ## 3. Directory layout
@@ -25,6 +26,9 @@ src/
   i18n.js             pl/en resources, language persisted in localStorage
   index.css           Tailwind layers + shared classes (e.g. container-app)
   context/AppContext.jsx   global state (see §5)
+  context/AuthContext.jsx  backend availability + magic-link session (§5)
+  api.js              fetch client for /api/*
+worker/index.js     API Worker (auth, reports); migrations/0001_init.sql
   data/index.js       mock datasets + category/city helpers
   data/bdlContext.json  GUS BDL snapshot (share of 65+ per city), written by scripts/fetch-bdl-context.mjs
   utils/              matching.js (keyword scoring), transferScore.js (case transfer score), privacy.js (sensitive categories, coordinate coarsening), geo.js (distanceKm), formatters.js
@@ -48,6 +52,8 @@ src/
 | `/eksperci`, `/eksperci/:id` | ExpertsPage, ExpertDetail |
 | `/finansowanie` | FundingPage (detail component: FundingDetail) |
 | `/projekty`, `/projekty/:id` | ProjectsPage (list of projects, empty state → `/rozwiazania`), ProjectRoom |
+| `/zgloszenia`, `/zgloszenia/:id` | ReportsPage (public shared reports from the backend, status timeline; responder form for role `responder`) |
+| `/logowanie` | LoginPage (email → magic link; consumes `?token=`) |
 | `/profil` | ProfilePage |
 | `/analityka` | AnalyticsPage |
 | `/o-nas` | AboutPage |
@@ -55,12 +61,13 @@ src/
 | `/prywatnosc`, `/regulamin` | LegalPage (`kind="privacy"`/`"terms"`; prototype drafts, linked from footer) |
 | `*` | NotFound |
 
-Nav order (concept §5.5): Solutions (centre), Map, Projects, Experts, Funding, Ideas (demoted, last). Profile only in the avatar menu; Analytics not linked until roadmap Step 18.
+Nav order (concept §5.5): Solutions (centre), Map, Projects, Reports (shared, Step 16), Experts, Funding, Ideas (demoted, last). Profile only in the avatar menu; Analytics not linked until roadmap Step 18.
 
 ## 5. State & persistence
 `AppProvider` (`useApp()`) holds: `user`, `signals`, `ideas`, `projects`, `saved`, `filters`, `toasts`, plus actions (`addSignal`, `addIdea`, `addProject` (returns the created project; defaults `responsibleBody: null`, `statusHistory: [received]`), `updateProject(id, patch|fn)`,  `saveItem`, `isSaved`, `setFilters`, `clearFilters`) and `data` (static datasets).
 - Each slice persists via `useLocalStorage` under `bridgeart-*` keys (`-user`, `-signals`, `-ideas`, `-projects`, `-saved`, `-filters`, `-toasts-placeholder`, plus `bridgeart-lang` for language).
-- Seeded from `src/data/index.js` on first load. Data is per-browser; no sync.
+- Seeded from `src/data/index.js` on first load. Local slices are per-browser; no sync.
+- **Shared slice (Step 16):** only problem *reports* live in D1. `AuthProvider` (`useAuth()`: `backend` null|true|false from `GET /api/health`, `account` `{email, role}`, `login`, `logout`). Magic link: `POST /api/auth/request` (token hash in `login_tokens`, 15 min, single use, 5/h per email) → mail via `EMAIL` binding + `MAIL_FROM` (unverified locally) or, with `DEV_MAGIC_LINK=true` in `.dev.vars` only, link in the response → `/logowanie?token=` → `POST /api/auth/verify` → HttpOnly `bw_session` cookie (hash in `sessions`, 30 d). Roles: `responder` iff email in `RESPONDER_EMAILS`, else `resident`. API: `GET /api/reports[/:id]` public (no email/coords), `POST /api/reports` (login), `POST /api/reports/:id/status` (responder; `rejected` needs note; optional `responsibleBody`). POSTs need JSON content-type and same-origin `Origin`. SubmitPage (problem tab) additionally posts a shared copy (title, description, category, city, onBehalf) when logged in; the local signal is unchanged.
 - Static, read-only entities (solutions, experts, ngos, fundings) are read from `data` directly.
 
 ## 6. Domain model (mock, in `src/data/index.js`)
@@ -76,15 +83,15 @@ Helpers: `categoryById`, `categoryName`, `loc` (language via `window.__i18nLang`
 - UI text goes through i18n keys (pl + en); never hardcode user-facing strings in new code.
 - Use `components/ui` primitives and Tailwind classes; brand colors from tailwind config.
 - New route = page in `src/pages`, lazy entry + `<Route>` in `App.jsx`, nav/i18n update, update §4 here.
-- No backend/env vars/secrets in MVP. External calls only: map tiles, dicebear avatars (`formatters.avatarUrl`). GUS BDL is fetched at build time by `scripts/fetch-bdl-context.mjs` (never at runtime).
+- Backend env (Step 16, see `DEPLOYMENT.md`): `RESPONDER_EMAILS`, `MAIL_FROM`, optional `PUBLIC_URL` (vars/secrets), `EMAIL` binding; local `.dev.vars` (gitignored). No secrets in the client. External calls only: map tiles, dicebear avatars (`formatters.avatarUrl`). GUS BDL is fetched at build time by `scripts/fetch-bdl-context.mjs` (never at runtime).
 - Accessibility (WCAG AA, see `accessibility.md`): text colours must keep ≥4.5:1 (`neutral-400` is already AA; don't use `brand-secondary/accent` as text colour); icon-only buttons need an i18n `aria-label` (`a11y.*`) and decorative icons `aria-hidden`; form controls need `htmlFor`/`id`; `Layout` focuses `<main>` and sets the tab title from `<h1>` on route change; framer-motion runs under `MotionConfig reducedMotion="user"`.
 - Privacy: SubmitPage shows a third-party personal data warning; sensitive reports never get exact map points (`utils/privacy.js`); policy/terms text lives in i18n `legal.*`.
 - Security headers for Netlify in `netlify.toml`; Cloudflare uses `wrangler.jsonc`.
 
 ## 9. Known gaps / tech debt
-- Non-functional controls are hidden, not faked (no search, logout, drafts, join-team, chat, upload/invite in Project Room); they return only with real backing (see roadmap P15).
+- Non-functional controls are hidden, not faked (no search, logout, drafts, join-team, chat, upload/invite in Project Room); some may return on the Step 16 backend (not done).
 - `toasts` persisted in localStorage under a placeholder key.
 - Accessibility: manual keyboard + screen-reader run pending; `Modal` has no full focus trap; map only partly keyboard-accessible.
 - GUS BDL snapshot is static (refresh manually); only the 8 demo cities, aged 65+ share is the single context indicator (population density etc. not used). Anonymous BDL quota is 100 requests/15 min.
-- No tests, no auth, no backend; data not shared across devices.
+- No tests. Only reports are shared (ideas, projects, map signals stay local); no moderation, no email-change/deletion flow; email delivery via Cloudflare Email Service is configured but not verified end-to-end; no rate limit beyond 5 links/email/hour; responder list is an env var, not a registry of real authorities.
 - Some comments in code are in Russian.

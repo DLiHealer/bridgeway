@@ -132,10 +132,11 @@ Conventions:
 - Done when: the factor is computed from real data with the source shown.
 - Result: `src/data/bdlContext.json` — real GUS BDL snapshot (share of 65+, 2024, gmina level) for the 8 demo cities, produced by `scripts/fetch-bdl-context.mjs`; context factor = 1 − gap/10 pp (assumed scale) when both cities have data, source + values shown in the score card, city select on the cases list. Foreign/regional cases stay "no data".
 
-### Step 16 (P15). Status: Open
+### Step 16 (P15). Status: Done
 **Shared backend + magic-link login** for the loop report → public page → status change by another role.
 - Effort L · Value ●●○ · After: P8
 - Done when: two browsers see the same data; otherwise the demo keeps the "data is local" label. Update `architecture.md` §2, §5, §9.
+- Result: Worker + D1 (`worker/index.js`), magic-link login, public `/zgloszenia` with status timeline, responder role (env list) changes status; verified by a local `wrangler dev` curl run of the full loop (incl. token reuse, role and origin checks). Not verified: real email delivery, deployed D1, manual two-browser UI run. Only reports are shared; everything else stays local.
 
 ### Step 17 (P16). Status: Open
 **LLM adaptation plan** strictly from loaded cases (RAG, a source link for every claim, no generated facts).

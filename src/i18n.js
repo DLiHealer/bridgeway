@@ -5,7 +5,7 @@ const pl = {
   nav: {
     map: 'Mapa', ideas: 'Pomysły', solutions: 'Rozwiązania', experts: 'Eksperci',
     funding: 'Finansowanie', projects: 'Projekty', about: 'O nas', analytics: 'Analityka',
-    profile: 'Profil', search: 'Szukaj', add: 'Dodaj', login: 'Zaloguj',
+    profile: 'Profil', search: 'Szukaj', add: 'Dodaj', login: 'Zaloguj', logout: 'Wyloguj', reports: 'Zgłoszenia',
     mySignals: 'Moje sygnały', myIdeas: 'Moje pomysły', myProjects: 'Moje projekty',
   },
   cta: {
@@ -41,6 +41,20 @@ const pl = {
       history: 'Historia statusów', newStatus: 'Dodaj status', reason: 'Powód / notatka', reasonRequired: 'Przy odrzuceniu podaj powód', add: 'Dodaj', demoNote: 'Dane demo / lokalne — status jest wpisywany ręcznie, nie pochodzi od urzędu.',
       status: { received: 'Przyjęte', assigned: 'Przypisane', inprogress: 'W trakcie', resolved: 'Rozwiązane', rejected: 'Odrzucone' },
     },
+  },
+  auth: {
+    title: 'Logowanie linkiem e-mail', email: 'Adres e-mail', send: 'Wyślij link', hint: 'Bez hasła: wyślemy jednorazowy link ważny 15 minut. Adres e-mail nie jest publikowany.',
+    sent: 'Jeśli adres jest poprawny, link do logowania został wysłany.', devLink: 'Tryb lokalny (demo) — link bez wysyłki e-mail', verifying: 'Sprawdzamy link…',
+    loggedAs: 'Zalogowano jako {{email}}', logout: 'Wyloguj', noBackend: 'Brak połączenia z serwerem — logowanie jest niedostępne, dane w tej wersji demo są tylko lokalne.',
+    role: { resident: 'mieszkaniec', responder: 'urząd / odpowiadający' },
+    err: { invalid_email: 'Podaj poprawny adres e-mail.', rate_limited: 'Zbyt wiele próśb — spróbuj za godzinę.', invalid_token: 'Link jest nieprawidłowy, wygasł lub został już użyty.', email_unavailable: 'Wysyłka e-mail nie jest skonfigurowana.', unavailable: 'Serwer jest niedostępny.' },
+  },
+  reports: {
+    title: 'Wspólne zgłoszenia', sharedNote: 'Dane wspólne: te same zgłoszenia widzą wszyscy użytkownicy. Status ustawia tylko zalogowany podmiot odpowiadający; nie jest to oficjalny rejestr urzędu.',
+    noBackend: 'Brak serwera: ta wersja działa lokalnie (dane tylko w Twojej przeglądarce), wspólne zgłoszenia są niedostępne.', empty: 'Brak zgłoszeń', emptyDesc: 'Zaloguj się i zgłoś problem — pojawi się tu publicznie (bez e-maila i dokładnej lokalizacji).',
+    back: 'Wszystkie zgłoszenia', notFound: 'Nie znaleziono zgłoszenia.', proxy: 'w imieniu osoby trzeciej', noBodyShort: 'brak adresata', responderTitle: 'Zmiana statusu (podmiot odpowiadający)',
+    residentNote: 'Status może zmieniać tylko podmiot odpowiadający.', loginNote: 'Aby zmienić status, zaloguj się jako podmiot odpowiadający.', published: 'Zgłoszenie opublikowano publicznie.', publishFailed: 'Zapisano lokalnie; publikacja na serwerze nie powiodła się.', loginToShare: 'Zaloguj się, aby opublikować zgłoszenie publicznie.',
+    err: { forbidden: 'Brak uprawnień.', login_required: 'Zaloguj się ponownie.', reason_required: 'Przy odrzuceniu podaj powód.' },
   },
   submit: {
     pageTitle: 'Zgłoś problem lub pomysł', tabProblem: 'Problem', tabIdea: 'Pomysł', fTitle: 'Tytuł *', fTitlePh: 'Krótki tytuł', fDesc: 'Opis *', fDescPh: 'Opisz problem lub pomysł…',
@@ -145,7 +159,7 @@ const en = {
   nav: {
     map: 'Map', ideas: 'Ideas', solutions: 'Solutions', experts: 'Experts',
     funding: 'Funding', projects: 'Projects', about: 'About', analytics: 'Analytics',
-    profile: 'Profile', search: 'Search', add: 'Add', login: 'Log in',
+    profile: 'Profile', search: 'Search', add: 'Add', login: 'Log in', logout: 'Log out', reports: 'Reports',
     mySignals: 'My reports', myIdeas: 'My ideas', myProjects: 'My projects',
   },
   cta: {
@@ -181,6 +195,20 @@ const en = {
       history: 'Status history', newStatus: 'Add status', reason: 'Reason / note', reasonRequired: 'Give a reason when rejecting', add: 'Add', demoNote: 'Demo / local data — statuses are entered by hand, not provided by an authority.',
       status: { received: 'Received', assigned: 'Assigned', inprogress: 'In progress', resolved: 'Resolved', rejected: 'Rejected' },
     },
+  },
+  auth: {
+    title: 'Sign in with an email link', email: 'Email address', send: 'Send link', hint: 'No password: we send a one-time link valid for 15 minutes. Your email is never published.',
+    sent: 'If the address is valid, a sign-in link has been sent.', devLink: 'Local (demo) mode — link shown instead of emailed', verifying: 'Checking the link…',
+    loggedAs: 'Signed in as {{email}}', logout: 'Log out', noBackend: 'No server connection — sign-in is unavailable, data in this demo version is local only.',
+    role: { resident: 'resident', responder: 'authority / responder' },
+    err: { invalid_email: 'Enter a valid email address.', rate_limited: 'Too many requests — try again in an hour.', invalid_token: 'The link is invalid, expired or already used.', email_unavailable: 'Email sending is not configured.', unavailable: 'The server is unavailable.' },
+  },
+  reports: {
+    title: 'Shared reports', sharedNote: 'Shared data: every user sees the same reports. Only a signed-in responder sets the status; this is not an official registry of the authority.',
+    noBackend: 'No server: this version runs locally (data only in your browser), shared reports are unavailable.', empty: 'No reports yet', emptyDesc: 'Sign in and report a problem — it appears here publicly (without your email or exact location).',
+    back: 'All reports', notFound: 'Report not found.', proxy: 'on behalf of a third party', noBodyShort: 'no addressee', responderTitle: 'Change status (responder)',
+    residentNote: 'Only a responder can change the status.', loginNote: 'To change the status, sign in as a responder.', published: 'Report published publicly.', publishFailed: 'Saved locally; publishing to the server failed.', loginToShare: 'Sign in to publish the report publicly.',
+    err: { forbidden: 'Not allowed.', login_required: 'Please sign in again.', reason_required: 'A reason is required for rejection.' },
   },
   submit: {
     pageTitle: 'Report a problem or an idea', tabProblem: 'Problem', tabIdea: 'Idea', fTitle: 'Title *', fTitlePh: 'Short title', fDesc: 'Description *', fDescPh: 'Describe the problem or idea…',

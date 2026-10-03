@@ -1,9 +1,18 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "bridgeway",
+  "main": "worker/index.js",
   "compatibility_date": "2026-10-03",
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "single-page-application"
-  }
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+  "d1_databases": [
+    { "binding": "DB", "database_name": "bridgeway", "migrations_dir": "migrations" }
+  ]
+  // Secrets / vars (set with `wrangler secret put` or the dashboard, see DEPLOYMENT.md):
+  //   RESPONDER_EMAILS (comma list), MAIL_FROM, optional PUBLIC_URL; email sending binding "EMAIL".
+  // Local only (.dev.vars): DEV_MAGIC_LINK=true, RESPONDER_EMAILS=...
 }

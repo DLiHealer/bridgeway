@@ -5,16 +5,19 @@ import { MotionConfig } from 'framer-motion';
 import App from './App.jsx';
 import './index.css';
 import './i18n';
+import { AuthProvider } from './context/AuthContext.jsx';
 import { AppProvider } from './context/AppContext.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <AppProvider>
-        <MotionConfig reducedMotion="user">
-          <App />
-        </MotionConfig>
-      </AppProvider>
+      <AuthProvider>
+        <AppProvider>
+          <MotionConfig reducedMotion="user">
+            <App />
+          </MotionConfig>
+        </AppProvider>
+      </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
