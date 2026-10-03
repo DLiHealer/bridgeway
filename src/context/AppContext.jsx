@@ -26,10 +26,11 @@ export function AppProvider({ children }) {
     addSignal: (s) => setSignals(list => [{ ...s, id: 's' + Date.now(), createdAt: new Date().toISOString().slice(0,10), author: user.name }, ...list]),
     addIdea: (i) => setIdeas(list => [{ ...i, id: 'i' + Date.now(), createdAt: new Date().toISOString().slice(0,10), author: user.name, team: [{ name: user.name, role: 'lider' }], teamSize: 1, teamTarget: 5 }, ...list]),
     addProject: (p) => {
-      const project = { ...p, id: 'p' + Date.now() };
+      const project = { responsibleBody: null, statusHistory: [{ status: 'received', date: new Date().toISOString().slice(0, 10), note: '' }], ...p, id: 'p' + Date.now() };
       setProjects(list => [project, ...list]);
       return project;
     },
+    updateProject: (id, patch) => setProjects(list => list.map(x => x.id === id ? { ...x, ...(typeof patch === 'function' ? patch(x) : patch) } : x)),
     data,
     toasts, setToasts,
   }), [user, signals, ideas, projects, saved, filters, toasts]);

@@ -86,10 +86,11 @@ Conventions:
 
 ## Layer 3 — Social value & responsibility (~20% effort → ~+12% value)
 
-### Step 9 (P8). Status: Open
+### Step 9 (P8). Status: Done
 **Addressee and status of a report.** Field `responsibleBody`, status timeline (received → assigned → in progress → resolved/rejected + reason), shown in Project Room.
 - Effort M · Value ●●○ · After: P2
 - Done when: the demo report shows an addressee and status history; an empty addressee is flagged. Update `architecture.md` §6.
+- Result: `responsibleBody` + `statusHistory` on projects, timeline and addressee card in Project Room overview (empty addressee flagged, rejection needs a reason).
 
 ### Step 10 (P9). Status: Open
 **Minimal assisted reporting.** "I'm reporting on behalf of someone" flag, recorded consent, hint about proxy points (library, senior club, social worker, NGO).

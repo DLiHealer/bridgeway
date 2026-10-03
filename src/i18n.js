@@ -35,6 +35,11 @@ const pl = {
     noTasks: 'Brak zadań', noBudget: 'Brak pozycji budżetu', noDocs: 'Brak dokumentów', noTeam: 'Brak członków zespołu', noDeadline: 'nie ustalono',
     copyTitle: 'Skopiuj rozwiązanie', copyHint: 'Utworzymy nowy projekt dla Twojej gminy z krokami z tego rozwiązania jako zadaniami.', yourCity: 'Twoje miasto', create: 'Utwórz projekt', copyPrefix: 'Kopia',
     status: { pomysl: 'Pomysł', pilot: 'Pilotaż', wdrozenie: 'Wdrożenie' },
+    report: {
+      title: 'Adresat i status zgłoszenia', body: 'Podmiot odpowiedzialny', noBody: 'Brak adresata — nie wiadomo, kto odpowiada za sprawę.', setBody: 'Ustal podmiot odpowiedzialny', save: 'Zapisz',
+      history: 'Historia statusów', newStatus: 'Dodaj status', reason: 'Powód / notatka', reasonRequired: 'Przy odrzuceniu podaj powód', add: 'Dodaj', demoNote: 'Dane demo / lokalne — status jest wpisywany ręcznie, nie pochodzi od urzędu.',
+      status: { received: 'Przyjęte', assigned: 'Przypisane', inprogress: 'W trakcie', resolved: 'Rozwiązane', rejected: 'Odrzucone' },
+    },
   },
   score: {
     title: 'Wynik transferu (model)', noData: 'brak danych', preliminary: 'Wynik wstępny — część czynników nie ma danych.',
@@ -109,6 +114,11 @@ const en = {
     noTasks: 'No tasks', noBudget: 'No budget items', noDocs: 'No documents', noTeam: 'No team members', noDeadline: 'not set',
     copyTitle: 'Copy solution', copyHint: 'We will create a new project for your municipality with this solution’s steps as tasks.', yourCity: 'Your city', create: 'Create project', copyPrefix: 'Copy',
     status: { pomysl: 'Idea', pilot: 'Pilot', wdrozenie: 'Rollout' },
+    report: {
+      title: 'Addressee and report status', body: 'Responsible body', noBody: 'No addressee — it is not known who is responsible.', setBody: 'Set the responsible body', save: 'Save',
+      history: 'Status history', newStatus: 'Add status', reason: 'Reason / note', reasonRequired: 'Give a reason when rejecting', add: 'Add', demoNote: 'Demo / local data — statuses are entered by hand, not provided by an authority.',
+      status: { received: 'Received', assigned: 'Assigned', inprogress: 'In progress', resolved: 'Resolved', rejected: 'Rejected' },
+    },
   },
   score: {
     title: 'Transfer score (model)', noData: 'no data', preliminary: 'Preliminary score — some factors have no data.',

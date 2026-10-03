@@ -208,6 +208,12 @@ export const projects = [
     ],
     documents: [{ name: 'projekt.pdf', url: '#' }, { name: 'zgody.pdf', url: '#' }],
     deadline: '2026-06-01',
+    responsibleBody: 'Zarząd Dróg Miejskich (dane demo)',
+    statusHistory: [
+      { status: 'received', date: '2026-01-15', note: '' },
+      { status: 'assigned', date: '2026-01-22', note: '' },
+      { status: 'inprogress', date: '2026-02-10', note: '' },
+    ],
     kpi: [{ name: 'Osoby objęte', value: '12' }, { name: 'Koszt', value: '5000 PLN' }],
   },
 ];

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useApp } from '../context/AppContext.jsx';
-import { Card, Chip, Button, EmptyState } from '../components/ui';
+import { Card, Chip, Button, EmptyState, Input, Select, Badge } from '../components/ui';
 import { loc } from '../data';
 
 const TABS = ['overview', 'tasks', 'budget', 'docs', 'team'];
@@ -10,9 +10,12 @@ const TABS = ['overview', 'tasks', 'budget', 'docs', 'team'];
 export default function ProjectRoom() {
   const { id } = useParams();
   const { t } = useTranslation();
-  const { projects, data } = useApp();
+  const { projects, data, updateProject } = useApp();
   const p = projects.find(x => x.id === id);
   const [tab, setTab] = useState('overview');
+  const [body, setBody] = useState('');
+  const [st, setSt] = useState('inprogress');
+  const [note, setNote] = useState('');
   if (!p) return <div className="container-app py-12"><EmptyState title={t('projects.notFound')} action={<Button as={Link} to="/projekty">{t('projects.back')}</Button>} /></div>;
   const src = p.sourceSolutionId && data.solutions.find(x => x.id === p.sourceSolutionId);
 
@@ -29,6 +32,36 @@ export default function ProjectRoom() {
       <div className="mt-6">
 
         <section>
+          {tab === 'overview' && (
+            <Card className="mb-4 p-6">
+              <div className="flex items-center justify-between gap-2"><h2 className="font-semibold">{t('projects.report.title')}</h2><Badge>{t('common.demo')}</Badge></div>
+              <p className="mt-1 text-xs text-neutral-500">{t('projects.report.demoNote')}</p>
+              <p className="mt-3 text-sm">{t('projects.report.body')}: {p.responsibleBody ? <b>{p.responsibleBody}</b> : <span className="font-medium text-red-600">{t('projects.report.noBody')}</span>}</p>
+              <form className="mt-2 flex gap-2" onSubmit={e => { e.preventDefault(); if (body.trim()) { updateProject(p.id, { responsibleBody: body.trim() }); setBody(''); } }}>
+                <Input value={body} onChange={e => setBody(e.target.value)} aria-label={t('projects.report.setBody')} placeholder={t('projects.report.setBody')} />
+                <Button type="submit">{t('projects.report.save')}</Button>
+              </form>
+              <h3 className="mt-5 text-sm font-semibold">{t('projects.report.history')}</h3>
+              <ol className="mt-2 space-y-2 border-l-2 border-border pl-4 text-sm">
+                {(p.statusHistory || []).map((h, i) => (
+                  <li key={i}><b>{t(`projects.report.status.${h.status}`)}</b> <span className="text-xs text-neutral-400">{h.date}</span>{h.note && <span className="block text-neutral-500">{h.note}</span>}</li>
+                ))}
+              </ol>
+              <form className="mt-4 grid gap-2 sm:grid-cols-[auto,1fr,auto]" onSubmit={e => {
+                e.preventDefault();
+                if (st === 'rejected' && !note.trim()) return;
+                updateProject(p.id, x => ({ statusHistory: [...(x.statusHistory || []), { status: st, date: new Date().toISOString().slice(0, 10), note: note.trim() }] }));
+                setNote('');
+              }}>
+                <Select value={st} onChange={e => setSt(e.target.value)} aria-label={t('projects.report.newStatus')}>
+                  {['received', 'assigned', 'inprogress', 'resolved', 'rejected'].map(k => <option key={k} value={k}>{t(`projects.report.status.${k}`)}</option>)}
+                </Select>
+                <Input value={note} onChange={e => setNote(e.target.value)} aria-label={t('projects.report.reason')} placeholder={st === 'rejected' ? t('projects.report.reasonRequired') : t('projects.report.reason')} />
+                <Button type="submit">{t('projects.report.add')}</Button>
+              </form>
+            </Card>
+          )}
+
           {tab === 'overview' && (
             <Card className="p-6">
               <h2 className="font-semibold">Przegląd</h2>
