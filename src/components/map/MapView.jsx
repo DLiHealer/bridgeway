@@ -1,0 +1,47 @@
+import { MapContainer, TileLayer, Marker, Popup, CircleMarker } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import { Link } from 'react-router-dom';
+import { categoryById } from '../../data';
+import { Button } from '../ui';
+
+function coloredDot(color, shape = 'circle') {
+  const html = shape === 'diamond'
+    ? `<div style="width:16px;height:16px;background:${color};transform:rotate(45deg);border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);border-radius:2px"></div>`
+    : `<div style="width:16px;height:16px;background:${color};border:2px solid #fff;border-radius:999px;box-shadow:0 1px 4px rgba(0,0,0,.3)"></div>`;
+  return L.divIcon({ html, className: '', iconSize: [16, 16], iconAnchor: [8, 8] });
+}
+
+export default function MapView({ items = [], height = '100%', zoom = 6, center = [52.0692, 19.4803] }) {
+  return (
+    <MapContainer center={center} zoom={zoom} style={{ height, width: '100%' }} scrollWheelZoom>
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      {items.map(item => {
+        const cat = categoryById(item.category);
+        const shape = item.type === 'idea' ? 'diamond' : 'circle';
+        const pos = item.coords || [52.2, 21];
+        return (
+          <Marker key={item.id} position={pos} icon={coloredDot(cat.color, shape)}>
+            <Popup>
+              <div className="w-56">
+                <p className="text-xs font-medium" style={{ color: cat.color }}>{cat.name}</p>
+                <p className="mt-1 font-semibold text-neutral-900">{item.title}</p>
+                <p className="text-xs text-neutral-400">{item.city}</p>
+                <p className="mt-2 line-clamp-2 text-xs text-neutral-700">{item.description}</p>
+                <div className="mt-3 flex gap-2">
+                  <Link to={item.type === 'idea' ? `/pomysly/${item.id}` : `/mapa?focus=${item.id}`}>
+                    <Button size="sm" variant="secondary">Szczegóły</Button>
+                  </Link>
+                  <Button size="sm">Przyłącz się</Button>
+                </div>
+              </div>
+            </Popup>
+          </Marker>
+        );
+      })}
+    </MapContainer>
+  );
+}

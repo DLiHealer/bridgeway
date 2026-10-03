@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-neutral-0 text-neutral-700 font-sans antialiased;
+  }
+  h1 { @apply text-neutral-900; }
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-primary ring-offset-2 rounded-btn;
+  }
+}
+
+@layer utilities {
+  .container-app { @apply mx-auto max-w-container px-4 md:px-6 lg:px-8; }
+  .card { @apply bg-white border border-border rounded-card shadow-sm; }
+  .scrollbar-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+  .scrollbar-thin::-webkit-scrollbar-thumb { @apply bg-neutral-400 rounded-full; }
+}
+
+/* Leaflet tweaks */
+.leaflet-container { font-family: inherit; z-index: 0; }
+.leaflet-pane { z-index: 1 !important; }
+.leaflet-top, .leaflet-bottom { z-index: 2 !important; }
+.leaflet-popup-content-wrapper { border-radius: 12px; }
