@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useApp } from '../context/AppContext.jsx';
 import { Card, Badge, Button, EmptyState } from '../components/ui';
+import { loc } from '../data';
 
 export default function ProjectsPage() {
   const { t } = useTranslation();
@@ -33,7 +34,7 @@ export default function ProjectsPage() {
                 <div className="mt-3 h-2 rounded-full bg-neutral-100"><div className="h-full rounded-full bg-brand-primary" style={{ width: `${p.progress || 0}%` }} /></div>
                 <p className="mt-2 text-xs text-neutral-400">{t('projects.progress')}: {p.progress || 0}% · {p.tasks.length} {t('projects.tasks')}</p>
                 {src && (
-                  <p className="mt-2 text-xs text-neutral-500">{t('projects.fromSolution')}: <Link to={`/rozwiazania/${src.id}`} className="text-brand-primary hover:underline">{src.title}</Link></p>
+                  <p className="mt-2 text-xs text-neutral-500">{t('projects.fromSolution')}: <Link to={`/rozwiazania/${src.id}`} className="text-brand-primary hover:underline">{loc(src.title)}</Link></p>
                 )}
               </Card>
             );

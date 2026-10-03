@@ -66,10 +66,11 @@ Conventions:
 - Done when: a table of cases with clickable sources exists and the decision per concept §7.4 is recorded.
 - Result ([sourcing-spike.md](./sourcing-spike.md)): 6 verified cases (<10) → §7.4 row 3; USP wording must be revisited before Steps 6–7. Team to extend the base in parallel.
 
-### Step 6 (P5). Status: Open
+### Step 6 (P5). Status: Done
 **Evidence-backed case schema.** Add `source`, `organisation`, `cost`, `duration`, `outcome`, `outcomeMethod`, `evidenceLevel`, `context`; load the cases from P4; remove the unsafe "DIY wooden ramps" case (replace with route: accessibility audit → responsible body → technically approved solution).
 - Effort M · Value ●●● · After: P4
 - Done when: all cases in the app are real, sourced and graded A–D. Update `architecture.md` §6.
+- Result: 6 verified cases + 1 route entry (`route1`, Dostępność Plus, level C) in `src/data/index.js`; evidence level, source, cost, outcome and measurement shown on list/detail pages; USP wording per Step 5 gate still to be applied in Step 8 (P7).
 
 ### Step 7 (P6). Status: Open
 **Transfer score with explanation.** Weighted formula from concept §6.3 with visible weights, "no data" instead of invented values, hard constraints first; one matching algorithm on every recommendation screen; remove the "AI" label from keyword matching.

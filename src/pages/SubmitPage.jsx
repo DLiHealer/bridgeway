@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { useApp } from '../context/AppContext.jsx';
 import { Button, Card, Chip, Input, Textarea, Select, Modal } from '../components/ui';
-import { categories, cities } from '../data';
+import { categories, cities, loc } from '../data';
 import { matchAll } from '../utils/matching';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -136,7 +136,7 @@ export default function SubmitPage() {
                   {matches.solutions.filter(s => s.score > 0).slice(0, 3).length > 0 ? (
                     matches.solutions.filter(s => s.score > 0).slice(0, 3).map(s => (
                       <div key={s.id} className="mt-1 rounded-btn bg-neutral-100 p-2 text-xs">
-                        {s.title} <span className="text-neutral-400">· {t('common.demo')}</span>
+                        {loc(s.title)} <span className="text-neutral-400">· {t('cases.evidence')} {s.evidenceLevel}</span>
                       </div>
                     ))
                   ) : (

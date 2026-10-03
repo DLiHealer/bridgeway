@@ -17,6 +17,13 @@ export const categoryName = (cat) => {
   return lang.startsWith('en') ? (cat.nameEn || cat.name) : cat.name;
 };
 
+// Picks the current-language string from a {pl, en} value; plain strings pass through.
+export const loc = (v) => {
+  if (!v || typeof v === 'string') return v || '';
+  const lang = (typeof window !== 'undefined' && window.__i18nLang) || 'pl';
+  return lang.startsWith('en') ? (v.en || v.pl) : (v.pl || v.en);
+};
+
 export const cities = [
   { id: 'warszawa', name: 'Warszawa', coords: [52.2297, 21.0122] },
   { id: 'krakow', name: 'Kraków', coords: [50.0647, 19.945] },
@@ -46,11 +53,118 @@ export const ideas = [
   { id: 'i6', title: 'Remonty pustostanów', description: 'Adaptacja pustych lokali gminnych na mieszkania komunalne.', category: 'mieszkanie', city: 'Łódź', stage: 'szukam-zespolu', needs: ['ekspert', 'finansowanie', 'zespol'], team: [{ name: 'Rafał M.', role: 'lider' }], teamSize: 2, teamTarget: 6, author: 'Rafał M.', createdAt: '2025-12-20' },
 ];
 
+// Cases come from spec/sourcing-spike.md (verified against sources 2026-10-04). null = not stated in the source.
+// Evidence level: A review/meta-analysis · B controlled/quasi-experimental · C evaluation or uncontrolled outcomes · D outputs only.
 export const solutions = [
-  { id: 'r1', title: 'Cyfrowi przewodnicy dla seniorów', problem: 'Seniorzy nie radzą sobie z e-usługami.', solution: 'Wolontariusze-seniorzy uczą innych seniorów.', category: 'cyfrowe', city: 'Gdańsk', budget: '5000-15000 PLN', duration: '3 miesiące', complexity: 'łatwa', cost: 'niski', steps: ['Rekrutacja przewodników', 'Szkolenie', 'Warsztaty w dzielnicach', 'Ewaluacja'], risks: ['Niska frekwencja', 'Bariery techniczne'], contacts: [{ name: 'Fundacja X', email: 'kontakt@fundacjax.pl' }] },
-  { id: 'r2', title: 'Zielone podwórka', problem: 'Betonoza i brak zieleni na podwórkach.', solution: 'Mieszkańcy wspólnie sadzą drzewa i tworzą ogrody.', category: 'ekologia', city: 'Wrocław', budget: '2000-8000 PLN', duration: '2 miesiące', complexity: 'łatwa', cost: 'niski', steps: ['Wybór podwórka', 'Konsultacje', 'Zakup sadzonek', 'Wspólne sadzenie'], risks: ['Vandalizm', 'Susza'], contacts: [{ name: 'Zielone Wrocław', email: 'kontakt@zielone.pl' }] },
-  { id: 'r3', title: 'Sąsiedzka pomoc seniorom', problem: 'Samotność i problemy z zakupami.', solution: 'Sieć wolontariuszy pomaga seniorom.', category: 'seniorzy', city: 'Kraków', budget: '3000-10000 PLN', duration: '6 miesięcy', complexity: 'średnia', cost: 'średni', steps: ['Mapowanie potrzeb', 'Rekrutacja wolontariuszy', 'System zgłoszeń'], risks: ['Wypalenie wolontariuszy'], contacts: [{ name: 'Fundacja Tkanka', email: 'biuro@tkanka.org' }] },
-  { id: 'r4', title: 'Podjazdy sąsiedzkie', problem: 'Brak podjazdów dla wózków.', solution: 'Proste, drewniane rampy budowane przez sąsiadów.', category: 'dostepnosc', city: 'Warszawa', budget: '1000-4000 PLN', duration: '1 miesiąc', complexity: 'łatwa', cost: 'niski', steps: ['Inwentaryzacja', 'Projekt', 'Budowa', 'Odbiór'], risks: ['Brak zgody wspólnoty'], contacts: [{ name: 'Dostępne Miasto', email: 'info@dostepne.pl' }] },
+  {
+    id: 'c1', kind: 'case', category: 'seniorzy', city: 'Barcelona', country: 'ES', year: 2014,
+    title: { pl: 'Wyjścia z wolontariuszami na schodowym wózku elektrycznym dla starszych osób odciętych barierami', en: 'Outings with volunteers in a stair-climbing power wheelchair for older people isolated by barriers' },
+    organisation: 'Barcelona (3 deprived areas) — study in Gaceta Sanitaria',
+    problem: { pl: 'Osoby starsze zamknięte w domach przez bariery architektoniczne (brak wind, schody).', en: 'Older people confined to their homes by architectural barriers (no lifts, stairs).' },
+    solution: { pl: 'Program wyjść z wolontariuszami (4 wyjścia na osobę) z użyciem wózka elektrycznego pokonującego schody.', en: 'Programme of outings with volunteers (4 outings per person) using a stair-climbing power wheelchair.' },
+    cost: null, duration: { pl: '4 wyjścia na osobę; czas programu nie podany', en: '4 outings per person; programme length not stated' },
+    outcome: { pl: 'n=74, mediana wieku 83 lata: postrzegane zdrowie +21%, zdrowie psychiczne +24%, dystres psychologiczny −16%, satysfakcja 98%.', en: 'n=74, median age 83: perceived health +21%, mental health +24%, psychological distress −16%, satisfaction 98%.' },
+    outcomeMethod: { pl: 'Badanie quasi-eksperymentalne przed–po', en: 'Quasi-experimental before–after study' },
+    evidenceLevel: 'B',
+    context: { pl: 'Duże miasto, dzielnice o niskich dochodach', en: 'Large city, low-income districts' },
+    source: { label: 'Gac Sanit 2014, doi:10.1016/j.gaceta.2014.04.013', url: 'https://doi.org/10.1016/j.gaceta.2014.04.013' },
+    steps: [],
+  },
+  {
+    id: 'c2', kind: 'case', category: 'seniorzy', city: 'Mazowsze', country: 'PL', year: 2020,
+    title: { pl: 'Regionalna teleopieka dla seniorów (przycisk SOS, centrum monitoringu 24/7)', en: 'Regional telecare for seniors (SOS button, 24/7 monitoring centre)' },
+    organisation: 'Województwo Mazowieckie, 28 gmin',
+    problem: { pl: 'Seniorzy mieszkający samotnie bez możliwości szybkiego wezwania pomocy.', en: 'Seniors living alone without a way to quickly call for help.' },
+    solution: { pl: 'Pilotaż teleopieki: przycisk SOS i całodobowe centrum monitoringu, współfinansowany przez region.', en: 'Telecare pilot: SOS button and a round-the-clock monitoring centre, co-funded by the region.' },
+    cost: { pl: 'ok. 549 000 PLN łącznie, ponad 173 000 PLN dotacji regionu (do 50% kosztów pierwszego roku)', en: 'approx. PLN 549,000 total, over PLN 173,000 regional subsidy (up to 50% of year 1)' },
+    duration: { pl: '2020–2021', en: '2020–2021' },
+    outcome: { pl: '654 użytkowników; zgłoszono 4 uratowane życia (2 Węgrów, 2 Płońsk) oraz inne interwencje alarmowe.', en: '654 users; 4 lives saved reported (2 Węgrów, 2 Płońsk) plus other alarm interventions.' },
+    outcomeMethod: { pl: 'Raporty gmin i centrum monitoringu; bez grupy kontrolnej', en: 'Gmina and monitoring-centre reports; no control group' },
+    evidenceLevel: 'C',
+    context: { pl: 'Region z gminami miejskimi i wiejskimi', en: 'Region with urban and rural gminas' },
+    source: { label: 'mazovia.pl', url: 'https://mazovia.pl/pl/dla_mediow/informacje_prasowe/teleopieka-dla-seniorow-na-mazowszu.html' },
+    steps: [],
+  },
+  {
+    id: 'c3', kind: 'case', category: 'seniorzy', city: 'Gdańsk', country: 'PL', year: 2017,
+    title: { pl: 'Sąsiedzki system teleopieki („czerwony przycisk”)', en: 'Neighbourhood telecare pilot (“red button”)' },
+    organisation: 'Gdańska Fundacja / Inkubator Sąsiedzkiej Energii, Dolne Miasto',
+    problem: { pl: 'Samotni seniorzy w dzielnicy bez szybkiego dostępu do pomocy.', en: 'Isolated seniors in a district without quick access to help.' },
+    solution: { pl: 'Lokalny pilotaż teleopieki: 50 urządzeń dla mieszkańców dzielnicy.', en: 'Local telecare pilot: 50 devices for district residents.' },
+    cost: { pl: '50 000 PLN (z czego ponad 17 000 PLN na 50 urządzeń)', en: 'PLN 50,000 (over PLN 17,000 of it for 50 devices)' },
+    duration: { pl: '6 miesięcy', en: '6 months' },
+    outcome: { pl: 'Brak wyniku w źródle — 50 użytkowników; raport zapowiedziany.', en: 'No outcome stated in the source — 50 users; a report was announced.' },
+    outcomeMethod: null,
+    evidenceLevel: 'D',
+    context: { pl: 'Dzielnica miasta, organizacja pozarządowa', en: 'City district, NGO-led' },
+    source: { label: 'netka.gda.pl', url: 'https://netka.gda.pl/pierwszy-w-polsce-sasiedzki-system-teleopieki-domowej-powstaje-w-gdansku-dolnym-miescie/' },
+    steps: [],
+  },
+  {
+    id: 'c4', kind: 'case', category: 'dostepnosc', city: 'Szczecin', country: 'PL', year: 2020,
+    title: { pl: 'Uczelnia dostępna: biuro dostępności, symulatorium, studia podyplomowe, narzędzie audytu AuditOmate', en: 'Accessible university: accessibility office, simulatorium, postgraduate course, AuditOmate audit tool' },
+    organisation: 'ZUT + Uniwersytet Szczeciński, NCBR',
+    problem: { pl: 'Budynki i procedury uczelni niedostosowane do osób z niepełnosprawnościami.', en: 'University buildings and procedures not adapted to people with disabilities.' },
+    solution: { pl: 'Trzy projekty: biuro dostępności, symulatorium, kształcenie „specjalistów ds. dostępności”, narzędzie do audytu budynków.', en: 'Three projects: accessibility office, simulatorium, training of “accessibility specialists”, a building-audit tool.' },
+    cost: { pl: '4,3 + 2,3 + 5,7 mln PLN (trzy projekty; część ZUT w ostatnim ok. 1,1 mln)', en: 'PLN 4.3 + 2.3 + 5.7 million (three projects; ZUT part of the last ≈ 1.1 million)' },
+    duration: null,
+    outcome: { pl: '39 przebadanych budynków, ponad 40 absolwentów. Tylko wyniki bezpośrednie.', en: '39 buildings audited, 40+ graduates. Outputs only.' },
+    outcomeMethod: null,
+    evidenceLevel: 'D',
+    context: { pl: 'Uczelnie publiczne, finansowanie NCBR', en: 'Public universities, NCBR funding' },
+    source: { label: 'gov.pl/ncbr', url: 'https://www.gov.pl/web/ncbr/uczelnia-dostepna-krok-po-kroku-przyklad-ze-szczecina' },
+    steps: [],
+  },
+  {
+    id: 'c5', kind: 'case', category: 'dostepnosc', city: 'Podlaskie', country: 'PL', year: 2021,
+    title: { pl: '„Dostępne Podlaskie”: audyty, przegląd procedur i szkolenia koordynatorów dostępności', en: '“Dostępne Podlaskie”: audits, procedure reviews and training of accessibility coordinators' },
+    organisation: 'Grupa Edukacji Otwartej, EFS',
+    problem: { pl: 'Urzędy samorządowe bez koordynatorów i procedur dostępności.', en: 'Local-government offices without accessibility coordinators or procedures.' },
+    solution: { pl: 'Audyty urzędów, przegląd procedur, szkolenia koordynatorów dostępności i pracowników.', en: 'Audits of offices, procedure reviews, training of accessibility coordinators and staff.' },
+    cost: { pl: '2 088 000 PLN (w tym 1 759 766 PLN z UE)', en: 'PLN 2,088,000 (of which PLN 1,759,766 EU funds)' },
+    duration: { pl: 'ok. 16–20 miesięcy (od lutego 2021)', en: 'approx. 16–20 months (from Feb 2021)' },
+    outcome: { pl: '56 urzędów wdrożyło rekomendacje, przeszkolono 51 koordynatorów i 95 pracowników. Tylko wskaźniki produktu.', en: '56 offices implemented recommendations, 51 coordinators and 95 staff trained. Output indicators only.' },
+    outcomeMethod: null,
+    evidenceLevel: 'D',
+    context: { pl: 'Region, wiele samorządów, projekt EFS', en: 'Region, many local governments, ESF project' },
+    source: { label: 'mapadotacji.gov.pl', url: 'https://mapadotacji.gov.pl/projekty/1359123/?lang=en' },
+    steps: [],
+  },
+  {
+    id: 'c6', kind: 'case', category: 'seniorzy', city: 'UK', country: 'GB', year: 2013,
+    title: { pl: 'The Silver Line: bezpłatna całodobowa infolinia i rozmowy towarzyskie (pilotaż)', en: 'The Silver Line: free 24/7 helpline and befriending calls (pilot)' },
+    organisation: 'The Silver Line; ewaluacja: Centre for Social Justice (2013)',
+    problem: { pl: 'Samotność i izolacja osób starszych.', en: 'Loneliness and isolation of older people.' },
+    solution: { pl: 'Telefon zaufania 24/7 i regularne rozmowy towarzyskie z wolontariuszami.', en: 'A 24/7 helpline and regular befriending calls with volunteers.' },
+    cost: null,
+    duration: { pl: 'Ewaluacja 3 miesiące, 6 miesięcy po starcie pilotażu', en: '3-month evaluation, 6 months after the pilot started' },
+    outcome: { pl: 'Dzwoniący zgłaszają większą pewność siebie i lepsze samopoczucie krótkoterminowo; chcą też kontaktu twarzą w twarz. Brak wyniku ilościowego.', en: 'Callers report more confidence and wellbeing short-term and want face-to-face contact too. No quantitative outcome.' },
+    outcomeMethod: { pl: 'Wywiady z personelem, wolontariuszami i dzwoniącymi', en: 'Interviews with staff, volunteers and callers' },
+    evidenceLevel: 'C',
+    context: { pl: 'Wielka Brytania, usługa ogólnokrajowa organizacji pozarządowej', en: 'United Kingdom, NGO-run national service' },
+    source: { label: 'Centre for Social Justice (PDF)', url: 'https://www.centreforsocialjustice.org.uk/wp-content/uploads/2018/03/silver.pdf' },
+    steps: [],
+  },
+  {
+    id: 'route1', kind: 'route', category: 'dostepnosc', city: 'Polska', country: 'PL', year: 2021,
+    title: { pl: 'Ścieżka: audyt dostępności → właściwy podmiot → zatwierdzone technicznie rozwiązanie', en: 'Route: accessibility audit → responsible body → technically approved solution' },
+    organisation: { pl: 'Program rządowy Dostępność Plus 2018–2025', en: 'Government programme Dostępność Plus 2018–2025' },
+    problem: { pl: 'Brak podjazdu lub innej bariery przy budynku lub w usłudze publicznej.', en: 'A missing ramp or other barrier at a building or public service.' },
+    solution: { pl: 'Zamiast samodzielnej budowy: zlecić audyt dostępności, zgłosić do podmiotu odpowiedzialnego za obiekt, wdrożyć rozwiązanie zatwierdzone technicznie.', en: 'Instead of building it yourself: commission an accessibility audit, report to the body responsible for the site, implement a technically approved solution.' },
+    cost: null,
+    duration: { pl: 'Program 2018–2025', en: 'Programme 2018–2025' },
+    outcome: { pl: 'Ewaluacja systemu zarządzania i efektów programu (okres 2018–2021). To kontekst i ścieżka, nie wynik pojedynczej interwencji.', en: 'Evaluation of the programme’s management system and effects (period 2018–2021). Context and route, not the result of a single intervention.' },
+    outcomeMethod: { pl: 'Raport ewaluacyjny, wrzesień 2021', en: 'Evaluation report, September 2021' },
+    evidenceLevel: 'C',
+    context: { pl: 'Cała Polska; budynki i usługi publiczne', en: 'Poland-wide; public buildings and services' },
+    source: { label: 'ewaluacja.gov.pl (PDF)', url: 'https://www.ewaluacja.gov.pl/media/105004/Raport_Dostepnosc_Plus_FINAL.pdf' },
+    steps: [
+      { pl: 'Zlecić audyt dostępności obiektu', en: 'Commission an accessibility audit of the site' },
+      { pl: 'Ustalić podmiot odpowiedzialny za obiekt i zgłosić mu problem', en: 'Identify the body responsible for the site and report the problem' },
+      { pl: 'Uzyskać technicznie zatwierdzone rozwiązanie', en: 'Obtain a technically approved solution' },
+      { pl: 'Wdrożyć i zmierzyć efekt', en: 'Implement and measure the outcome' },
+    ],
+  },
 ];
 
 export const experts = [

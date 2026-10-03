@@ -1,6 +1,6 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext.jsx';
-import { categoryById } from '../data';
+import { categoryById, loc } from '../data';
 import { Badge, Button, Card, EmptyState } from '../components/ui';
 import { Bookmark } from 'lucide-react';
 
@@ -91,7 +91,7 @@ export default function IdeaDetail() {
           </Card>
 
           <Card className="p-5">
-            <p className="text-sm font-semibold">Podobne rozwiązania</p>
+            <p className="text-sm font-semibold">Podobne przypadki</p>
             <div className="mt-3 space-y-2 text-sm">
               {topSolutions.map(s => (
                 <Link
@@ -99,7 +99,7 @@ export default function IdeaDetail() {
                   to={`/rozwiazania/${s.id}`}
                   className="block rounded-btn bg-neutral-100 p-2 hover:bg-neutral-200"
                 >
-                  {s.title}
+                  {loc(s.title)}
                 </Link>
               ))}
             </div>

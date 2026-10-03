@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useApp } from '../context/AppContext.jsx';
 import { Card, Chip, Button, EmptyState } from '../components/ui';
+import { loc } from '../data';
 
 const TABS = ['overview', 'tasks', 'budget', 'docs', 'team'];
 
@@ -19,7 +20,7 @@ export default function ProjectRoom() {
     <div className="container-app py-8">
       <Link to="/projekty" className="text-xs text-neutral-400 hover:text-brand-primary">← {t('projects.back')}</Link>
       <h1 className="mt-2 text-2xl font-bold md:text-3xl">{p.title}</h1>
-      {src && <p className="mt-1 text-sm text-neutral-500">{t('projects.fromSolution')}: <Link to={`/rozwiazania/${src.id}`} className="text-brand-primary hover:underline">{src.title}</Link></p>}
+      {src && <p className="mt-1 text-sm text-neutral-500">{t('projects.fromSolution')}: <Link to={`/rozwiazania/${src.id}`} className="text-brand-primary hover:underline">{loc(src.title)}</Link></p>}
       <p className="mt-3 rounded-btn bg-neutral-100 p-3 text-xs text-neutral-500">{t('common.localData')}</p>
       <div className="mt-4 flex gap-2 overflow-x-auto">
         {TABS.map(tb => <Chip key={tb} active={tab === tb} onClick={() => setTab(tb)}>{tb}</Chip>)}

@@ -107,3 +107,8 @@ export function EmptyState({ icon: Icon, title, description, action }) {
 export function Skeleton({ className }) {
   return <div className={cx('animate-pulse rounded-btn bg-neutral-100', className)} />;
 }
+
+const EVIDENCE_COLORS = { A: '#00B894', B: '#0984E3', C: '#E17055', D: '#64748B' };
+export function EvidenceBadge({ level, label }) {
+  return <Badge color={EVIDENCE_COLORS[level] || '#64748B'}>{label}</Badge>;
+}

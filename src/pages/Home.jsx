@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Plus, Lightbulb, CheckCircle2, MapPin, Users, Sparkles } from 'lucide-react';
 import { useApp } from '../context/AppContext.jsx';
-import { Button, Card, Badge } from '../components/ui';
-import { categoryById } from '../data';
+import { Button, Card, Badge, EvidenceBadge } from '../components/ui';
+import { categoryById, loc } from '../data';
 import MapView from '../components/map/MapView';
 
 export default function Home() {
@@ -91,12 +91,11 @@ export default function Home() {
             <Link key={s.id} to={`/rozwiazania/${s.id}`}>
               <Card hover className="h-full p-5">
                 <div className="flex items-center gap-2">
-                  <Badge color="#64748B">{t('common.demo')}</Badge>
+                  <EvidenceBadge level={s.evidenceLevel} label={`${t('cases.evidence')} ${s.evidenceLevel}`} />
                   <Badge color={categoryById(s.category).color}>{categoryById(s.category).name}</Badge>
                 </div>
-                <h3 className="mt-3 font-semibold text-neutral-900">{s.title}</h3>
-                <p className="mt-1 text-sm text-neutral-400">{s.city}</p>
-                <p className="mt-3 text-sm text-neutral-400">{s.budget} · {s.duration}</p>
+                <h3 className="mt-3 font-semibold text-neutral-900">{loc(s.title)}</h3>
+                <p className="mt-1 text-sm text-neutral-400">{s.city}, {s.year}</p>
               </Card>
             </Link>
           ))}
