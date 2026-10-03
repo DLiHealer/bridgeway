@@ -2,6 +2,7 @@ import { MapContainer, TileLayer, Marker, Popup, CircleMarker } from 'react-leaf
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { categoryById } from '../../data';
 import { Button } from '../ui';
 
@@ -13,6 +14,7 @@ function coloredDot(color, shape = 'circle') {
 }
 
 export default function MapView({ items = [], height = '100%', zoom = 6, center = [52.0692, 19.4803] }) {
+  const { t } = useTranslation();
   return (
     <MapContainer center={center} zoom={zoom} style={{ height, width: '100%' }} scrollWheelZoom>
       <TileLayer
@@ -30,6 +32,7 @@ export default function MapView({ items = [], height = '100%', zoom = 6, center 
                 <p className="text-xs font-medium" style={{ color: cat.color }}>{cat.name}</p>
                 <p className="mt-1 font-semibold text-neutral-900">{item.title}</p>
                 <p className="text-xs text-neutral-400">{item.city}</p>
+                {item.onBehalf && <p className="mt-1 text-xs text-brand-600">{t('submit.proxyBadge')}</p>}
                 <p className="mt-2 line-clamp-2 text-xs text-neutral-700">{item.description}</p>
                 <div className="mt-3 flex gap-2">
                   <Link to={item.type === 'idea' ? `/pomysly/${item.id}` : `/mapa?focus=${item.id}`}>

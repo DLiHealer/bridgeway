@@ -41,6 +41,11 @@ const pl = {
       status: { received: 'Przyjęte', assigned: 'Przypisane', inprogress: 'W trakcie', resolved: 'Rozwiązane', rejected: 'Odrzucone' },
     },
   },
+  submit: {
+    onBehalf: 'Zgłaszam w imieniu innej osoby', consent: 'Ta osoba wie o zgłoszeniu i zgadza się na nie oraz na jego publikację bez imienia i adresu.', consentRequired: 'Zgoda jest wymagana',
+    proxyTitle: 'Gdzie można pomóc w zgłoszeniu', proxyHint: 'Zgłoszenie może przygotować wspólnie z osobą: biblioteka, klub seniora, pracownik socjalny lub organizacja pozarządowa.',
+    proxyBadge: 'Zgłoszone w imieniu innej osoby',
+  },
   score: {
     title: 'Wynik transferu (model)', noData: 'brak danych', preliminary: 'Wynik wstępny — część czynników nie ma danych.',
     note: 'Model, nie prognoza. Wagi to hipoteza; średnia ważona tylko z czynników, które mają dane.',
@@ -119,6 +124,11 @@ const en = {
       history: 'Status history', newStatus: 'Add status', reason: 'Reason / note', reasonRequired: 'Give a reason when rejecting', add: 'Add', demoNote: 'Demo / local data — statuses are entered by hand, not provided by an authority.',
       status: { received: 'Received', assigned: 'Assigned', inprogress: 'In progress', resolved: 'Resolved', rejected: 'Rejected' },
     },
+  },
+  submit: {
+    onBehalf: 'I am reporting on behalf of someone else', consent: 'This person knows about the report and agrees to it and to its publication without name or address.', consentRequired: 'Consent is required',
+    proxyTitle: 'Where to get help with a report', proxyHint: 'A report can be prepared together with the person by a library, a senior club, a social worker or an NGO.',
+    proxyBadge: 'Reported on behalf of someone else',
   },
   score: {
     title: 'Transfer score (model)', noData: 'no data', preliminary: 'Preliminary score — some factors have no data.',

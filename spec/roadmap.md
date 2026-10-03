@@ -92,10 +92,11 @@ Conventions:
 - Done when: the demo report shows an addressee and status history; an empty addressee is flagged. Update `architecture.md` §6.
 - Result: `responsibleBody` + `statusHistory` on projects, timeline and addressee card in Project Room overview (empty addressee flagged, rejection needs a reason).
 
-### Step 10 (P9). Status: Open
+### Step 10 (P9). Status: Done
 **Minimal assisted reporting.** "I'm reporting on behalf of someone" flag, recorded consent, hint about proxy points (library, senior club, social worker, NGO).
 - Effort S · Value ●●○ · After: —
 - Done when: the flag and consent text are in the form; the demo scenario goes through a proxy.
+- Result: proxy checkbox + required consent + proxy-points hint in the report form (problem tab), `onBehalf`/`consentAt` stored on the signal, demo signal `s6` is a proxy report, badge in map popup.
 
 ### Step 11 (P10). Status: Open
 **Accessibility minimum and check.** Keyboard navigation, visible focus, WCAG AA contrast, text scaling to 200%, landmarks, icon labels, accessibility statement; run the main scenario with keyboard and a screen reader.

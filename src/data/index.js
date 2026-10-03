@@ -41,7 +41,7 @@ export const signals = [
   { id: 's3', type: 'problem', title: 'Śmieci na skwerze', description: 'Skwer przy parku pełen śmieci, brak koszy.', category: 'ekologia', city: 'Gdańsk', coords: [54.36, 18.65], urgency: 'niska', tags: ['śmieci', 'park'], status: 'nowe', createdAt: '2026-01-10', author: 'Ewa L.' },
   { id: 's4', type: 'problem', title: 'Brak miejsc integracji', description: 'Brak świetlicy dla młodzieży.', category: 'integracja', city: 'Wrocław', coords: [51.11, 17.04], urgency: 'krytyczna', tags: ['młodzież', 'świetlica'], status: 'w toku', createdAt: '2026-01-08', author: 'Marek T.' },
   { id: 's5', type: 'problem', title: 'Zły stan kamienicy', description: 'Kamienica w centrum wymaga remontu.', category: 'mieszkanie', city: 'Poznań', coords: [52.41, 16.93], urgency: 'wysoka', tags: ['remont', 'kamienica'], status: 'nowe', createdAt: '2026-01-06', author: 'Zofia W.' },
-  { id: 's6', type: 'problem', title: 'Izolacja samotnych seniorów', description: 'Samotni seniorzy w bloku nie mają kontaktu.', category: 'seniorzy', city: 'Łódź', coords: [51.76, 19.46], urgency: 'średnia', tags: ['seniorzy', 'samotność'], status: 'nowe', createdAt: '2026-01-05', author: 'Krzysztof P.' },
+  { id: 's6', type: 'problem', title: 'Izolacja samotnych seniorów', description: 'Samotni seniorzy w bloku nie mają kontaktu.', category: 'seniorzy', city: 'Łódź', coords: [51.76, 19.46], urgency: 'średnia', tags: ['seniorzy', 'samotność'], status: 'nowe', createdAt: '2026-01-05', author: 'Krzysztof P.', onBehalf: true, consentAt: '2026-01-05T10:00:00.000Z' },
 ];
 
 export const ideas = [

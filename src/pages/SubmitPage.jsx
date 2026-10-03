@@ -15,20 +15,23 @@ export default function SubmitPage() {
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState('');
   const [success, setSuccess] = useState(false);
-  const { register, handleSubmit, watch, reset } = useForm();
+  const { register, handleSubmit, watch, reset, formState: { errors } } = useForm();
   const { addSignal, addIdea, data } = useApp();
   const navigate = useNavigate();
 
   const title = watch('title', '');
   const category = watch('category', '');
   const city = watch('city', '');
+  const onBehalf = watch('onBehalf', false);
 
   const hasInput = (title?.length || 0) >= 3 && !!category;
   const matches = hasInput ? matchAll({ title, category, city, tags }, data) : null;
 
   const onSubmit = (values) => {
+    const { onBehalf: proxy, consent, ...rest } = values;
     const payload = {
-      ...values,
+      ...rest,
+      ...(tab === 'problem' && proxy && consent ? { onBehalf: true, consentAt: new Date().toISOString() } : {}),
       tags,
       category: values.category,
       city: values.city,
@@ -108,6 +111,22 @@ export default function SubmitPage() {
                     </label>
                   ))}
                 </div>
+              </div>
+            )}
+            {tab === 'problem' && (
+              <div className="mt-4 rounded-btn border border-border p-3">
+                <label className="flex items-start gap-2 text-sm font-medium">
+                  <input type="checkbox" className="mt-1" {...register('onBehalf')} /> {t('submit.onBehalf')}
+                </label>
+                {onBehalf && (
+                  <div className="mt-3 space-y-3">
+                    <p className="text-xs text-neutral-500"><span className="font-semibold">{t('submit.proxyTitle')}:</span> {t('submit.proxyHint')}</p>
+                    <label className="flex items-start gap-2 text-sm">
+                      <input type="checkbox" className="mt-1" {...register('consent', { required: true })} /> {t('submit.consent')}
+                    </label>
+                    {errors.consent && <p role="alert" className="text-xs text-red-600">{t('submit.consentRequired')}</p>}
+                  </div>
+                )}
               </div>
             )}
           </Card>
