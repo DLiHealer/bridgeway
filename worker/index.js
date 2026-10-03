@@ -54,10 +54,21 @@ const publicReport = (r) => ({
 
 async function sendLink(env, email, link) {
   if (env.DEV_MAGIC_LINK === 'true') return { devLink: link };
+  const text = `Zaloguj się / Sign in: ${link}\n\nLink jest ważny 15 minut i można go użyć raz. / Valid for 15 minutes, single use.`;
+  const subject = 'BridgeWay — link do logowania / sign-in link';
+  if (env.RESEND_API_KEY) {
+    // Resend HTTP API; MAIL_FROM defaults to Resend's shared test sender (delivers only to the Resend account owner)
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, 'content-type': 'application/json' },
+      body: JSON.stringify({ from: env.MAIL_FROM || 'BridgeWay <onboarding@resend.dev>', to: [email], subject, text }),
+    });
+    if (!res.ok) throw new Error(`resend ${res.status}`);
+    return {};
+  }
   if (!env.EMAIL || !env.MAIL_FROM) throw new Error('email not configured');
   await env.EMAIL.send({
-    to: email, from: env.MAIL_FROM, subject: 'BridgeWay — link do logowania / sign-in link',
-    text: `Zaloguj się / Sign in: ${link}\n\nLink jest ważny 15 minut i można go użyć raz. / Valid for 15 minutes, single use.`,
+    to: email, from: env.MAIL_FROM, subject, text,
   });
   return {};
 }
