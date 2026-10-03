@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { useApp } from '../context/AppContext.jsx';
 import { Button, Card, Chip, Input, Textarea, Select, Modal } from '../components/ui';
-import { categories, cities, loc } from '../data';
+import { categories, cities, loc, categoryName } from '../data';
 import { matchAll } from '../utils/matching';
 import ScoreBreakdown from '../components/cases/ScoreBreakdown.jsx';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
@@ -49,11 +49,11 @@ export default function SubmitPage() {
 
   return (
     <div className="container-app py-8">
-      <h1 className="text-2xl font-bold md:text-3xl">Zgłoś problem lub pomysł</h1>
+      <h1 className="text-2xl font-bold md:text-3xl">{t('submit.pageTitle')}</h1>
       <div className="mt-6 flex gap-2">
         {['problem', 'idea'].map(x => (
           <Chip key={x} active={tab === x} onClick={() => setTab(x)}>
-            {x === 'problem' ? 'Problem' : 'Pomysł'}
+            {x === 'problem' ? t('submit.tabProblem') : t('submit.tabIdea')}
           </Chip>
         ))}
       </div>
@@ -61,31 +61,31 @@ export default function SubmitPage() {
       <div className="mt-6 grid gap-6 lg:grid-cols-[2fr,1fr]">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <Card className="p-5">
-            <label className="block text-sm font-medium">Tytuł *</label>
-            <Input {...register('title', { required: true, maxLength: 100 })} className="mt-2" placeholder="Krótki tytuł" />
+            <label className="block text-sm font-medium">{t('submit.fTitle')}</label>
+            <Input {...register('title', { required: true, maxLength: 100 })} className="mt-2" placeholder={t('submit.fTitlePh')} />
 
-            <label className="mt-4 block text-sm font-medium">Opis *</label>
-            <Textarea rows={5} maxLength={1000} {...register('description', { required: true })} className="mt-2" placeholder="Opisz problem lub pomysł…" />
+            <label className="mt-4 block text-sm font-medium">{t('submit.fDesc')}</label>
+            <Textarea rows={5} maxLength={1000} {...register('description', { required: true })} className="mt-2" placeholder={t('submit.fDescPh')} />
 
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
               <div>
-                <label className="block text-sm font-medium">Kategoria *</label>
+                <label className="block text-sm font-medium">{t('submit.fCategory')}</label>
                 <Select {...register('category', { required: true })} className="mt-2">
-                  <option value="">Wybierz…</option>
-                  {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                  <option value="">{t('submit.choose')}</option>
+                  {categories.map(c => <option key={c.id} value={c.id}>{categoryName(c)}</option>)}
                 </Select>
               </div>
               <div>
-                <label className="block text-sm font-medium">Miasto *</label>
+                <label className="block text-sm font-medium">{t('submit.fCity')}</label>
                 <Select {...register('city', { required: true })} className="mt-2">
-                  <option value="">Wybierz…</option>
+                  <option value="">{t('submit.choose')}</option>
                   {cities.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
                 </Select>
               </div>
             </div>
 
             <div className="mt-4">
-              <label className="block text-sm font-medium">Tagi</label>
+              <label className="block text-sm font-medium">{t('submit.fTags')}</label>
               <div className="mt-2 flex flex-wrap gap-2">
                 {tags.map(tg => (
                   <Chip key={tg} onClick={() => setTags(t => t.filter(x => x !== tg))}>{tg} ✕</Chip>
@@ -98,16 +98,16 @@ export default function SubmitPage() {
                     if (tagInput.trim()) { setTags(t => [...t, tagInput.trim()]); setTagInput(''); }
                   }
                 }}
-                placeholder="Dodaj tag i Enter" className="mt-2" />
+                placeholder={t('submit.tagPh')} className="mt-2" />
             </div>
 
             {tab === 'problem' && (
               <div className="mt-4">
-                <label className="block text-sm font-medium">Pilność</label>
+                <label className="block text-sm font-medium">{t('submit.fUrgency')}</label>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {['niska', 'średnia', 'wysoka', 'krytyczna'].map(u => (
                     <label key={u} className="flex items-center gap-2 rounded-btn border border-border px-3 py-2 text-sm">
-                      <input type="radio" value={u} {...register('urgency')} defaultChecked={u === 'średnia'} /> {u}
+                      <input type="radio" value={u} {...register('urgency')} defaultChecked={u === 'średnia'} /> {t(`submit.urgency.${u}`)}
                     </label>
                   ))}
                 </div>
@@ -132,7 +132,7 @@ export default function SubmitPage() {
           </Card>
 
           <div className="flex flex-wrap gap-3">
-            <Button type="submit">Opublikuj</Button>
+            <Button type="submit">{t('submit.publish')}</Button>
           </div>
         </form>
 
@@ -143,7 +143,7 @@ export default function SubmitPage() {
 
             {!hasInput && (
               <p className="mt-2 text-xs text-neutral-400">
-                Wpisz tytuł lub wybierz kategorię — pokażemy dopasowania.
+                {t('submit.sugEmpty')}
               </p>
             )}
 
@@ -151,7 +151,7 @@ export default function SubmitPage() {
               <div className="mt-3 space-y-4">
                 <div>
                   <p className="text-xs font-semibold text-neutral-500">
-                    {tab === 'problem' ? 'Podobne problemy i rozwiązania' : 'Może szukasz tego?'}
+                    {tab === 'problem' ? t('submit.sugSolutionsProblem') : t('submit.sugSolutionsIdea')}
                   </p>
                   {matches.solutions.filter(s => s.score > 0).slice(0, 3).length > 0 ? (
                     matches.solutions.filter(s => s.score > 0).slice(0, 3).map(s => (
@@ -163,13 +163,13 @@ export default function SubmitPage() {
                       </div>
                     ))
                   ) : (
-                    <p className="mt-1 text-xs text-neutral-400">Brak trafień w tej kategorii.</p>
+                    <p className="mt-1 text-xs text-neutral-400">{t('submit.sugNoSolutions')}</p>
                   )}
                 </div>
 
                 <div>
                   <p className="text-xs font-semibold text-neutral-500">
-                    {tab === 'problem' ? 'Osoby, które pomogą w rozwiązaniu' : 'Osoby, które pomogą w rozwoju'}
+                    {tab === 'problem' ? t('submit.sugExpertsProblem') : t('submit.sugExpertsIdea')}
                   </p>
                   {matches.experts.filter(e => e.score > 0).slice(0, 2).length > 0 ? (
                     matches.experts.filter(e => e.score > 0).slice(0, 2).map(e => (
@@ -179,13 +179,13 @@ export default function SubmitPage() {
                       </div>
                     ))
                   ) : (
-                    <p className="mt-1 text-xs text-neutral-400">Brak dopasowanych ekspertów.</p>
+                    <p className="mt-1 text-xs text-neutral-400">{t('submit.sugNoExperts')}</p>
                   )}
                 </div>
 
                 <div>
                   <p className="text-xs font-semibold text-neutral-500">
-                    {tab === 'problem' ? 'Możliwe źródła finansowania' : 'Pasujące finansowanie'}
+                    {tab === 'problem' ? t('submit.sugFundingProblem') : t('submit.sugFundingIdea')}
                   </p>
                   {matches.fundings.filter(f => f.score > 0).slice(0, 2).length > 0 ? (
                     matches.fundings.filter(f => f.score > 0).slice(0, 2).map(f => (
@@ -195,7 +195,7 @@ export default function SubmitPage() {
                       </div>
                     ))
                   ) : (
-                    <p className="mt-1 text-xs text-neutral-400">Brak pasujących grantów.</p>
+                    <p className="mt-1 text-xs text-neutral-400">{t('submit.sugNoFunding')}</p>
                   )}
                 </div>
               </div>
@@ -204,11 +204,11 @@ export default function SubmitPage() {
         </aside>
       </div>
 
-      <Modal open={success} onClose={() => setSuccess(false)} title="Dziękujemy!">
-        <p className="text-sm text-neutral-700">Twoje zgłoszenie zostało dodane.</p>
+      <Modal open={success} onClose={() => setSuccess(false)} title={t('submit.thanks')}>
+        <p className="text-sm text-neutral-700">{t('submit.added')}</p>
         <div className="mt-4 flex flex-wrap gap-2">
-          <Button onClick={() => { setSuccess(false); navigate('/mapa'); }}>Przejdź do mapy</Button>
-          <Button variant="secondary" onClick={() => setSuccess(false)}>Dodaj kolejny</Button>
+          <Button onClick={() => { setSuccess(false); navigate('/mapa'); }}>{t('submit.toMap')}</Button>
+          <Button variant="secondary" onClick={() => setSuccess(false)}>{t('submit.addAnother')}</Button>
         </div>
       </Modal>
     </div>
