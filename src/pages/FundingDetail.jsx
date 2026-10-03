@@ -20,7 +20,7 @@ export default function FundingDetail() {
   }
 
   const handleAdd = () => {
-    addProject({
+    const project = addProject({
       title: `Projekt: ${f.name}`,
       status: 'pomysl',
       progress: 0,
@@ -31,7 +31,7 @@ export default function FundingDetail() {
       deadline: f.deadline,
       kpi: [],
     });
-    navigate('/projekty');
+    navigate(`/projekty/${project.id}`);
   };
 
   return (

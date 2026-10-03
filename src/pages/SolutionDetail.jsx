@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 export default function SolutionDetail() {
   const { t } = useTranslation();
   const { id } = useParams();
-  const { data, addProject } = useApp();
+  const { data, addProject, user } = useApp();
   const s = data.solutions.find(x => x.id === id);
   const [copy, setCopy] = useState(false);
   const [city, setCity] = useState('');
@@ -20,14 +20,17 @@ export default function SolutionDetail() {
   const c = categoryById(s.category);
 
   const handleCopy = () => {
-    addProject({
-      title: `Kopia: ${s.title} — ${city}`,
+    const project = addProject({
+      title: `${t('projects.copyPrefix')}: ${s.title} — ${city}`,
       status: 'pomysl', progress: 0,
-      team: [], tasks: [], budget: [], documents: [],
+      sourceSolutionId: s.id,
+      team: [{ name: user.name, role: 'lider' }],
+      tasks: s.steps.map((st, i) => ({ id: `t${i + 1}`, title: st, status: 'todo' })),
+      budget: [], documents: [],
       deadline: '', kpi: [],
     });
     setCopy(false);
-    navigate('/projekty');
+    navigate(`/projekty/${project.id}`);
   };
 
   return (
@@ -66,7 +69,7 @@ export default function SolutionDetail() {
         </div>
 
         <aside className="space-y-4 lg:sticky lg:top-20 lg:self-start">
-          <Button className="w-full" onClick={() => setCopy(true)}>Skopiuj to u siebie</Button>
+          <Button className="w-full" onClick={() => setCopy(true)}>{t('cta.copy')}</Button>
           <Card className="p-5">
             <p className="text-sm font-semibold">Podobne rozwiązania</p>
             <div className="mt-2 space-y-2 text-sm">
@@ -78,12 +81,12 @@ export default function SolutionDetail() {
         </aside>
       </div>
 
-      <Modal open={copy} onClose={() => setCopy(false)} title="Skopiuj rozwiązanie">
-        <p className="text-sm text-neutral-400">Utworzymy nową komorę projektową dla Twojej gminy.</p>
-        <Input className="mt-3" placeholder="Twoje miasto" value={city} onChange={e => setCity(e.target.value)} />
+      <Modal open={copy} onClose={() => setCopy(false)} title={t('projects.copyTitle')}>
+        <p className="text-sm text-neutral-400">{t('projects.copyHint')}</p>
+        <Input className="mt-3" placeholder={t('projects.yourCity')} value={city} onChange={e => setCity(e.target.value)} />
         <div className="mt-4 flex justify-end gap-2">
-          <Button variant="ghost" onClick={() => setCopy(false)}>Anuluj</Button>
-          <Button onClick={handleCopy} disabled={!city}>Utwórz projekt</Button>
+          <Button variant="ghost" onClick={() => setCopy(false)}>{t('common.cancel')}</Button>
+          <Button onClick={handleCopy} disabled={!city}>{t('projects.create')}</Button>
         </div>
       </Modal>
     </div>

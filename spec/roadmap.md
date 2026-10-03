@@ -48,7 +48,7 @@ Conventions:
 - Effort S · Value ●●● · After: —
 - Done when: no number on the UI lacks a source or a "demo/target" label; no invented organisations or ratings remain.
 
-### Step 3 (P2). Status: Open
+### Step 3 (P2). Status: Done
 **Fix the end-to-end flow** Solution → "Skopiuj to u siebie" → Project (`/projekty` is currently a copy of ProfilePage).
 - Effort S · Value ●●● · After: —
 - Done when: the scenario runs without dead ends; the projects list is a real list.

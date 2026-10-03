@@ -25,7 +25,11 @@ export function AppProvider({ children }) {
     clearFilters: () => setFiltersState({ type: 'all', categories: [], city: '', urgency: 'all', q: '' }),
     addSignal: (s) => setSignals(list => [{ ...s, id: 's' + Date.now(), createdAt: new Date().toISOString().slice(0,10), author: user.name }, ...list]),
     addIdea: (i) => setIdeas(list => [{ ...i, id: 'i' + Date.now(), createdAt: new Date().toISOString().slice(0,10), author: user.name, team: [{ name: user.name, role: 'lider' }], teamSize: 1, teamTarget: 5 }, ...list]),
-    addProject: (p) => setProjects(list => [{ ...p, id: 'p' + Date.now() }, ...list]),
+    addProject: (p) => {
+      const project = { ...p, id: 'p' + Date.now() };
+      setProjects(list => [project, ...list]);
+      return project;
+    },
     data,
     toasts, setToasts,
   }), [user, signals, ideas, projects, saved, filters, toasts]);

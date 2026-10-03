@@ -45,20 +45,20 @@ src/
 | `/rozwiazania`, `/rozwiazania/:id` | SolutionsPage, SolutionDetail |
 | `/eksperci`, `/eksperci/:id` | ExpertsPage, ExpertDetail |
 | `/finansowanie` | FundingPage (detail component: FundingDetail) |
-| `/projekty`, `/projekty/:id` | ProjectsPage, ProjectRoom |
+| `/projekty`, `/projekty/:id` | ProjectsPage (list of projects, empty state → `/rozwiazania`), ProjectRoom |
 | `/profil` | ProfilePage |
 | `/analityka` | AnalyticsPage |
 | `/o-nas` | AboutPage |
 | `*` | NotFound |
 
 ## 5. State & persistence
-`AppProvider` (`useApp()`) holds: `user`, `signals`, `ideas`, `projects`, `saved`, `filters`, `toasts`, plus actions (`addSignal`, `addIdea`, `addProject`, `saveItem`, `isSaved`, `setFilters`, `clearFilters`) and `data` (static datasets).
+`AppProvider` (`useApp()`) holds: `user`, `signals`, `ideas`, `projects`, `saved`, `filters`, `toasts`, plus actions (`addSignal`, `addIdea`, `addProject` (returns the created project),  `saveItem`, `isSaved`, `setFilters`, `clearFilters`) and `data` (static datasets).
 - Each slice persists via `useLocalStorage` under `bridgeart-*` keys (`-user`, `-signals`, `-ideas`, `-projects`, `-saved`, `-filters`, `-toasts-placeholder`, plus `bridgeart-lang` for language).
 - Seeded from `src/data/index.js` on first load. Data is per-browser; no sync.
 - Static, read-only entities (solutions, experts, ngos, fundings) are read from `data` directly.
 
 ## 6. Domain model (mock, in `src/data/index.js`)
-Entities: `categories` (id, name, nameEn, color), `cities` (id, name, coords), `signals`, `ideas`, `solutions`, `experts`, `ngos`, `fundings`, `projects`. (No `analytics` dataset: the Analytics page counts the user's local signals/ideas/projects. Solutions have no `effect`/`verified`, experts no `rating`/`email`, NGOs no project counts.) Category ids: mieszkanie, seniorzy, dostepnosc, cyfrowe, ekologia, integracja, inne. IDs of user-created items are prefixed (`s`/`i`/`p` + timestamp).
+Entities: `categories` (id, name, nameEn, color), `cities` (id, name, coords), `signals`, `ideas`, `solutions`, `experts`, `ngos`, `fundings`, `projects`. (No `analytics` dataset: the Analytics page counts the user's local signals/ideas/projects. Solutions have no `effect`/`verified`, experts no `rating`/`email`, NGOs no project counts.) Category ids: mieszkanie, seniorzy, dostepnosc, cyfrowe, ekologia, integracja, inne. `projects` have optional `sourceSolutionId` (set when copied from a solution; its `steps` become `todo` tasks). IDs of user-created items are prefixed (`s`/`i`/`p` + timestamp).
 Helpers: `categoryById`, `categoryName` (language via `window.__i18nLang`).
 
 ## 7. Matching (`src/utils/matching.js`)

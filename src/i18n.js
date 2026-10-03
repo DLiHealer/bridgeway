@@ -29,6 +29,13 @@ const pl = {
     forInstitutions: 'Dla instytucji', partners: 'Partnerzy',
     ctaFinal: 'Nie czekaj. Twój pomysł może zmienić czyjeś życie',
   },
+  projects: {
+    title: 'Moje projekty', empty: 'Nie masz jeszcze projektów.', emptyHint: 'Zacznij od sprawdzonego rozwiązania i skopiuj je do swojej gminy.', browse: 'Przeglądaj rozwiązania',
+    tasks: 'zadań', progress: 'Postęp', fromSolution: 'Na podstawie rozwiązania', back: 'Wszystkie projekty', notFound: 'Nie znaleziono projektu',
+    noTasks: 'Brak zadań', noBudget: 'Brak pozycji budżetu', noDocs: 'Brak dokumentów', noTeam: 'Brak członków zespołu', noDeadline: 'nie ustalono',
+    copyTitle: 'Skopiuj rozwiązanie', copyHint: 'Utworzymy nowy projekt dla Twojej gminy z krokami z tego rozwiązania jako zadaniami.', yourCity: 'Twoje miasto', create: 'Utwórz projekt', copyPrefix: 'Kopia',
+    status: { pomysl: 'Pomysł', pilot: 'Pilotaż', wdrozenie: 'Wdrożenie' },
+  },
   analytics: { signals: 'Sygnały', ideas: 'Pomysły', projects: 'Projekty', byCategory: 'Sygnały według kategorii' },
   common: {
     all: 'Wszystko', problems: 'Problemy', ideas: 'Pomysły',
@@ -78,6 +85,13 @@ const en = {
     mapTeaserSub: 'See what’s happening in your area and get involved.',
     forInstitutions: 'For institutions', partners: 'Partners',
     ctaFinal: 'Don’t wait. Your idea can change someone’s life',
+  },
+  projects: {
+    title: 'My projects', empty: 'You have no projects yet.', emptyHint: 'Start from a proven solution and copy it to your municipality.', browse: 'Browse solutions',
+    tasks: 'tasks', progress: 'Progress', fromSolution: 'Based on solution', back: 'All projects', notFound: 'Project not found',
+    noTasks: 'No tasks', noBudget: 'No budget items', noDocs: 'No documents', noTeam: 'No team members', noDeadline: 'not set',
+    copyTitle: 'Copy solution', copyHint: 'We will create a new project for your municipality with this solution’s steps as tasks.', yourCity: 'Your city', create: 'Create project', copyPrefix: 'Copy',
+    status: { pomysl: 'Idea', pilot: 'Pilot', wdrozenie: 'Rollout' },
   },
   analytics: { signals: 'Signals', ideas: 'Ideas', projects: 'Projects', byCategory: 'Signals by category' },
   common: {
