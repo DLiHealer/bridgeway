@@ -39,8 +39,8 @@ export default function Footer() {
             <li><Link className="hover:text-brand-primary" to="/o-nas">{t('nav.about')}</Link></li>
             <li><Link className="hover:text-brand-primary" to="/dostepnosc">{t('footer.a11y')}</Link></li>
             <li>{t('footer.contact')}</li>
-            <li>{t('footer.privacy')}</li>
-            <li>{t('footer.terms')}</li>
+            <li><Link className="hover:text-brand-primary" to="/prywatnosc">{t('footer.privacy')}</Link></li>
+            <li><Link className="hover:text-brand-primary" to="/regulamin">{t('footer.terms')}</Link></li>
           </ul>
         </div>
       </div>

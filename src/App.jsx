@@ -19,6 +19,7 @@ const ProfilePage = lazy(() => import('./pages/ProfilePage.jsx'));
 const AnalyticsPage = lazy(() => import('./pages/AnalyticsPage.jsx'));
 const AboutPage = lazy(() => import('./pages/AboutPage.jsx'));
 const AccessibilityPage = lazy(() => import('./pages/AccessibilityPage.jsx'));
+const LegalPage = lazy(() => import('./pages/LegalPage.jsx'));
 const NotFound = lazy(() => import('./pages/NotFound.jsx'));
 
 const Loading = () => <div className="container-app py-12"><Skeleton className="h-64 w-full" /></div>;
@@ -44,6 +45,8 @@ export default function App() {
           <Route path="/analityka" element={<AnalyticsPage />} />
           <Route path="/o-nas" element={<AboutPage />} />
           <Route path="/dostepnosc" element={<AccessibilityPage />} />
+          <Route path="/prywatnosc" element={<LegalPage kind="privacy" />} />
+          <Route path="/regulamin" element={<LegalPage kind="terms" />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

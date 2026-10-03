@@ -104,10 +104,11 @@ Conventions:
 - Done when: checklist passed; remaining limitations listed honestly.
 - Result: code-level checklist done ([accessibility.md](./accessibility.md)) — contrast tokens, labelled landmarks/icons/forms, Esc handling, focus on route change, reduced motion, statement at `/dostepnosc`. **Manual keyboard + screen-reader run is still pending (human)** and listed as a limitation.
 
-### Step 12 (P11). Status: Open
+### Step 12 (P11). Status: Done
 **Privacy & safety minimum.** Coarsen map points for sensitive categories, warning about third-party personal data, real Privacy and Terms pages linked from the footer.
 - Effort S–M · Value ●●○ · After: —
 - Done when: pages exist; exact addresses of sensitive categories are not published.
+- Result: `/prywatnosc` + `/regulamin` (footer-linked, prototype drafts, pl/en), third-party data warning in report form, sensitive categories (seniors, housing) and proxy reports shown as approximate 3 km area on the map. Legal text needs real legal review before production.
 
 ### Step 13 (P12). Status: Open
 **Validation.** 5 interviews with the target group, ≥1 municipality/district, ≥2 NGOs, ≥1 proxy point, ≥1 letter of intent or quote; results in a separate file under `spec/`. Run in parallel.

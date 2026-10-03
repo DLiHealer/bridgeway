@@ -54,6 +54,8 @@ const pl = {
     onBehalf: 'Zgłaszam w imieniu innej osoby', consent: 'Ta osoba wie o zgłoszeniu i zgadza się na nie oraz na jego publikację bez imienia i adresu.', consentRequired: 'Zgoda jest wymagana',
     proxyTitle: 'Gdzie można pomóc w zgłoszeniu', proxyHint: 'Zgłoszenie może przygotować wspólnie z osobą: biblioteka, klub seniora, pracownik socjalny lub organizacja pozarządowa.',
     proxyBadge: 'Zgłoszone w imieniu innej osoby',
+    privacyWarn: 'Nie podawaj imion, nazwisk, adresów, telefonów ani danych zdrowotnych osób trzecich. Opisuj sytuację, nie osobę.',
+    sensitiveNote: 'Ta kategoria jest wrażliwa: na mapie pokażemy tylko przybliżony obszar, nie dokładny punkt.',
   },
   score: {
     title: 'Wynik transferu (model)', noData: 'brak danych', preliminary: 'Wynik wstępny — część czynników nie ma danych.',
@@ -91,6 +93,27 @@ const pl = {
     cities: 'Gminom', funds: 'Funduszom',
     a11y: 'Deklaracja dostępności', contact: 'Kontakt', privacy: 'Polityka prywatności', terms: 'Regulamin',
     madeFor: 'Stworzone na HackYeah',
+  },
+  legal: {
+    approxArea: 'Przybliżony obszar (dane wrażliwe)',
+    demo: 'Prototyp: dokument roboczy, nie jest poradą prawną ani zatwierdzonym regulaminem.',
+    privacyTitle: 'Polityka prywatności',
+    privacy: [
+      { h: 'Kto przetwarza dane', p: 'BridgeWay to prototyp bez serwera. Zgłoszenia, pomysły i projekty są zapisywane wyłącznie w pamięci przeglądarki (localStorage) na Twoim urządzeniu. Nie wysyłamy ich do nas ani do osób trzecich.' },
+      { h: 'Jakie dane zbieramy', p: 'Treść zgłoszenia, miasto, kategoria, tagi i pilność. Nie prosimy o imię, adres ani telefon osób, których sprawa dotyczy. W zgłoszeniu w imieniu innej osoby zapisujemy tylko znacznik i czas zgody.' },
+      { h: 'Mapa i dane wrażliwe', p: 'Zgłoszenia w kategoriach wrażliwych (opieka nad seniorami, mieszkanie) oraz zgłoszenia składane w imieniu innej osoby pokazujemy na mapie jako przybliżony obszar, a nie dokładny punkt. Dokładne adresy nie są zbierane ani publikowane.' },
+      { h: 'Dane osób trzecich', p: 'Nie wpisuj danych osobowych ani zdrowotnych innych osób. Zgłaszając w imieniu kogoś, potrzebujesz jego zgody.' },
+      { h: 'Usługi zewnętrzne', p: 'Kafelki mapy pochodzą z OpenStreetMap, a awatary z DiceBear; ich dostawcy mogą widzieć adres IP przeglądarki. Poza tym nie używamy ciasteczek analitycznych ani reklamowych.' },
+      { h: 'Twoje prawa i usunięcie danych', p: 'Dane możesz w każdej chwili usunąć, czyszcząc dane witryny w przeglądarce. Dla wersji z serwerem (planowanej) opiszemy pełne prawa wynikające z RODO i administratora danych.' },
+    ],
+    termsTitle: 'Regulamin',
+    terms: [
+      { h: 'Charakter serwisu', p: 'BridgeWay jest prototypem. Przykłady i dane demonstracyjne są oznaczone jako takie; przypadki z rejestru mają wskazane źródło i poziom dowodów.' },
+      { h: 'Zasady zgłoszeń', p: 'Zgłaszaj tylko prawdziwe, własne obserwacje. Nie publikuj danych osobowych, treści nielegalnych, obraźliwych ani reklam.' },
+      { h: 'Zgłoszenia w imieniu innych', p: 'Możesz zgłosić sprawę w imieniu innej osoby tylko wtedy, gdy ona o tym wie i wyraziła zgodę.' },
+      { h: 'Brak gwarancji', p: 'Zgłoszenie nie jest wnioskiem do urzędu i nie gwarantuje reakcji. Wskazane rozwiązania nie są poradą techniczną ani prawną; przed wdrożeniem skonsultuj je z odpowiednim organem.' },
+      { h: 'Sytuacje pilne', p: 'W zagrożeniu życia lub zdrowia dzwoń na numer 112.' },
+    ],
   },
   a11y: {
     skip: 'Przejdź do treści', menu: 'Menu', close: 'Zamknij', account: 'Menu konta', language: 'Język', mainNav: 'Nawigacja główna', profileNav: 'Profil', remove: 'usuń',
@@ -171,6 +194,8 @@ const en = {
     onBehalf: 'I am reporting on behalf of someone else', consent: 'This person knows about the report and agrees to it and to its publication without name or address.', consentRequired: 'Consent is required',
     proxyTitle: 'Where to get help with a report', proxyHint: 'A report can be prepared together with the person by a library, a senior club, a social worker or an NGO.',
     proxyBadge: 'Reported on behalf of someone else',
+    privacyWarn: 'Do not include names, addresses, phone numbers or health data of third parties. Describe the situation, not the person.',
+    sensitiveNote: 'This category is sensitive: the map will show only an approximate area, never an exact point.',
   },
   score: {
     title: 'Transfer score (model)', noData: 'no data', preliminary: 'Preliminary score — some factors have no data.',
@@ -208,6 +233,27 @@ const en = {
     cities: 'Municipalities', funds: 'Funds',
     a11y: 'Accessibility statement', contact: 'Contact', privacy: 'Privacy policy', terms: 'Terms',
     madeFor: 'Made at HackYeah',
+  },
+  legal: {
+    approxArea: 'Approximate area (sensitive data)',
+    demo: 'Prototype: a working draft, not legal advice or an approved set of terms.',
+    privacyTitle: 'Privacy policy',
+    privacy: [
+      { h: 'Who processes the data', p: 'BridgeWay is a prototype without a server. Reports, ideas and projects are stored only in your browser (localStorage) on your device. We do not send them to us or to third parties.' },
+      { h: 'What we collect', p: 'Report text, city, category, tags and urgency. We do not ask for the name, address or phone of the people concerned. For a report on behalf of someone else we store only a flag and the time of consent.' },
+      { h: 'Map and sensitive data', p: 'Reports in sensitive categories (senior care, housing) and reports made on behalf of another person are shown on the map as an approximate area, not an exact point. Exact addresses are neither collected nor published.' },
+      { h: 'Third-party data', p: 'Do not enter personal or health data of other people. To report on someone\'s behalf you need their consent.' },
+      { h: 'External services', p: 'Map tiles come from OpenStreetMap and avatars from DiceBear; their providers may see your browser\'s IP address. We use no analytics or advertising cookies.' },
+      { h: 'Your rights and deletion', p: 'You can delete your data at any time by clearing the site data in your browser. For the planned server version we will describe the full GDPR rights and the data controller.' },
+    ],
+    termsTitle: 'Terms of use',
+    terms: [
+      { h: 'Nature of the service', p: 'BridgeWay is a prototype. Examples and demo data are labelled as such; registry cases show their source and evidence level.' },
+      { h: 'Reporting rules', p: 'Report only genuine, first-hand observations. Do not post personal data, illegal or abusive content, or ads.' },
+      { h: 'Reports on behalf of others', p: 'You may report on behalf of another person only if they know about it and have given consent.' },
+      { h: 'No guarantees', p: 'A report is not an official application and does not guarantee a response. Listed solutions are not technical or legal advice; consult the responsible body before implementing them.' },
+      { h: 'Emergencies', p: 'If life or health is at risk, call 112.' },
+    ],
   },
   a11y: {
     skip: 'Skip to content', menu: 'Menu', close: 'Close', account: 'Account menu', language: 'Language', mainNav: 'Main navigation', profileNav: 'Profile', remove: 'remove',

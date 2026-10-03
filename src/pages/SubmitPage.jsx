@@ -5,6 +5,7 @@ import { useApp } from '../context/AppContext.jsx';
 import { Button, Card, Chip, Input, Textarea, Select, Modal } from '../components/ui';
 import { categories, cities, loc, categoryName } from '../data';
 import { matchAll } from '../utils/matching';
+import { isSensitive, coarsenCoords } from '../utils/privacy';
 import ScoreBreakdown from '../components/cases/ScoreBreakdown.jsx';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -23,6 +24,7 @@ export default function SubmitPage() {
   const category = watch('category', '');
   const city = watch('city', '');
   const onBehalf = watch('onBehalf', false);
+  const sensitive = tab === 'problem' && isSensitive({ type: 'problem', category, onBehalf });
 
   const hasInput = (title?.length || 0) >= 3 && !!category;
   const matches = hasInput ? matchAll({ title, category, city, tags }, data) : null;
@@ -41,6 +43,7 @@ export default function SubmitPage() {
       needs: [],
       coords: cities.find(c => c.name === values.city)?.coords || [52.2, 21],
     };
+    if (isSensitive(payload)) payload.coords = coarsenCoords(payload.coords);
     if (tab === 'idea') addIdea(payload); else addSignal(payload);
     setSuccess(true);
     reset();
@@ -83,6 +86,9 @@ export default function SubmitPage() {
                 </Select>
               </div>
             </div>
+
+            <p className="mt-4 rounded-btn bg-amber-50 p-3 text-xs text-neutral-700" role="note">{t('submit.privacyWarn')}</p>
+            {sensitive && <p className="mt-2 text-xs text-neutral-700" role="note">{t('submit.sensitiveNote')}</p>}
 
             <div className="mt-4">
               <label htmlFor="f-tags" className="block text-sm font-medium">{t('submit.fTags')}</label>

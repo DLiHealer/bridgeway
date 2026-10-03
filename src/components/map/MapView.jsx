@@ -1,10 +1,11 @@
-import { MapContainer, TileLayer, Marker, Popup, CircleMarker } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { categoryById } from '../../data';
 import { Button } from '../ui';
+import { isSensitive, coarsenCoords, APPROX_RADIUS_M } from '../../utils/privacy';
 
 function coloredDot(color, shape = 'circle') {
   const html = shape === 'diamond'
@@ -24,14 +25,14 @@ export default function MapView({ items = [], height = '100%', zoom = 6, center 
       {items.map(item => {
         const cat = categoryById(item.category);
         const shape = item.type === 'idea' ? 'diamond' : 'circle';
-        const pos = item.coords || [52.2, 21];
-        return (
-          <Marker key={item.id} position={pos} icon={coloredDot(cat.color, shape)}>
+        const sensitive = isSensitive(item);
+        const pos = sensitive ? coarsenCoords(item.coords || [52.2, 21]) : (item.coords || [52.2, 21]);
+        const popup = (
             <Popup>
               <div className="w-56">
                 <p className="text-xs font-medium" style={{ color: cat.color }}>{cat.name}</p>
                 <p className="mt-1 font-semibold text-neutral-900">{item.title}</p>
-                <p className="text-xs text-neutral-400">{item.city}</p>
+                <p className="text-xs text-neutral-400">{item.city}{sensitive && ` · ${t('legal.approxArea')}`}</p>
                 {item.onBehalf && <p className="mt-1 text-xs text-brand-600">{t('submit.proxyBadge')}</p>}
                 <p className="mt-2 line-clamp-2 text-xs text-neutral-700">{item.description}</p>
                 <div className="mt-3 flex gap-2">
@@ -41,7 +42,11 @@ export default function MapView({ items = [], height = '100%', zoom = 6, center 
                 </div>
               </div>
             </Popup>
-          </Marker>
+        );
+        return sensitive ? (
+          <Circle key={item.id} center={pos} radius={APPROX_RADIUS_M} pathOptions={{ color: cat.color, fillColor: cat.color, fillOpacity: 0.25, weight: 2 }}>{popup}</Circle>
+        ) : (
+          <Marker key={item.id} position={pos} icon={coloredDot(cat.color, shape)}>{popup}</Marker>
         );
       })}
     </MapContainer>
