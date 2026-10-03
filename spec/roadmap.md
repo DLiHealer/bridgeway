@@ -110,10 +110,11 @@ Conventions:
 - Done when: pages exist; exact addresses of sensitive categories are not published.
 - Result: `/prywatnosc` + `/regulamin` (footer-linked, prototype drafts, pl/en), third-party data warning in report form, sensitive categories (seniors, housing) and proxy reports shown as approximate 3 km area on the map. Legal text needs real legal review before production.
 
-### Step 13 (P12). Status: Open
+### Step 13 (P12). Status: In progress
 **Validation.** 5 interviews with the target group, ≥1 municipality/district, ≥2 NGOs, ≥1 proxy point, ≥1 letter of intent or quote; results in a separate file under `spec/`. Run in parallel.
 - Effort M · Value ●●● · After: —
 - Done when: real quotes and honest numbers are ready for the pitch (no rounding up).
+- Progress: [validation.md](./validation.md) prepared (quotas, hypotheses, interview guide, consent rules, empty logs). **Interviews themselves are pending (human)**; step stays In progress until the quotas are met with real data.
 
 ## Layer 4 — Packaging
 

@@ -9,6 +9,7 @@ Reference for project specs. **Keep this index and the linked specs in sync with
 | [concept_review_v0.1.md](./concept_review_v0.1.md), [concept_review_v0.2.md](./concept_review_v0.2.md) | Archived jury/investor reviews (inputs to v1.0) |
 | [sourcing-spike.md](./sourcing-spike.md) | Step 5 result: verified cases with sources, evidence levels A–D, §7.4 decision |
 | [accessibility.md](./accessibility.md) | Step 11 result: accessibility checklist, pending manual checks, limitations |
+| [validation.md](./validation.md) | Step 13: validation plan, interview guide, interview/quote logs (real data only) |
 | [roadmap.md](./roadmap.md) | MVP roadmap steps and statuses (Open / In progress / Blocked / Postponed / Done) |
 
 ## Maintenance rules
