@@ -5,7 +5,8 @@ import { useApp } from '../context/AppContext.jsx';
 import { Button, Card, Chip, Input, Textarea, Select, Modal } from '../components/ui';
 import { categories, cities, loc } from '../data';
 import { matchAll } from '../utils/matching';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import ScoreBreakdown from '../components/cases/ScoreBreakdown.jsx';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
 export default function SubmitPage() {
   const { t } = useTranslation();
@@ -135,8 +136,11 @@ export default function SubmitPage() {
                   </p>
                   {matches.solutions.filter(s => s.score > 0).slice(0, 3).length > 0 ? (
                     matches.solutions.filter(s => s.score > 0).slice(0, 3).map(s => (
-                      <div key={s.id} className="mt-1 rounded-btn bg-neutral-100 p-2 text-xs">
-                        {loc(s.title)} <span className="text-neutral-400">· {t('cases.evidence')} {s.evidenceLevel}</span>
+                      <div key={s.id} className="mt-1">
+                        <Link to={`/rozwiazania/${s.id}?cat=${category}${city ? `&city=${city}` : ''}`} className="block rounded-btn bg-neutral-100 p-2 text-xs hover:bg-neutral-200">
+                          {loc(s.title)} <span className="text-neutral-400">· {t('cases.evidence')} {s.evidenceLevel}</span>
+                        </Link>
+                        <ScoreBreakdown transfer={s.transfer} compact />
                       </div>
                     ))
                   ) : (

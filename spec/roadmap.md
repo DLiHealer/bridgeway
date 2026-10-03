@@ -72,10 +72,11 @@ Conventions:
 - Done when: all cases in the app are real, sourced and graded A–D. Update `architecture.md` §6.
 - Result: 6 verified cases + 1 route entry (`route1`, Dostępność Plus, level C) in `src/data/index.js`; evidence level, source, cost, outcome and measurement shown on list/detail pages; USP wording per Step 5 gate still to be applied in Step 8 (P7).
 
-### Step 7 (P6). Status: Open
+### Step 7 (P6). Status: Done
 **Transfer score with explanation.** Weighted formula from concept §6.3 with visible weights, "no data" instead of invented values, hard constraints first; one matching algorithm on every recommendation screen; remove the "AI" label from keyword matching.
 - Effort M · Value ●●● · After: P5
 - Done when: each case shows a score with a per-factor breakdown and the source of every input. Update `architecture.md` §7.
+- Result: `src/utils/transferScore.js` + `ScoreBreakdown`; only problem type and evidence have data, context/budget/partners show "no data" (score preliminary) until Step 15 / a real registry.
 
 ### Step 8 (P7). Status: Open
 **Home repositioning.** Slogan "Problem został już gdzieś rozwiązany." (pl; en equivalent, via i18n), two CTAs, 5-step "how it works", cases as the navigation centre; demote Pomysły / Profil / Analityka per concept §5.5.

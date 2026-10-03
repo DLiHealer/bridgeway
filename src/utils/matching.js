@@ -1,3 +1,5 @@
+import { scoreCase } from './transferScore';
+
 // Явный маппинг человекочитаемых специализаций на id категорий
 const SPEC_TO_CAT = {
   'mieszkanie': 'mieszkanie',
@@ -58,10 +60,11 @@ export function matchNgos(input, ngos = []) {
 }
 
 export function matchSolutions(input, solutions = []) {
-  return solutions.map(s => ({
-    ...s,
-    score: scoreByCategory(s.category, input.category) + scoreByText(s, (input.tags || []).join(' ')),
-  })).sort((a, b) => b.score - a.score);
+  return solutions
+    .map(s => ({ ...s, transfer: scoreCase(s, input) }))
+    .filter(s => !s.transfer.excluded)
+    .map(s => ({ ...s, score: s.transfer.score ?? 0 }))
+    .sort((a, b) => b.score - a.score);
 }
 
 export function matchFundings(input, fundings = []) {

@@ -26,11 +26,12 @@ src/
   index.css           Tailwind layers + shared classes (e.g. container-app)
   context/AppContext.jsx   global state (see §5)
   data/index.js       mock datasets + category/city helpers
-  utils/              matching.js (scoring), geo.js (distanceKm), formatters.js
+  utils/              matching.js (keyword scoring), transferScore.js (case transfer score), geo.js (distanceKm), formatters.js
   hooks/              useLocalStorage, useDebounce
   components/
     layout/           Layout (Header, Footer, Outlet)
     map/MapView.jsx   Leaflet wrapper
+    cases/ScoreBreakdown.jsx   per-factor transfer score card
     ui/index.jsx      design-system primitives (Button, Card, Badge, Chip, Input, Textarea, Select, Modal, Toast, EmptyState, Skeleton, cx)
   pages/              one file per route
 ```
@@ -62,8 +63,9 @@ Entities: `categories` (id, name, nameEn, color), `cities` (id, name, coords), `
 `solutions` are **evidence-backed cases** (route `/rozwiazania`), loaded from `spec/sourcing-spike.md`: `id`, `kind` (`case` | `route`), `category`, `city`, `country`, `year`, `title`, `organisation`, `problem`, `solution`, `cost`, `duration`, `outcome`, `outcomeMethod`, `evidenceLevel` (A–D: A systematic review, B controlled study, C evaluation / uncontrolled outcome, D outputs only), `context`, `source` (`{label,url}`), `steps`. Text fields are `{pl,en}` objects read with `loc()`; `null` = not stated in the source (UI shows "not stated"/"not measured", never an invented value). Every case must be real, sourced and graded; unverifiable cases are not added. `kind: 'route'` is a recommended process (accessibility audit → responsible body → technically approved solution), replacing the removed unsafe DIY-ramp case. Cases without `steps` produce generic `cases.defaultSteps` tasks on copy. Category ids: mieszkanie, seniorzy, dostepnosc, cyfrowe, ekologia, integracja, inne. `projects` have optional `sourceSolutionId` (set when copied from a case; its `steps` or `cases.defaultSteps` become `todo` tasks). IDs of user-created items are prefixed (`s`/`i`/`p` + timestamp).
 Helpers: `categoryById`, `categoryName`, `loc` (language via `window.__i18nLang`). UI: `EvidenceBadge` in `components/ui`.
 
-## 7. Matching (`src/utils/matching.js`)
-`matchAll(input, data)` → `matchExperts/Ngos/Solutions/Fundings/Ideas`. Score = category match (100 / 0, 40 neutral when no category) + text keyword hits (25 per word ≥3 chars, diacritic-normalized) + city match (30). UI label is "Suggestions (no AI)" — keyword matching, not AI. Specialization strings mapped to category ids via `SPEC_TO_CAT`.
+## 7. Matching (`src/utils/`)
+**Cases (`transferScore.js`, used by `matchSolutions`, SolutionsPage, SolutionDetail, SubmitPage, IdeaDetail):** `scoreCase(case, {category, city, available})` → `{excluded, score|null, preliminary, factors[]}`. Weights (concept §6.3, a hypothesis shown in the UI): problem type 30, context 25, budget 15, partners 15, evidence 15. Score = weighted mean of factors **that have data**, 0–100; factors without data are `value: null` → "no data" and the score is marked preliminary. Currently with data: problem type (case category = chosen category; null without a category) and evidence (A 1, B .75, C .5, D .25 — assumption). Always "no data": context (needs GUS BDL, roadmap Step 15), budget (case costs are free text, no user budget), partners (no real registry). Hard constraints first: `case.requires[]` not in `input.available[]` → excluded (hook; no case declares `requires` yet). SolutionDetail reads input from `?cat=&city=`.
+**Other entities (`matching.js`):** `matchExperts/Ngos/Fundings/Ideas` via `matchAll` — keyword scoring: category (100/0, 40 neutral), keyword hits (25 per word ≥3 chars, diacritic-normalized), city (30). Label is "Suggestions … (model, no AI)". Specialization strings mapped via `SPEC_TO_CAT`.
 
 ## 8. Conventions
 - UI text goes through i18n keys (pl + en); never hardcode user-facing strings in new code.

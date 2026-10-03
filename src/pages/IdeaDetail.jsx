@@ -3,8 +3,11 @@ import { useApp } from '../context/AppContext.jsx';
 import { categoryById, loc } from '../data';
 import { Badge, Button, Card, EmptyState } from '../components/ui';
 import { Bookmark } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { matchSolutions } from '../utils/matching';
 
 export default function IdeaDetail() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const { ideas, data, saveItem, isSaved, user } = useApp();
   const idea = ideas.find(i => i.id === id);
@@ -23,9 +26,9 @@ export default function IdeaDetail() {
 
   const c = categoryById(idea.category);
 
-  // Жёстко берём первые элементы из данных — без matchAll
+  // Experts/fundings/ngos: first items; cases: same transfer-score algorithm as everywhere
   const topExperts = (data.experts || []).slice(0, 2);
-  const topSolutions = (data.solutions || []).slice(0, 2);
+  const topSolutions = matchSolutions({ category: idea.category, city: idea.city }, data.solutions || []).slice(0, 2);
   const topFundings = (data.fundings || []).slice(0, 2);
   const topNgos = (data.ngos || []).slice(0, 1);
 
@@ -100,6 +103,7 @@ export default function IdeaDetail() {
                   className="block rounded-btn bg-neutral-100 p-2 hover:bg-neutral-200"
                 >
                   {loc(s.title)}
+                  <span className="text-neutral-400"> · {s.transfer.score === null ? t('score.noData') : `${s.transfer.score}/100`}</span>
                 </Link>
               ))}
             </div>

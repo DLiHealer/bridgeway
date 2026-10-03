@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext.jsx';
 import { Card, Chip, Badge, EvidenceBadge } from '../components/ui';
 import { categories, categoryById, categoryName, loc } from '../data';
+import { scoreCase } from '../utils/transferScore';
 import { useTranslation } from 'react-i18next';
 
 export default function SolutionsPage() {
@@ -10,7 +11,10 @@ export default function SolutionsPage() {
   const { data } = useApp();
   const [cat, setCat] = useState('all');
 
-  const list = useMemo(() => data.solutions.filter(s => cat === 'all' || s.category === cat), [cat, data.solutions]);
+  const list = useMemo(() => data.solutions
+    .map(s => ({ ...s, transfer: scoreCase(s, { category: cat === 'all' ? '' : cat }) }))
+    .filter(s => cat === 'all' || s.category === cat)
+    .sort((a, b) => (b.transfer.score ?? -1) - (a.transfer.score ?? -1)), [cat, data.solutions]);
 
   return (
     <div className="container-app py-8">
@@ -25,11 +29,12 @@ export default function SolutionsPage() {
 
       <div className="mt-8 grid gap-4 md:grid-cols-2">
         {list.map(s => (
-          <Link key={s.id} to={`/rozwiazania/${s.id}`}>
+          <Link key={s.id} to={`/rozwiazania/${s.id}${cat === 'all' ? '' : `?cat=${cat}`}`}>
             <Card hover className="h-full p-5">
               <div className="flex items-center gap-2">
                 <EvidenceBadge level={s.evidenceLevel} label={`${t('cases.evidence')} ${s.evidenceLevel}`} />
                 {s.kind === 'route' && <Badge color="#64748B">{t('cases.route')}</Badge>}
+                <Badge color="#64748B">{t('score.title')}: {s.transfer.score === null ? t('score.noData') : `${s.transfer.score}${s.transfer.preliminary ? '*' : ''}`}</Badge>
                 <Badge color={categoryById(s.category).color}>{categoryName(categoryById(s.category))}</Badge>
               </div>
               <h3 className="mt-3 font-semibold text-neutral-900">{loc(s.title)}</h3>

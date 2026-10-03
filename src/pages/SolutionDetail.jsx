@@ -1,4 +1,6 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useSearchParams } from 'react-router-dom';
+import ScoreBreakdown from '../components/cases/ScoreBreakdown.jsx';
+import { scoreCase } from '../utils/transferScore';
 import { useApp } from '../context/AppContext.jsx';
 import { categoryById, categoryName, loc } from '../data';
 import { Button, Card, Badge, EvidenceBadge, EmptyState, Modal, Input } from '../components/ui';
@@ -11,6 +13,7 @@ export default function SolutionDetail() {
   const { id } = useParams();
   const { data, addProject, user } = useApp();
   const s = data.solutions.find(x => x.id === id);
+  const [params] = useSearchParams();
   const [copy, setCopy] = useState(false);
   const [city, setCity] = useState('');
   const navigate = useNavigate();
@@ -18,6 +21,7 @@ export default function SolutionDetail() {
   if (!s) return <div className="container-app py-12"><EmptyState title={t('cases.notFound')} /></div>;
 
   const c = categoryById(s.category);
+  const transfer = scoreCase(s, { category: params.get('cat') || '', city: params.get('city') || '' });
 
   const handleCopy = () => {
     const project = addProject({
@@ -87,6 +91,7 @@ export default function SolutionDetail() {
 
         <aside className="space-y-4 lg:sticky lg:top-20 lg:self-start">
           <Button className="w-full" onClick={() => setCopy(true)}>{t('cta.copy')}</Button>
+          <ScoreBreakdown transfer={transfer} />
           <Card className="p-5">
             <p className="text-sm font-semibold">{t('cases.similar')}</p>
             <div className="mt-2 space-y-2 text-sm">
