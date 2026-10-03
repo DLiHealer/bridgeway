@@ -47,28 +47,28 @@ export const ideas = [
 ];
 
 export const solutions = [
-  { id: 'r1', title: 'Cyfrowi przewodnicy dla seniorów', problem: 'Seniorzy nie radzą sobie z e-usługami.', solution: 'Wolontariusze-seniorzy uczą innych seniorów.', category: 'cyfrowe', city: 'Gdańsk', budget: '5000-15000 PLN', duration: '3 miesiące', effect: '+40% uczestnictwa', verified: true, complexity: 'łatwa', cost: 'niski', steps: ['Rekrutacja przewodników', 'Szkolenie', 'Warsztaty w dzielnicach', 'Ewaluacja'], risks: ['Niska frekwencja', 'Bariery techniczne'], contacts: [{ name: 'Fundacja X', email: 'kontakt@fundacjax.pl' }] },
-  { id: 'r2', title: 'Zielone podwórka', problem: 'Betonoza i brak zieleni na podwórkach.', solution: 'Mieszkańcy wspólnie sadzą drzewa i tworzą ogrody.', category: 'ekologia', city: 'Wrocław', budget: '2000-8000 PLN', duration: '2 miesiące', effect: '-3°C latem', verified: true, complexity: 'łatwa', cost: 'niski', steps: ['Wybór podwórka', 'Konsultacje', 'Zakup sadzonek', 'Wspólne sadzenie'], risks: ['Vandalizm', 'Susza'], contacts: [{ name: 'Zielone Wrocław', email: 'kontakt@zielone.pl' }] },
-  { id: 'r3', title: 'Sąsiedzka pomoc seniorom', problem: 'Samotność i problemy z zakupami.', solution: 'Sieć wolontariuszy pomaga seniorom.', category: 'seniorzy', city: 'Kraków', budget: '3000-10000 PLN', duration: '6 miesięcy', effect: '120 seniorów objętych', verified: true, complexity: 'średnia', cost: 'średni', steps: ['Mapowanie potrzeb', 'Rekrutacja wolontariuszy', 'System zgłoszeń'], risks: ['Wypalenie wolontariuszy'], contacts: [{ name: 'Fundacja Tkanka', email: 'biuro@tkanka.org' }] },
-  { id: 'r4', title: 'Podjazdy sąsiedzkie', problem: 'Brak podjazdów dla wózków.', solution: 'Proste, drewniane rampy budowane przez sąsiadów.', category: 'dostepnosc', city: 'Warszawa', budget: '1000-4000 PLN', duration: '1 miesiąc', effect: '+15 budynków', verified: true, complexity: 'łatwa', cost: 'niski', steps: ['Inwentaryzacja', 'Projekt', 'Budowa', 'Odbiór'], risks: ['Brak zgody wspólnoty'], contacts: [{ name: 'Dostępne Miasto', email: 'info@dostepne.pl' }] },
+  { id: 'r1', title: 'Cyfrowi przewodnicy dla seniorów', problem: 'Seniorzy nie radzą sobie z e-usługami.', solution: 'Wolontariusze-seniorzy uczą innych seniorów.', category: 'cyfrowe', city: 'Gdańsk', budget: '5000-15000 PLN', duration: '3 miesiące', complexity: 'łatwa', cost: 'niski', steps: ['Rekrutacja przewodników', 'Szkolenie', 'Warsztaty w dzielnicach', 'Ewaluacja'], risks: ['Niska frekwencja', 'Bariery techniczne'], contacts: [{ name: 'Fundacja X', email: 'kontakt@fundacjax.pl' }] },
+  { id: 'r2', title: 'Zielone podwórka', problem: 'Betonoza i brak zieleni na podwórkach.', solution: 'Mieszkańcy wspólnie sadzą drzewa i tworzą ogrody.', category: 'ekologia', city: 'Wrocław', budget: '2000-8000 PLN', duration: '2 miesiące', complexity: 'łatwa', cost: 'niski', steps: ['Wybór podwórka', 'Konsultacje', 'Zakup sadzonek', 'Wspólne sadzenie'], risks: ['Vandalizm', 'Susza'], contacts: [{ name: 'Zielone Wrocław', email: 'kontakt@zielone.pl' }] },
+  { id: 'r3', title: 'Sąsiedzka pomoc seniorom', problem: 'Samotność i problemy z zakupami.', solution: 'Sieć wolontariuszy pomaga seniorom.', category: 'seniorzy', city: 'Kraków', budget: '3000-10000 PLN', duration: '6 miesięcy', complexity: 'średnia', cost: 'średni', steps: ['Mapowanie potrzeb', 'Rekrutacja wolontariuszy', 'System zgłoszeń'], risks: ['Wypalenie wolontariuszy'], contacts: [{ name: 'Fundacja Tkanka', email: 'biuro@tkanka.org' }] },
+  { id: 'r4', title: 'Podjazdy sąsiedzkie', problem: 'Brak podjazdów dla wózków.', solution: 'Proste, drewniane rampy budowane przez sąsiadów.', category: 'dostepnosc', city: 'Warszawa', budget: '1000-4000 PLN', duration: '1 miesiąc', complexity: 'łatwa', cost: 'niski', steps: ['Inwentaryzacja', 'Projekt', 'Budowa', 'Odbiór'], risks: ['Brak zgody wspólnoty'], contacts: [{ name: 'Dostępne Miasto', email: 'info@dostepne.pl' }] },
 ];
 
 export const experts = [
-  { id: 'e1', name: 'Maria Kowalska', specialization: 'Seniorzy', city: 'Warszawa', rating: 4.8, bio: 'Gerontolog z 15-letnim doświadczeniem.', email: 'maria@example.com', projects: ['r3'] },
-  { id: 'e2', name: 'Tomasz Nowak', specialization: 'Dostępność', city: 'Kraków', rating: 4.6, bio: 'Architekt specjalizujący się w dostępności.', email: 'tomasz@example.com', projects: ['r4'] },
-  { id: 'e3', name: 'Agnieszka Lis', specialization: 'Ekologia', city: 'Wrocław', rating: 4.9, bio: 'Biolog, aktywistka miejska.', email: 'aga@example.com', projects: ['r2'] },
-  { id: 'e4', name: 'Paweł Zieliński', specialization: 'Cyfryzacja', city: 'Gdańsk', rating: 4.7, bio: 'Trener kompetencji cyfrowych.', email: 'pawel@example.com', projects: ['r1'] },
-  { id: 'e5', name: 'Katarzyna Dąbrowska', specialization: 'Integracja', city: 'Łódź', rating: 4.5, bio: 'Socjolog, animatorka społeczna.', email: 'kasia@example.com', projects: [] },
-  { id: 'e6', name: 'Michał Wójcik', specialization: 'Mieszkanie', city: 'Poznań', rating: 4.4, bio: 'Ekspert polityki mieszkaniowej.', email: 'michal@example.com', projects: [] },
-  { id: 'e7', name: 'Ewa Kaczmarek', specialization: 'Seniorzy', city: 'Kraków', rating: 4.9, bio: 'Pracownik socjalny.', email: 'ewa@example.com', projects: ['r3'] },
-  { id: 'e8', name: 'Jakub Lewandowski', specialization: 'Cyfryzacja', city: 'Warszawa', rating: 4.3, bio: 'Programista i społecznik.', email: 'jakub@example.com', projects: [] },
+  { id: 'e1', name: 'Maria Kowalska', specialization: 'Seniorzy', city: 'Warszawa', bio: 'Gerontolog z 15-letnim doświadczeniem.', projects: ['r3'] },
+  { id: 'e2', name: 'Tomasz Nowak', specialization: 'Dostępność', city: 'Kraków', bio: 'Architekt specjalizujący się w dostępności.', projects: ['r4'] },
+  { id: 'e3', name: 'Agnieszka Lis', specialization: 'Ekologia', city: 'Wrocław', bio: 'Biolog, aktywistka miejska.', projects: ['r2'] },
+  { id: 'e4', name: 'Paweł Zieliński', specialization: 'Cyfryzacja', city: 'Gdańsk', bio: 'Trener kompetencji cyfrowych.', projects: ['r1'] },
+  { id: 'e5', name: 'Katarzyna Dąbrowska', specialization: 'Integracja', city: 'Łódź', bio: 'Socjolog, animatorka społeczna.', projects: [] },
+  { id: 'e6', name: 'Michał Wójcik', specialization: 'Mieszkanie', city: 'Poznań', bio: 'Ekspert polityki mieszkaniowej.', projects: [] },
+  { id: 'e7', name: 'Ewa Kaczmarek', specialization: 'Seniorzy', city: 'Kraków', bio: 'Pracownik socjalny.', projects: ['r3'] },
+  { id: 'e8', name: 'Jakub Lewandowski', specialization: 'Cyfryzacja', city: 'Warszawa', bio: 'Programista i społecznik.', projects: [] },
 ];
 
 export const ngos = [
-  { id: 'n1', name: 'Fundacja Tkanka', mission: 'Wsparcie lokalnych społeczności', city: 'Kraków', projects: 12 },
-  { id: 'n2', name: 'Dostępne Miasto', mission: 'Miasto bez barier', city: 'Warszawa', projects: 8 },
-  { id: 'n3', name: 'Zielone Wrocław', mission: 'Zieleń w mieście', city: 'Wrocław', projects: 15 },
-  { id: 'n4', name: 'Senior Plus', mission: 'Aktywni seniorzy', city: 'Poznań', projects: 6 },
+  { id: 'n1', name: 'Fundacja Tkanka', mission: 'Wsparcie lokalnych społeczności', city: 'Kraków' },
+  { id: 'n2', name: 'Dostępne Miasto', mission: 'Miasto bez barier', city: 'Warszawa' },
+  { id: 'n3', name: 'Zielone Wrocław', mission: 'Zieleń w mieście', city: 'Wrocław' },
+  { id: 'n4', name: 'Senior Plus', mission: 'Aktywni seniorzy', city: 'Poznań' },
 ];
 
 export const fundings = [
@@ -97,17 +97,5 @@ export const projects = [
     kpi: [{ name: 'Osoby objęte', value: '12' }, { name: 'Koszt', value: '5000 PLN' }],
   },
 ];
-
-export const analytics = {
-  kpis: { signals: 1248, ideas: 356, projects: 89, rate: 68 },
-  trend: [10, 22, 18, 30, 42, 38, 55, 62, 58, 71, 80, 92],
-  categories: [
-    { id: 'seniorzy', count: 210, delta: 12 },
-    { id: 'dostepnosc', count: 180, delta: 8 },
-    { id: 'ekologia', count: 165, delta: -3 },
-    { id: 'cyfrowe', count: 140, delta: 15 },
-    { id: 'integracja', count: 120, delta: 4 },
-  ],
-};
 
 export const allData = { signals, ideas, solutions, experts, ngos, fundings, projects, categories, cities };

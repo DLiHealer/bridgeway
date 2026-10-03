@@ -1,9 +1,11 @@
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { useApp } from '../context/AppContext.jsx';
-import { Card, Button, EmptyState } from '../components/ui';
+import { Card, EmptyState } from '../components/ui';
 import { avatarUrl } from '../utils/formatters';
 
 export default function ExpertDetail() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const { data } = useApp();
   const e = data.experts.find(x => x.id === id);
@@ -18,7 +20,6 @@ export default function ExpertDetail() {
               <div>
                 <h1 className="text-2xl font-bold">{e.name}</h1>
                 <p className="text-neutral-400">{e.specialization} · {e.city}</p>
-                <p className="text-brand-accent">★ {e.rating}</p>
               </div>
             </div>
           </Card>
@@ -26,22 +27,8 @@ export default function ExpertDetail() {
             <h2 className="font-semibold">Bio</h2>
             <p className="mt-2 text-neutral-700">{e.bio}</p>
           </Card>
-          <Card className="p-6">
-            <h2 className="font-semibold">Doświadczenie</h2>
-            <ul className="mt-3 list-inside list-disc text-sm text-neutral-700">
-              <li>15+ lat w sektorze</li>
-              <li>Współpraca z NGO i gminami</li>
-              <li>Autor publikacji branżowych</li>
-            </ul>
-          </Card>
+          <p className="rounded-btn bg-neutral-100 p-3 text-xs text-neutral-500">{t('common.demoNote')}</p>
         </div>
-        <aside className="space-y-4">
-          <Card className="p-5">
-            <p className="text-sm font-semibold">Kontakt</p>
-            <p className="mt-2 text-sm text-neutral-400">{e.email}</p>
-            <p className="text-sm text-neutral-400">linkedin.com/in/{e.name.toLowerCase().replace(' ', '-')}</p>
-          </Card>
-        </aside>
       </div>
     </div>
   );

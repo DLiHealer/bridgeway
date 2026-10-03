@@ -3,9 +3,11 @@ import { useApp } from '../context/AppContext.jsx';
 import { categoryById } from '../data';
 import { Button, Card, Badge, EmptyState, Modal, Input } from '../components/ui';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 export default function SolutionDetail() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const { data, addProject } = useApp();
   const s = data.solutions.find(x => x.id === id);
@@ -55,11 +57,7 @@ export default function SolutionDetail() {
             </ol>
           </Card>
 
-          <Card className="p-6">
-            <h2 className="font-semibold">Wyniki</h2>
-            <p className="mt-2 text-sm text-brand-secondary font-medium">{s.effect}</p>
-            <div className="mt-3 h-24 rounded-btn bg-neutral-100" />
-          </Card>
+          <p className="rounded-btn bg-neutral-100 p-3 text-xs text-neutral-500">{t('common.demoNote')}</p>
 
           <Card className="p-6">
             <h2 className="font-semibold">Ryzyka</h2>

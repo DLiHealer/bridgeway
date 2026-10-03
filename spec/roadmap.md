@@ -43,7 +43,7 @@ Conventions:
 
 ## Layer 1 — Trust & a working flow (~20% effort → ~50% value)
 
-### Step 2 (P1). Status: Open
+### Step 2 (P1). Status: Done
 **Data honesty.** Remove invented KPIs (Home, Analytics), "verified" badges, expert ratings and unsourced "effect" claims; label demo data; remove or hide fake expert contacts.
 - Effort S · Value ●●● · After: —
 - Done when: no number on the UI lacks a source or a "demo/target" label; no invented organisations or ratings remain.

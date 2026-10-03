@@ -27,15 +27,14 @@ export default function SolutionsPage() {
           <Link key={s.id} to={`/rozwiazania/${s.id}`}>
             <Card hover className="h-full p-5">
               <div className="flex items-center gap-2">
-                <Badge color="#00B894">{t('common.verified')}</Badge>
+                <Badge color="#64748B">{t('common.demo')}</Badge>
                 <Badge color={categoryById(s.category).color}>{categoryById(s.category).name}</Badge>
               </div>
               <h3 className="mt-3 font-semibold text-neutral-900">{s.title}</h3>
               <p className="mt-1 text-sm text-neutral-400">{s.city}</p>
-              <div className="mt-3 grid grid-cols-3 gap-3 text-xs text-neutral-400">
-                <div><p className="text-neutral-900 font-medium">{s.effect}</p><p>Efekt</p></div>
-                <div><p className="text-neutral-900 font-medium">{s.budget}</p><p>Budżet</p></div>
-                <div><p className="text-neutral-900 font-medium">{s.duration}</p><p>Czas</p></div>
+              <div className="mt-3 grid grid-cols-2 gap-3 text-xs text-neutral-400">
+                <div><p className="text-neutral-900 font-medium">{s.budget}</p><p>{t('common.budget')}</p></div>
+                <div><p className="text-neutral-900 font-medium">{s.duration}</p><p>{t('common.duration')}</p></div>
               </div>
             </Card>
           </Link>

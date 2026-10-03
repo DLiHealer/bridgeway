@@ -13,6 +13,7 @@ export default function ExpertsPage() {
   return (
     <div className="container-app py-8">
       <h1 className="text-2xl font-bold md:text-3xl">{t('nav.experts')}</h1>
+      <p className="mt-3 rounded-btn bg-neutral-100 p-3 text-xs text-neutral-500">{t('common.demoNote')}</p>
       <div className="mt-4 flex gap-2">
         <Chip active={tab === 'experts'} onClick={() => setTab('experts')}>Eksperci</Chip>
         <Chip active={tab === 'ngos'} onClick={() => setTab('ngos')}>Organizacje</Chip>
@@ -26,7 +27,7 @@ export default function ExpertsPage() {
               <h3 className="mt-3 font-semibold text-neutral-900">{e.name}</h3>
               <p className="text-sm text-neutral-400">{e.specialization}</p>
               <p className="mt-1 text-xs text-neutral-400">{e.city}</p>
-              <p className="mt-2 text-sm font-medium text-brand-accent">★ {e.rating}</p>
+              <Badge color="#64748B" className="mt-2">{t('common.demo')}</Badge>
               <Button as={Link} to={`/eksperci/${e.id}`} size="sm" variant="secondary" className="mt-3 w-full">{t('cta.more')}</Button>
             </Card>
           ))}
@@ -38,7 +39,7 @@ export default function ExpertsPage() {
               <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-secondary/10 text-xl font-bold text-brand-secondary">{initials(n.name)}</div>
               <h3 className="mt-3 font-semibold text-neutral-900">{n.name}</h3>
               <p className="mt-1 line-clamp-2 text-sm text-neutral-400">{n.mission}</p>
-              <p className="mt-1 text-xs text-neutral-400">{n.city} · {n.projects} projektów</p>
+              <p className="mt-1 text-xs text-neutral-400">{n.city}</p>
             </Card>
           ))}
         </div>

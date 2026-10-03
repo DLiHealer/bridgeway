@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { useApp } from '../context/AppContext.jsx';
 import { Button, Card, Chip, Input, Textarea, Select, Modal } from '../components/ui';
@@ -7,6 +8,7 @@ import { matchAll } from '../utils/matching';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export default function SubmitPage() {
+  const { t } = useTranslation();
   const [params] = useSearchParams();
   const [tab, setTab] = useState(params.get('tab') === 'idea' ? 'idea' : 'problem');
   const [tags, setTags] = useState([]);
@@ -117,7 +119,8 @@ export default function SubmitPage() {
 
         <aside className="space-y-4">
           <Card className="p-5">
-            <p className="text-sm font-semibold text-neutral-900">Asystent AI</p>
+            <p className="text-sm font-semibold text-neutral-900">{t('common.suggestions')}</p>
+            <p className="mt-1 text-xs text-neutral-400">{t('common.suggestionsHint')}</p>
 
             {!hasInput && (
               <p className="mt-2 text-xs text-neutral-400">
@@ -134,7 +137,7 @@ export default function SubmitPage() {
                   {matches.solutions.filter(s => s.score > 0).slice(0, 3).length > 0 ? (
                     matches.solutions.filter(s => s.score > 0).slice(0, 3).map(s => (
                       <div key={s.id} className="mt-1 rounded-btn bg-neutral-100 p-2 text-xs">
-                        {s.title} <span className="text-brand-secondary">· {s.effect}</span>
+                        {s.title} <span className="text-neutral-400">· {t('common.demo')}</span>
                       </div>
                     ))
                   ) : (

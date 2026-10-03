@@ -1,52 +1,45 @@
+import { useTranslation } from 'react-i18next';
 import { useApp } from '../context/AppContext.jsx';
-import { Card, Button, Badge } from '../components/ui';
+import { Card, Badge } from '../components/ui';
 import MapView from '../components/map/MapView';
-import { categoryById } from '../data';
+import { categoryById, categoryName } from '../data';
 
 export default function AnalyticsPage() {
-  const { data } = useApp();
-  const a = data.analytics;
+  const { t } = useTranslation();
+  const { signals, ideas, projects, data } = useApp();
 
   const kpis = [
-    { l: 'Sygnały', v: a.kpis.signals },
-    { l: 'Pomysły', v: a.kpis.ideas },
-    { l: 'Projekty', v: a.kpis.projects },
-    { l: 'Wskaźnik realizacji', v: a.kpis.rate + '%' },
+    { l: t('analytics.signals'), v: signals.length },
+    { l: t('analytics.ideas'), v: ideas.length },
+    { l: t('analytics.projects'), v: projects.length },
   ];
+  const byCategory = data.categories
+    .map(c => ({ id: c.id, count: signals.filter(s => s.category === c.id).length }))
+    .filter(c => c.count > 0)
+    .sort((a, b) => b.count - a.count);
 
   return (
     <div className="container-app py-8">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-bold md:text-3xl">Analityka</h1>
-        <Button variant="secondary">Eksportuj PDF</Button>
-      </div>
+      <h1 className="text-2xl font-bold md:text-3xl">{t('nav.analytics')}</h1>
+      <p className="mt-3 rounded-btn bg-neutral-100 p-3 text-xs text-neutral-500">{t('common.localData')}</p>
 
-      <div className="mt-6 grid gap-4 md:grid-cols-4">
+      <div className="mt-6 grid gap-4 md:grid-cols-3">
         {kpis.map(k => <Card key={k.l} className="p-5"><p className="text-2xl font-bold">{k.v}</p><p className="text-sm text-neutral-400">{k.l}</p></Card>)}
       </div>
 
       <Card className="mt-6 overflow-hidden">
-        <div className="h-80"><MapView items={data.signals} zoom={5} /></div>
+        <div className="h-80"><MapView items={signals} zoom={5} /></div>
       </Card>
 
       <Card className="mt-6 p-6">
-        <h2 className="font-semibold">Trend zgłoszeń</h2>
-        <svg viewBox="0 0 400 100" className="mt-3 w-full">
-          <polyline fill="none" stroke="#1E5EFF" strokeWidth="2"
-            points={a.trend.map((v, i) => `${(i/(a.trend.length-1))*400},${100 - v}`).join(' ')} />
-        </svg>
-      </Card>
-
-      <Card className="mt-6 p-6">
-        <h2 className="font-semibold">Kategorie</h2>
+        <h2 className="font-semibold">{t('analytics.byCategory')}</h2>
         <table className="mt-3 w-full text-sm">
-          <thead><tr className="text-left text-xs text-neutral-400"><th>Kategoria</th><th>Zgłoszenia</th><th>Δ</th></tr></thead>
+          <thead><tr className="text-left text-xs text-neutral-400"><th>{t('common.category')}</th><th>{t('analytics.signals')}</th></tr></thead>
           <tbody>
-            {a.categories.map(c => (
+            {byCategory.map(c => (
               <tr key={c.id} className="border-t border-border">
-                <td className="py-2"><Badge color={categoryById(c.id).color}>{categoryById(c.id).name}</Badge></td>
+                <td className="py-2"><Badge color={categoryById(c.id).color}>{categoryName(categoryById(c.id))}</Badge></td>
                 <td>{c.count}</td>
-                <td className={c.delta >= 0 ? 'text-brand-secondary' : 'text-brand-danger'}>{c.delta >= 0 ? '+' : ''}{c.delta}%</td>
               </tr>
             ))}
           </tbody>

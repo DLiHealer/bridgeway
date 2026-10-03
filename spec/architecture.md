@@ -3,7 +3,7 @@
 > Source of truth for how the app is built. Update in the same change as any code change that affects it.
 
 ## 1. Overview
-Polish-language civic engagement SPA ("bridge between a problem and a solution"). Residents report problems (signals), pitch ideas, get matched to solutions/experts/NGOs/funding, and follow community projects on a map. MVP: fully client-side, mocked data, no backend.
+Polish-language civic engagement SPA ("bridge between a problem and a solution"). Residents report problems (signals), pitch ideas, get matched to solutions/experts/NGOs/funding, and follow community projects on a map. MVP: fully client-side, mocked data, no backend. **Data honesty rule:** every seeded dataset is demo data and is labelled as such in the UI (`common.demo`, `common.demoNote`); no invented KPIs, ratings, "verified" claims, effects or contacts.
 
 ## 2. Stack
 | Concern | Choice |
@@ -55,14 +55,14 @@ src/
 `AppProvider` (`useApp()`) holds: `user`, `signals`, `ideas`, `projects`, `saved`, `filters`, `toasts`, plus actions (`addSignal`, `addIdea`, `addProject`, `saveItem`, `isSaved`, `setFilters`, `clearFilters`) and `data` (static datasets).
 - Each slice persists via `useLocalStorage` under `bridgeart-*` keys (`-user`, `-signals`, `-ideas`, `-projects`, `-saved`, `-filters`, `-toasts-placeholder`, plus `bridgeart-lang` for language).
 - Seeded from `src/data/index.js` on first load. Data is per-browser; no sync.
-- Static, read-only entities (solutions, experts, ngos, fundings, analytics) are read from `data` directly.
+- Static, read-only entities (solutions, experts, ngos, fundings) are read from `data` directly.
 
 ## 6. Domain model (mock, in `src/data/index.js`)
-Entities: `categories` (id, name, nameEn, color), `cities` (id, name, coords), `signals`, `ideas`, `solutions`, `experts`, `ngos`, `fundings`, `projects`, `analytics`. Category ids: mieszkanie, seniorzy, dostepnosc, cyfrowe, ekologia, integracja, inne. IDs of user-created items are prefixed (`s`/`i`/`p` + timestamp).
+Entities: `categories` (id, name, nameEn, color), `cities` (id, name, coords), `signals`, `ideas`, `solutions`, `experts`, `ngos`, `fundings`, `projects`. (No `analytics` dataset: the Analytics page counts the user's local signals/ideas/projects. Solutions have no `effect`/`verified`, experts no `rating`/`email`, NGOs no project counts.) Category ids: mieszkanie, seniorzy, dostepnosc, cyfrowe, ekologia, integracja, inne. IDs of user-created items are prefixed (`s`/`i`/`p` + timestamp).
 Helpers: `categoryById`, `categoryName` (language via `window.__i18nLang`).
 
 ## 7. Matching (`src/utils/matching.js`)
-`matchAll(input, data)` → `matchExperts/Ngos/Solutions/Fundings/Ideas`. Score = category match (100 / 0, 40 neutral when no category) + text keyword hits (25 per word ≥3 chars, diacritic-normalized) + city match (30). Specialization strings mapped to category ids via `SPEC_TO_CAT`.
+`matchAll(input, data)` → `matchExperts/Ngos/Solutions/Fundings/Ideas`. Score = category match (100 / 0, 40 neutral when no category) + text keyword hits (25 per word ≥3 chars, diacritic-normalized) + city match (30). UI label is "Suggestions (no AI)" — keyword matching, not AI. Specialization strings mapped to category ids via `SPEC_TO_CAT`.
 
 ## 8. Conventions
 - UI text goes through i18n keys (pl + en); never hardcode user-facing strings in new code.

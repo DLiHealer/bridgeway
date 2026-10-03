@@ -10,13 +10,6 @@ export default function Home() {
   const { t } = useTranslation();
   const { signals, ideas, data } = useApp();
 
-  const stats = [
-    { label: t('home.statsSignals'), value: '1 248' },
-    { label: t('home.statsIdeas'), value: '356' },
-    { label: t('home.statsSolutions'), value: '189' },
-    { label: t('home.statsCities'), value: '47' },
-  ];
-
   const steps = [
     { icon: MapPin, title: t('home.step1Title'), text: t('home.step1Text') },
     { icon: Users, title: t('home.step2Title'), text: t('home.step2Text') },
@@ -42,16 +35,6 @@ export default function Home() {
             <MapView items={signals.slice(0, 6)} height="320px" zoom={5} />
           </div>
         </div>
-      </section>
-
-      {/* Stats */}
-      <section className="container-app grid grid-cols-2 gap-4 pt-12 md:grid-cols-4">
-        {stats.map(s => (
-          <Card key={s.label} className="p-5 text-center">
-            <p className="text-2xl font-bold text-neutral-900 md:text-3xl">{s.value}</p>
-            <p className="mt-1 text-sm text-neutral-400">{s.label}</p>
-          </Card>
-        ))}
       </section>
 
       {/* How it works */}
@@ -108,12 +91,12 @@ export default function Home() {
             <Link key={s.id} to={`/rozwiazania/${s.id}`}>
               <Card hover className="h-full p-5">
                 <div className="flex items-center gap-2">
-                  <Badge color="#00B894">{t('common.verified')}</Badge>
+                  <Badge color="#64748B">{t('common.demo')}</Badge>
                   <Badge color={categoryById(s.category).color}>{categoryById(s.category).name}</Badge>
                 </div>
                 <h3 className="mt-3 font-semibold text-neutral-900">{s.title}</h3>
                 <p className="mt-1 text-sm text-neutral-400">{s.city}</p>
-                <p className="mt-3 text-sm font-medium text-brand-secondary">{s.effect}</p>
+                <p className="mt-3 text-sm text-neutral-400">{s.budget} · {s.duration}</p>
               </Card>
             </Link>
           ))}
