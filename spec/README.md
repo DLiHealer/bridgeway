@@ -7,6 +7,7 @@ Reference for project specs. **Keep this index and the linked specs in sync with
 | [architecture.md](./architecture.md) | Stack, structure, routes, state, data model, matching, conventions |
 | [concept_v1.0.md](./concept_v1.0.md) | Working product concept (RU): USP, scope cut line, demo, evidence, validation. Approved v1.0 |
 | [concept_review_v0.1.md](./concept_review_v0.1.md), [concept_review_v0.2.md](./concept_review_v0.2.md) | Archived jury/investor reviews (inputs to v1.0) |
+| [sourcing-spike.md](./sourcing-spike.md) | Step 5 result: verified cases with sources, evidence levels A–D, §7.4 decision |
 | [roadmap.md](./roadmap.md) | MVP roadmap steps and statuses (Open / In progress / Blocked / Postponed / Done) |
 
 ## Maintenance rules

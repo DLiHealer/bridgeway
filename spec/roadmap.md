@@ -60,10 +60,11 @@ Conventions:
 
 ## Layer 2 — Core USP (~25% effort → ~+30% value)
 
-### Step 5 (P4). Status: Open
+### Step 5 (P4). Status: Done
 **Sourcing spike.** Find and verify 10–15 real accessibility / senior-support cases (source, organisation, cost, duration, outcome and how it was measured, evidence level A–D, licence/reuse rules). Unverifiable cases are excluded. Run in parallel.
 - Effort M · Value ●●● · After: —
 - Done when: a table of cases with clickable sources exists and the decision per concept §7.4 is recorded.
+- Result ([sourcing-spike.md](./sourcing-spike.md)): 6 verified cases (<10) → §7.4 row 3; USP wording must be revisited before Steps 6–7. Team to extend the base in parallel.
 
 ### Step 6 (P5). Status: Open
 **Evidence-backed case schema.** Add `source`, `organisation`, `cost`, `duration`, `outcome`, `outcomeMethod`, `evidenceLevel`, `context`; load the cases from P4; remove the unsafe "DIY wooden ramps" case (replace with route: accessibility audit → responsible body → technically approved solution).
