@@ -3,3 +3,14 @@ dist
 .netlify
 .DS_Store
 *.log
+crs/
+
+# AI assistant instructions
+CLAUDE.md
+AGENTS.md
+GEMINI.md
+.claude/
+.cursor/
+.cursorrules
+.windsurfrules
+.github/copilot-instructions.md
