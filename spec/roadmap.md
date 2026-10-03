@@ -118,10 +118,11 @@ Conventions:
 
 ## Layer 4 — Packaging
 
-### Step 14 (P13). Status: Open
+### Step 14 (P13). Status: Done
 **Demo scenario and pitch.** End-to-end 90-second scenario, a before/after frame (real, or clearly labelled as staged), competitor slide (concept §11), honest statement of what is mocked.
 - Effort M · Value ●●● · After: P6, P8, P9 (P12 cut)
 - Done when: rehearsal runs without failures and every figure is labelled; a validation slide shows the real status (desk evidence + "not yet validated with users", next step: interviews/pilot).
+- Result: [pitch.md](./pitch.md) — 90 s script mapped to routes, staged (labelled) before/after plus one real measured outcome (c1, level B), competitor slide marked unverified, mocked-vs-real list, figure register, validation slide. **Human rehearsal and competitor-site check still pending** (checklist in pitch.md).
 
 ## Layer 5 — Reinforcement if time remains (diminishing returns)
 

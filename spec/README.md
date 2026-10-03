@@ -10,6 +10,7 @@ Reference for project specs. **Keep this index and the linked specs in sync with
 | [sourcing-spike.md](./sourcing-spike.md) | Step 5 result: verified cases with sources, evidence levels A–D, §7.4 decision |
 | [accessibility.md](./accessibility.md) | Step 11 result: accessibility checklist, pending manual checks, limitations |
 | [validation.md](./validation.md) | Step 13 (postponed): desk-evidence rules, validation plan, interview guide, interview/quote logs (real data only) |
+| [pitch.md](./pitch.md) | Step 14: 90-second demo script, staged/real before-after, competitor slide (unverified), mocked-vs-real, figure register, rehearsal checklist |
 | [roadmap.md](./roadmap.md) | MVP roadmap steps and statuses (Open / In progress / Blocked / Postponed / Done) |
 
 ## Maintenance rules
