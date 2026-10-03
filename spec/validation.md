@@ -1,8 +1,23 @@
 # Validation (Roadmap Step 13 / P12)
 
-Status: **In progress — no interviews recorded yet.** This file is filled by the team with real data only. Nothing below the "Results" heading may be invented, rounded up or paraphrased into a stronger claim.
+Status: **Postponed (cut for the hackathon) — no interviews recorded.** Interviews move to the post-hackathon pilot; for the demo, use the desk-evidence rules below. This file is filled by the team with real data only. Nothing below the "Results" heading may be invented, rounded up or paraphrased into a stronger claim.
 
-## Quotas (from roadmap)
+## Hackathon substitute: desk evidence
+Interviews are not feasible before the deadline. The pitch uses only **secondary evidence**, always labelled as such (never as user validation):
+- Verified cases from [sourcing-spike.md](./sourcing-spike.md) (problem exists and was solved elsewhere, with link).
+- Public statistics on problem scale (e.g. GUS, NIK, RPO) — only with a clickable source; to be added by the team below.
+- Public statements by municipalities/NGOs (reports, tenders), quoted verbatim with source link — not presented as interviews.
+- Optional async outreach (3-question form to 5–10 NGOs/libraries/offices): report responses as "n of N", including "0 responses"; quote only with consent.
+
+**Pitch wording (pl):** „Jeszcze nie zwalidowane z użytkownikami. Dowody: 6 zweryfikowanych przypadków ze źródłami. Następny krok: 5 wywiadów i pilotaż w jednej gminie."
+**Pitch wording (en):** "Not yet validated with users. Evidence so far: 6 verified cases with sources. Next step: 5 interviews and a pilot with one municipality."
+
+### Desk-evidence register (verified links only)
+| # | Claim | Source (URL) | Publisher | Date accessed |
+|---|---|---|---|---|
+| — | — | — | — | — |
+
+## Quotas (post-hackathon pilot; from roadmap)
 | Segment | Target | Done |
 |---|---|---|
 | Target-group interviews (people affected by an access/isolation problem) | 5 | 0 |

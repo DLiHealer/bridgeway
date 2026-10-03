@@ -110,18 +110,18 @@ Conventions:
 - Done when: pages exist; exact addresses of sensitive categories are not published.
 - Result: `/prywatnosc` + `/regulamin` (footer-linked, prototype drafts, pl/en), third-party data warning in report form, sensitive categories (seniors, housing) and proxy reports shown as approximate 3 km area on the map. Legal text needs real legal review before production.
 
-### Step 13 (P12). Status: In progress
+### Step 13 (P12). Status: Postponed
 **Validation.** 5 interviews with the target group, ≥1 municipality/district, ≥2 NGOs, ≥1 proxy point, ≥1 letter of intent or quote; results in a separate file under `spec/`. Run in parallel.
 - Effort M · Value ●●● · After: —
 - Done when: real quotes and honest numbers are ready for the pitch (no rounding up).
-- Progress: [validation.md](./validation.md) prepared (quotas, hypotheses, interview guide, consent rules, empty logs). **Interviews themselves are pending (human)**; step stays In progress until the quotas are met with real data.
+- Decision: **consciously cut for the hackathon** — no access to respondents before the deadline. Replaced by desk evidence (secondary, labelled as such) and an honest "not yet validated" statement in the pitch; optional async outreach, results reported with n. Plan, interview guide and logs kept in [validation.md](./validation.md) for the post-hackathon pilot.
 
 ## Layer 4 — Packaging
 
 ### Step 14 (P13). Status: Open
 **Demo scenario and pitch.** End-to-end 90-second scenario, a before/after frame (real, or clearly labelled as staged), competitor slide (concept §11), honest statement of what is mocked.
-- Effort M · Value ●●● · After: P6, P8, P9, P12
-- Done when: rehearsal runs without failures and every figure is labelled.
+- Effort M · Value ●●● · After: P6, P8, P9 (P12 cut)
+- Done when: rehearsal runs without failures and every figure is labelled; a validation slide shows the real status (desk evidence + "not yet validated with users", next step: interviews/pilot).
 
 ## Layer 5 — Reinforcement if time remains (diminishing returns)
 
