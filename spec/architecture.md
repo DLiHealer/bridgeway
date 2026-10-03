@@ -26,6 +26,7 @@ src/
   index.css           Tailwind layers + shared classes (e.g. container-app)
   context/AppContext.jsx   global state (see §5)
   data/index.js       mock datasets + category/city helpers
+  data/bdlContext.json  GUS BDL snapshot (share of 65+ per city), written by scripts/fetch-bdl-context.mjs
   utils/              matching.js (keyword scoring), transferScore.js (case transfer score), privacy.js (sensitive categories, coordinate coarsening), geo.js (distanceKm), formatters.js
   hooks/              useLocalStorage, useDebounce
   components/
@@ -68,14 +69,14 @@ Entities: `categories` (id, name, nameEn, color), `cities` (id, name, coords), `
 Helpers: `categoryById`, `categoryName`, `loc` (language via `window.__i18nLang`). UI: `EvidenceBadge` in `components/ui`.
 
 ## 7. Matching (`src/utils/`)
-**Cases (`transferScore.js`, used by `matchSolutions`, SolutionsPage, SolutionDetail, SubmitPage, IdeaDetail):** `scoreCase(case, {category, city, available})` → `{excluded, score|null, preliminary, factors[]}`. Weights (concept §6.3, a hypothesis shown in the UI): problem type 30, context 25, budget 15, partners 15, evidence 15. Score = weighted mean of factors **that have data**, 0–100; factors without data are `value: null` → "no data" and the score is marked preliminary. Currently with data: problem type (case category = chosen category; null without a category) and evidence (A 1, B .75, C .5, D .25 — assumption). Always "no data": context (needs GUS BDL, roadmap Step 15), budget (case costs are free text, no user budget), partners (no real registry). Hard constraints first: `case.requires[]` not in `input.available[]` → excluded (hook; no case declares `requires` yet). SolutionDetail reads input from `?cat=&city=`.
+**Cases (`transferScore.js`, used by `matchSolutions`, SolutionsPage, SolutionDetail, SubmitPage, IdeaDetail):** `scoreCase(case, {category, city, available})` → `{excluded, score|null, preliminary, factors[]}`. Weights (concept §6.3, a hypothesis shown in the UI): problem type 30, context 25, budget 15, partners 15, evidence 15. Score = weighted mean of factors **that have data**, 0–100; factors without data are `value: null` → "no data" and the score is marked preliminary. Currently with data: problem type (case category = chosen category; null without a category) and evidence (A 1, B .75, C .5, D .25 — assumption). Context similarity (Step 15): `1 − min(1, |share65_user − share65_case| / 0.10)` from the GUS BDL snapshot `data/bdlContext.json` (`units[city].share65`, year, source/retrieval date shown in `ScoreBreakdown`), only when both the user's city (`input.city`; city select on SolutionsPage, `?city=` on detail) and the case city are in the snapshot — otherwise "no data" (foreign cities, voivodeships). 10 pp gap = 0 is an assumption. **The snapshot is currently empty (BDL rate-limited): run `BDL_VAR_POP=… BDL_VAR_POP65=… node scripts/fetch-bdl-context.mjs`.** Always "no data": budget (case costs are free text, no user budget), partners (no real registry). Hard constraints first: `case.requires[]` not in `input.available[]` → excluded (hook; no case declares `requires` yet). SolutionDetail reads input from `?cat=&city=`.
 **Other entities (`matching.js`):** `matchExperts/Ngos/Fundings/Ideas` via `matchAll` — keyword scoring: category (100/0, 40 neutral), keyword hits (25 per word ≥3 chars, diacritic-normalized), city (30). Label is "Suggestions … (model, no AI)". Specialization strings mapped via `SPEC_TO_CAT`.
 
 ## 8. Conventions
 - UI text goes through i18n keys (pl + en); never hardcode user-facing strings in new code.
 - Use `components/ui` primitives and Tailwind classes; brand colors from tailwind config.
 - New route = page in `src/pages`, lazy entry + `<Route>` in `App.jsx`, nav/i18n update, update §4 here.
-- No backend/env vars/secrets in MVP. External calls only: map tiles, dicebear avatars (`formatters.avatarUrl`).
+- No backend/env vars/secrets in MVP. External calls only: map tiles, dicebear avatars (`formatters.avatarUrl`). GUS BDL is fetched at build time by `scripts/fetch-bdl-context.mjs` (never at runtime).
 - Accessibility (WCAG AA, see `accessibility.md`): text colours must keep ≥4.5:1 (`neutral-400` is already AA; don't use `brand-secondary/accent` as text colour); icon-only buttons need an i18n `aria-label` (`a11y.*`) and decorative icons `aria-hidden`; form controls need `htmlFor`/`id`; `Layout` focuses `<main>` and sets the tab title from `<h1>` on route change; framer-motion runs under `MotionConfig reducedMotion="user"`.
 - Privacy: SubmitPage shows a third-party personal data warning; sensitive reports never get exact map points (`utils/privacy.js`); policy/terms text lives in i18n `legal.*`.
 - Security headers for Netlify in `netlify.toml`; Cloudflare uses `wrangler.jsonc`.
@@ -84,5 +85,6 @@ Helpers: `categoryById`, `categoryName`, `loc` (language via `window.__i18nLang`
 - Non-functional controls are hidden, not faked (no search, logout, drafts, join-team, chat, upload/invite in Project Room); they return only with real backing (see roadmap P15).
 - `toasts` persisted in localStorage under a placeholder key.
 - Accessibility: manual keyboard + screen-reader run pending; `Modal` has no full focus trap; map only partly keyboard-accessible.
+- GUS BDL snapshot empty until the script is run successfully (anonymous API quota 1000/12 h); variable ids for population by age (subject P2137) still to be confirmed.
 - No tests, no auth, no backend; data not shared across devices.
 - Some comments in code are in Russian.

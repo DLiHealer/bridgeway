@@ -18,7 +18,9 @@ export default function ScoreBreakdown({ transfer, compact = false }) {
             <span className={f.value === null ? 'text-neutral-400' : 'font-medium text-neutral-900'}>
               {f.value === null ? t('score.noData') : `${Math.round(f.value * 100)}%`}
             </span>
-            {!compact && <span className="w-full text-neutral-400">{f.value === null ? t(`score.why.${f.id}`) : t(`score.src.${f.source}`)}</span>}
+            {!compact && <span className="w-full text-neutral-400">{f.value === null ? t(`score.why.${f.id}`) : f.source === 'bdl'
+              ? <>{t('score.src.bdl', { a: f.detail.from.city, sa: (f.detail.from.share65 * 100).toFixed(1), b: f.detail.to.city, sb: (f.detail.to.share65 * 100).toFixed(1), year: f.detail.from.year })} <a className="underline" href={f.detail.ref.url} target="_blank" rel="noreferrer">{f.detail.ref.label}</a></>
+              : t(`score.src.${f.source}`)}</span>}
           </li>
         ))}
       </ul>

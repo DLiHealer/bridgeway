@@ -126,10 +126,11 @@ Conventions:
 
 ## Layer 5 — Reinforcement if time remains (diminishing returns)
 
-### Step 15 (P14). Status: Open
+### Step 15 (P14). Status: In progress
 **One real context source.** GUS BDL (share of 65+, population) for 2 municipalities feeding the "context similarity" factor.
 - Effort M · Value ●●○ · After: P6
 - Done when: the factor is computed from real data with the source shown.
+- Progress: factor, UI source line, city select and fetch script implemented ([CR](../crs/cr-rd-step-15.md)); snapshot `src/data/bdlContext.json` still empty — BDL API rate-limited, run `scripts/fetch-bdl-context.mjs`, then mark Done.
 
 ### Step 16 (P15). Status: Open
 **Shared backend + magic-link login** for the loop report → public page → status change by another role.

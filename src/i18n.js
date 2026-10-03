@@ -59,10 +59,10 @@ const pl = {
   },
   score: {
     title: 'Wynik transferu (model)', noData: 'brak danych', preliminary: 'Wynik wstępny — część czynników nie ma danych.',
-    note: 'Model, nie prognoza. Wagi to hipoteza; średnia ważona tylko z czynników, które mają dane.',
+    note: 'Model, nie prognoza. Wagi to hipoteza; średnia ważona tylko z czynników, które mają dane.', cityLabel: 'Twoje miasto (kontekst)',
     f: { problemType: 'Zgodność typu problemu', context: 'Podobieństwo kontekstu', budget: 'Mieści się w budżecie', partners: 'Partnerzy lokalnie', evidence: 'Poziom dowodów' },
-    why: { problemType: 'Wybierz kategorię problemu', context: 'Brak źródła danych (GUS BDL — planowane)', budget: 'Koszt w źródle jest opisowy; brak budżetu użytkownika', partners: 'Brak rejestru organizacji' },
-    src: { case: 'Źródło: kategoria przypadku', evidence: 'Źródło: ocena dowodów A–D' },
+    why: { problemType: 'Wybierz kategorię problemu', context: 'Brak danych GUS BDL dla tej pary miast (tylko polskie miasta z wczytanymi danymi; podaj miasto)', budget: 'Koszt w źródle jest opisowy; brak budżetu użytkownika', partners: 'Brak rejestru organizacji' },
+    src: { bdl: 'Udział osób 65+: {{a}} {{sa}}%, {{b}} {{sb}}% ({{year}}). Źródło:', case: 'Źródło: kategoria przypadku', evidence: 'Źródło: ocena dowodów A–D' },
     explain: 'Jak liczymy wynik',
   },
   cases: {
@@ -199,10 +199,11 @@ const en = {
   },
   score: {
     title: 'Transfer score (model)', noData: 'no data', preliminary: 'Preliminary score — some factors have no data.',
+    cityLabel: 'Your city (context)',
     note: 'A model, not a forecast. Weights are a hypothesis; weighted mean over factors that have data only.',
     f: { problemType: 'Problem type match', context: 'Context similarity', budget: 'Fits the budget', partners: 'Local partners exist', evidence: 'Evidence level' },
-    why: { problemType: 'Pick a problem category', context: 'No data source yet (GUS BDL — planned)', budget: 'Source cost is descriptive; no user budget', partners: 'No organisation registry' },
-    src: { case: 'Source: case category tag', evidence: 'Source: evidence grade A–D' },
+    why: { problemType: 'Pick a problem category', context: 'No GUS BDL data for this city pair (only Polish cities with loaded data; pick a city)', budget: 'Source cost is descriptive; no user budget', partners: 'No organisation registry' },
+    src: { bdl: 'Share aged 65+: {{a}} {{sa}}%, {{b}} {{sb}}% ({{year}}). Source:', case: 'Source: case category tag', evidence: 'Source: evidence grade A–D' },
     explain: 'How the score is computed',
   },
   cases: {
