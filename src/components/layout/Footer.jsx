@@ -37,6 +37,7 @@ export default function Footer() {
           <h4 className="mb-3 text-sm font-semibold text-neutral-900">{t('footer.about')}</h4>
           <ul className="space-y-2 text-sm text-neutral-400">
             <li><Link className="hover:text-brand-primary" to="/o-nas">{t('nav.about')}</Link></li>
+            <li><Link className="hover:text-brand-primary" to="/dostepnosc">{t('footer.a11y')}</Link></li>
             <li>{t('footer.contact')}</li>
             <li>{t('footer.privacy')}</li>
             <li>{t('footer.terms')}</li>

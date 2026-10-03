@@ -50,6 +50,7 @@ src/
 | `/profil` | ProfilePage |
 | `/analityka` | AnalyticsPage |
 | `/o-nas` | AboutPage |
+| `/dostepnosc` | AccessibilityPage (accessibility statement, linked from footer) |
 | `*` | NotFound |
 
 Nav order (concept §5.5): Solutions (centre), Map, Projects, Experts, Funding, Ideas (demoted, last). Profile only in the avatar menu; Analytics not linked until roadmap Step 18.
@@ -74,10 +75,12 @@ Helpers: `categoryById`, `categoryName`, `loc` (language via `window.__i18nLang`
 - Use `components/ui` primitives and Tailwind classes; brand colors from tailwind config.
 - New route = page in `src/pages`, lazy entry + `<Route>` in `App.jsx`, nav/i18n update, update §4 here.
 - No backend/env vars/secrets in MVP. External calls only: map tiles, dicebear avatars (`formatters.avatarUrl`).
+- Accessibility (WCAG AA, see `accessibility.md`): text colours must keep ≥4.5:1 (`neutral-400` is already AA; don't use `brand-secondary/accent` as text colour); icon-only buttons need an i18n `aria-label` (`a11y.*`) and decorative icons `aria-hidden`; form controls need `htmlFor`/`id`; `Layout` focuses `<main>` and sets the tab title from `<h1>` on route change; framer-motion runs under `MotionConfig reducedMotion="user"`.
 - Security headers for Netlify in `netlify.toml`; Cloudflare uses `wrangler.jsonc`.
 
 ## 9. Known gaps / tech debt
 - Non-functional controls are hidden, not faked (no search, logout, drafts, join-team, chat, upload/invite in Project Room); they return only with real backing (see roadmap P15).
 - `toasts` persisted in localStorage under a placeholder key.
+- Accessibility: manual keyboard + screen-reader run pending; `Modal` has no full focus trap; map only partly keyboard-accessible.
 - No tests, no auth, no backend; data not shared across devices.
 - Some comments in code are in Russian.

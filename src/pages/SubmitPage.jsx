@@ -61,23 +61,23 @@ export default function SubmitPage() {
       <div className="mt-6 grid gap-6 lg:grid-cols-[2fr,1fr]">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <Card className="p-5">
-            <label className="block text-sm font-medium">{t('submit.fTitle')}</label>
-            <Input {...register('title', { required: true, maxLength: 100 })} className="mt-2" placeholder={t('submit.fTitlePh')} />
+            <label htmlFor="f-title" className="block text-sm font-medium">{t('submit.fTitle')}</label>
+            <Input id="f-title" {...register('title', { required: true, maxLength: 100 })} className="mt-2" placeholder={t('submit.fTitlePh')} />
 
-            <label className="mt-4 block text-sm font-medium">{t('submit.fDesc')}</label>
-            <Textarea rows={5} maxLength={1000} {...register('description', { required: true })} className="mt-2" placeholder={t('submit.fDescPh')} />
+            <label htmlFor="f-desc" className="mt-4 block text-sm font-medium">{t('submit.fDesc')}</label>
+            <Textarea id="f-desc" rows={5} maxLength={1000} {...register('description', { required: true })} className="mt-2" placeholder={t('submit.fDescPh')} />
 
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
               <div>
-                <label className="block text-sm font-medium">{t('submit.fCategory')}</label>
-                <Select {...register('category', { required: true })} className="mt-2">
+                <label htmlFor="f-cat" className="block text-sm font-medium">{t('submit.fCategory')}</label>
+                <Select id="f-cat" {...register('category', { required: true })} className="mt-2">
                   <option value="">{t('submit.choose')}</option>
                   {categories.map(c => <option key={c.id} value={c.id}>{categoryName(c)}</option>)}
                 </Select>
               </div>
               <div>
-                <label className="block text-sm font-medium">{t('submit.fCity')}</label>
-                <Select {...register('city', { required: true })} className="mt-2">
+                <label htmlFor="f-city" className="block text-sm font-medium">{t('submit.fCity')}</label>
+                <Select id="f-city" {...register('city', { required: true })} className="mt-2">
                   <option value="">{t('submit.choose')}</option>
                   {cities.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
                 </Select>
@@ -85,13 +85,13 @@ export default function SubmitPage() {
             </div>
 
             <div className="mt-4">
-              <label className="block text-sm font-medium">{t('submit.fTags')}</label>
+              <label htmlFor="f-tags" className="block text-sm font-medium">{t('submit.fTags')}</label>
               <div className="mt-2 flex flex-wrap gap-2">
                 {tags.map(tg => (
-                  <Chip key={tg} onClick={() => setTags(t => t.filter(x => x !== tg))}>{tg} ✕</Chip>
+                  <Chip key={tg} onClick={() => setTags(t => t.filter(x => x !== tg))}>{tg} <span aria-hidden="true">✕</span><span className="sr-only">{t('a11y.remove')}</span></Chip>
                 ))}
               </div>
-              <Input value={tagInput} onChange={e => setTagInput(e.target.value)}
+              <Input id="f-tags" value={tagInput} onChange={e => setTagInput(e.target.value)}
                 onKeyDown={e => {
                   if (e.key === 'Enter') {
                     e.preventDefault();
@@ -103,8 +103,8 @@ export default function SubmitPage() {
 
             {tab === 'problem' && (
               <div className="mt-4">
-                <label className="block text-sm font-medium">{t('submit.fUrgency')}</label>
-                <div className="mt-2 flex flex-wrap gap-2">
+                <span id="f-urg" className="block text-sm font-medium">{t('submit.fUrgency')}</span>
+                <div role="group" aria-labelledby="f-urg" className="mt-2 flex flex-wrap gap-2">
                   {['niska', 'średnia', 'wysoka', 'krytyczna'].map(u => (
                     <label key={u} className="flex items-center gap-2 rounded-btn border border-border px-3 py-2 text-sm">
                       <input type="radio" value={u} {...register('urgency')} defaultChecked={u === 'średnia'} /> {t(`submit.urgency.${u}`)}

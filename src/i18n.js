@@ -6,6 +6,7 @@ const pl = {
     map: 'Mapa', ideas: 'Pomysły', solutions: 'Rozwiązania', experts: 'Eksperci',
     funding: 'Finansowanie', projects: 'Projekty', about: 'O nas', analytics: 'Analityka',
     profile: 'Profil', search: 'Szukaj', add: 'Dodaj', login: 'Zaloguj',
+    mySignals: 'Moje sygnały', myIdeas: 'Moje pomysły', myProjects: 'Moje projekty',
   },
   cta: {
     findCase: 'Znajdź rozwiązanie', submit: 'Zgłoś problem', propose: 'Zaproponuj pomysł', join: 'Przyłącz się',
@@ -88,8 +89,32 @@ const pl = {
     platform: 'Platforma', forWho: 'Dla kogo', about: 'O projekcie',
     residents: 'Mieszkańcom', activists: 'Aktywistom', ngos: 'NGO',
     cities: 'Gminom', funds: 'Funduszom',
-    contact: 'Kontakt', privacy: 'Polityka prywatności', terms: 'Regulamin',
+    a11y: 'Deklaracja dostępności', contact: 'Kontakt', privacy: 'Polityka prywatności', terms: 'Regulamin',
     madeFor: 'Stworzone na HackYeah',
+  },
+  a11y: {
+    skip: 'Przejdź do treści', menu: 'Menu', close: 'Zamknij', account: 'Menu konta', language: 'Język', mainNav: 'Nawigacja główna', profileNav: 'Profil', remove: 'usuń',
+    title: 'Deklaracja dostępności',
+    intro: 'To jest prototyp. Dążymy do zgodności z WCAG 2.1 poziom AA, ale zgodność nie została jeszcze zweryfikowana niezależnym audytem.',
+    doneTitle: 'Co zrobiono',
+    done: [
+      'Nawigacja klawiaturą: link „Przejdź do treści”, widoczny fokus, menu i okna zamykane klawiszem Esc.',
+      'Kontrast tekstu co najmniej 4,5:1 (sprawdzony obliczeniowo dla tokenów kolorów i plakietek).',
+      'Znaczniki: nawigacje i okna dialogowe z nazwami, przyciski-ikony z etykietami, pola formularza powiązane z etykietami.',
+      'Po zmianie podstrony fokus trafia do treści, a tytuł karty odpowiada nagłówkowi strony.',
+      'Układ działa przy powiększeniu tekstu do 200%; animacje są ograniczone przy ustawieniu „zmniejsz ruch”.',
+    ],
+    limitsTitle: 'Znane ograniczenia',
+    limits: [
+      'Test ze zrzutem czytnika ekranu (NVDA/VoiceOver) i pełne przejście głównego scenariusza klawiaturą nie zostały jeszcze wykonane przez człowieka.',
+      'Mapa (Leaflet) jest tylko częściowo dostępna z klawiatury; lista zgłoszeń obok mapy jest alternatywą tekstową.',
+      'Kolory kategorii na mapie i w kartach nie są jedynym nośnikiem informacji, ale nie zostały zweryfikowane dla wszystkich typów zaburzeń widzenia barw.',
+      'Brak napisów i opisów alternatywnych dla mediów — aplikacja nie zawiera jeszcze własnych materiałów wideo.',
+      'Awatary zewnętrzne (dicebear) mają pusty opis alternatywny.',
+    ],
+    contactTitle: 'Zgłaszanie barier',
+    contact: 'Prototyp nie ma jeszcze kanału kontaktu. Kanał zgłaszania barier dostępności będzie podany przed pilotażem.',
+    checklist: 'Lista kontrolna: spec/accessibility.md w repozytorium.',
   },
 };
 
@@ -98,6 +123,7 @@ const en = {
     map: 'Map', ideas: 'Ideas', solutions: 'Solutions', experts: 'Experts',
     funding: 'Funding', projects: 'Projects', about: 'About', analytics: 'Analytics',
     profile: 'Profile', search: 'Search', add: 'Add', login: 'Log in',
+    mySignals: 'My reports', myIdeas: 'My ideas', myProjects: 'My projects',
   },
   cta: {
     findCase: 'Find a solved case', submit: 'Report a problem', propose: 'Propose an idea', join: 'Join',
@@ -180,8 +206,32 @@ const en = {
     platform: 'Platform', forWho: 'For whom', about: 'About',
     residents: 'Residents', activists: 'Activists', ngos: 'NGOs',
     cities: 'Municipalities', funds: 'Funds',
-    contact: 'Contact', privacy: 'Privacy policy', terms: 'Terms',
+    a11y: 'Accessibility statement', contact: 'Contact', privacy: 'Privacy policy', terms: 'Terms',
     madeFor: 'Made at HackYeah',
+  },
+  a11y: {
+    skip: 'Skip to content', menu: 'Menu', close: 'Close', account: 'Account menu', language: 'Language', mainNav: 'Main navigation', profileNav: 'Profile', remove: 'remove',
+    title: 'Accessibility statement',
+    intro: 'This is a prototype. We aim for WCAG 2.1 level AA, but conformance has not yet been verified by an independent audit.',
+    doneTitle: 'What has been done',
+    done: [
+      'Keyboard navigation: "Skip to content" link, visible focus, menus and dialogs close with Esc.',
+      'Text contrast of at least 4.5:1 (computed for the colour tokens and badges).',
+      'Markup: named navigations and dialogs, labelled icon buttons, form fields tied to their labels.',
+      'On page change focus moves to the content and the tab title matches the page heading.',
+      'Layout works with text zoomed to 200%; animations are reduced with the "reduce motion" setting.',
+    ],
+    limitsTitle: 'Known limitations',
+    limits: [
+      'A run with a screen reader (NVDA/VoiceOver) and a full keyboard-only pass of the main scenario have not yet been done by a person.',
+      'The map (Leaflet) is only partly keyboard-accessible; the list of reports next to the map is the text alternative.',
+      'Category colours on the map and cards are not the only carrier of information, but were not verified for all types of colour-vision deficiency.',
+      'No captions or alternative descriptions for media — the app has no video content of its own yet.',
+      'External avatars (dicebear) have an empty alternative text.',
+    ],
+    contactTitle: 'Reporting barriers',
+    contact: 'The prototype has no contact channel yet. A channel for reporting accessibility barriers will be provided before any pilot.',
+    checklist: 'Checklist: spec/accessibility.md in the repository.',
   },
 };
 

@@ -98,10 +98,11 @@ Conventions:
 - Done when: the flag and consent text are in the form; the demo scenario goes through a proxy.
 - Result: proxy checkbox + required consent + proxy-points hint in the report form (problem tab), `onBehalf`/`consentAt` stored on the signal, demo signal `s6` is a proxy report, badge in map popup.
 
-### Step 11 (P10). Status: Open
+### Step 11 (P10). Status: Done
 **Accessibility minimum and check.** Keyboard navigation, visible focus, WCAG AA contrast, text scaling to 200%, landmarks, icon labels, accessibility statement; run the main scenario with keyboard and a screen reader.
 - Effort M · Value ●●○ · After: P7, P9
 - Done when: checklist passed; remaining limitations listed honestly.
+- Result: code-level checklist done ([accessibility.md](./accessibility.md)) — contrast tokens, labelled landmarks/icons/forms, Esc handling, focus on route change, reduced motion, statement at `/dostepnosc`. **Manual keyboard + screen-reader run is still pending (human)** and listed as a limitation.
 
 ### Step 12 (P11). Status: Open
 **Privacy & safety minimum.** Coarsen map points for sensitive categories, warning about third-party personal data, real Privacy and Terms pages linked from the footer.

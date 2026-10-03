@@ -38,12 +38,13 @@ export default function AboutPage() {
             <div key={i} className="py-3">
               <button
                 onClick={() => setOpen(open === i ? null : i)}
+                aria-expanded={open === i} aria-controls={`faq-${i}`}
                 className="flex w-full items-center justify-between text-left"
               >
                 <span className="font-medium">{f.q}</span>
-                <span>{open === i ? '−' : '+'}</span>
+                <span aria-hidden="true">{open === i ? '−' : '+'}</span>
               </button>
-              {open === i && <p className="mt-2 text-sm text-neutral-400">{f.a}</p>}
+              {open === i && <p id={`faq-${i}`} className="mt-2 text-sm text-neutral-400">{f.a}</p>}
             </div>
           ))}
         </div>

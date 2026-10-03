@@ -36,7 +36,7 @@ export default function ExpertsPage() {
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {data.ngos.map(n => (
             <Card key={n.id} hover className="p-5 text-center">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-secondary/10 text-xl font-bold text-brand-secondary">{initials(n.name)}</div>
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-secondary/10 text-xl font-bold text-[#085f5a]">{initials(n.name)}</div>
               <h3 className="mt-3 font-semibold text-neutral-900">{n.name}</h3>
               <p className="mt-1 line-clamp-2 text-sm text-neutral-400">{n.mission}</p>
               <p className="mt-1 text-xs text-neutral-400">{n.city}</p>

@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
-import { useEffect, forwardRef } from 'react';
+import { useEffect, useRef, useId, forwardRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const cx = (...c) => c.filter(Boolean).join(' ');
 
@@ -24,9 +25,19 @@ export function Card({ className, hover, children, ...rest }) {
   return <div className={cx('card', hover && 'transition hover:shadow-md hover:-translate-y-0.5', className)} {...rest}>{children}</div>;
 }
 
+// Text colour = tint colour mixed 55% towards neutral-900, so it stays >= 4.5:1 on its own 10% tint (WCAG AA).
+const darken = (hex) => {
+  const m = /^#([0-9a-f]{6})/i.exec(hex);
+  if (!m) return hex;
+  const n = parseInt(m[1], 16);
+  const base = [15, 23, 42];
+  const ch = [n >> 16 & 255, n >> 8 & 255, n & 255].map((v, i) => Math.round(v * 0.45 + base[i] * 0.55));
+  return `rgb(${ch.join(',')})`;
+};
+
 export function Badge({ color = '#1E5EFF', children, className }) {
   return (
-    <span className={cx('inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium', className)} style={{ backgroundColor: color + '1A', color }}>
+    <span className={cx('inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium', className)} style={{ backgroundColor: color + '1A', color: darken(color) }}>
       {children}
     </span>
   );
@@ -34,7 +45,7 @@ export function Badge({ color = '#1E5EFF', children, className }) {
 
 export function Chip({ active, onClick, children, className }) {
   return (
-    <button type="button" onClick={onClick}
+    <button type="button" onClick={onClick} aria-pressed={active === undefined ? undefined : !!active}
       className={cx('inline-flex h-9 items-center rounded-full border px-3.5 text-sm font-medium transition',
         active ? 'border-brand-primary bg-brand-primary text-white' : 'border-border bg-white text-neutral-700 hover:border-brand-primary hover:text-brand-primary',
         className)}>
@@ -56,11 +67,16 @@ export const Select = forwardRef(function Select({ className, children, ...rest 
 });
 
 export function Modal({ open, onClose, title, children, size = 'md' }) {
+  const { t } = useTranslation();
+  const titleId = useId();
+  const panelRef = useRef(null);
   useEffect(() => {
     if (!open) return;
+    const prev = document.activeElement;
+    panelRef.current?.focus();
     const onKey = (e) => e.key === 'Escape' && onClose?.();
     document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
+    return () => { document.removeEventListener('keydown', onKey); prev?.focus?.(); };
   }, [open, onClose]);
 
   const sizes = { sm: 'max-w-md', md: 'max-w-lg', lg: 'max-w-2xl', xl: 'max-w-4xl' };
@@ -69,12 +85,12 @@ export function Modal({ open, onClose, title, children, size = 'md' }) {
       {open && (
         <motion.div className="fixed inset-0 z-50 flex items-end justify-center bg-neutral-900/50 p-0 sm:items-center sm:p-4"
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose}>
-          <motion.div onClick={(e) => e.stopPropagation()}
+          <motion.div ref={panelRef} tabIndex={-1} role="dialog" aria-modal="true" aria-labelledby={titleId} onClick={(e) => e.stopPropagation()}
             initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 20, opacity: 0 }}
             className={cx('w-full bg-white shadow-lg sm:rounded-modal rounded-t-modal', sizes[size])}>
             <div className="flex items-center justify-between border-b border-border px-5 py-4">
-              <h3 className="text-lg font-semibold text-neutral-900">{title}</h3>
-              <button aria-label="Zamknij" onClick={onClose} className="rounded-full p-2 hover:bg-neutral-100"><X size={18} /></button>
+              <h3 id={titleId} className="text-lg font-semibold text-neutral-900">{title}</h3>
+              <button aria-label={t('a11y.close')} onClick={onClose} className="rounded-full p-2 hover:bg-neutral-100"><X size={18} aria-hidden="true" /></button>
             </div>
             <div className="px-5 py-4">{children}</div>
           </motion.div>

@@ -25,7 +25,7 @@ export default function Home() {
         <div className="container-app grid gap-8 py-16 lg:grid-cols-2 lg:py-24">
           <div className="min-w-0">
             <h1 className="text-3xl font-bold leading-tight text-white md:text-5xl">{t('home.heroTitle')}</h1>
-            <p className="mt-4 max-w-xl text-white/80 md:text-lg">{t('home.heroSub')}</p>
+            <p className="mt-4 max-w-xl text-white md:text-lg">{t('home.heroSub')}</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link to="/rozwiazania"><Button size="lg" variant="light"><Search size={18} /> {t('cta.findCase')}</Button></Link>
               <Link to="/zglos"><Button size="lg" variant="ghost" className="border border-white/30 text-white hover:bg-white/10"><Plus size={18} /> {t('cta.submit')}</Button></Link>
