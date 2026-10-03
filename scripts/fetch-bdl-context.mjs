@@ -1,5 +1,5 @@
 // Build-time snapshot of GUS BDL context data (share of population aged 65+) for the demo cities.
-// Usage: BDL_VAR_POP=<id> BDL_VARS_65=<id,id,...> [BDL_CLIENT_ID=<key>] node scripts/fetch-bdl-context.mjs
+// Usage: [BDL_CLIENT_ID=<key>] node scripts/fetch-bdl-context.mjs
 // Anonymous limits: 5/s, 100/15m, 1000/12h; a free registered key (header X-ClientId) raises them. One data call per city.
 // Writes src/data/bdlContext.json. Never types numbers by hand.
 import { writeFileSync } from 'node:fs';
@@ -26,12 +26,15 @@ async function get(path, params = {}) {
   throw new Error(`rate-limited: ${url}`);
 }
 
-const find = async name => (await get('/units/search', { name, level: 5 })).results
-  .find(u => u.name.toLowerCase().includes(name.toLowerCase()) && /city/i.test(u.name));
+// population by age is published at gmina level (6); the city gmina has the city's exact name
+const BDL_NAME = { Warszawa: 'Capital city Warszawa since 2002' };  // BDL name differs from the common one
+const find = async name => (await get('/units/search', { name: BDL_NAME[name] || name, level: 6, 'page-size': 100 })).results
+  .find(u => u.name.toLowerCase() === (BDL_NAME[name] || name).toLowerCase());
 
-// variable ids are discovered via /variables?subject-id=P2137 (population by age), not assumed
-const VAR_POP = process.env.BDL_VAR_POP;
-const VARS_65 = (process.env.BDL_VARS_65 || '').split(',').filter(Boolean);
+// Variables of subject P2137 (population by age, total of both sexes), found via /variables?subject-id=P2137:
+// 72305 = total, 72239 = 65-69, 72240 = 70 and more.
+const VAR_POP = process.env.BDL_VAR_POP || '72305';
+const VARS_65 = (process.env.BDL_VARS_65 || '72239,72240').split(',').filter(Boolean);
 if (!VAR_POP || !VARS_65.length) {
   console.error('Set BDL_VAR_POP (total population) and BDL_VARS_65 (comma list: age groups 65-69 … 85+, same sex)');
   process.exit(1);

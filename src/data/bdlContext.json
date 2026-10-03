@@ -1,1 +1,73 @@
-{ "source": { "label": "GUS Bank Danych Lokalnych", "url": "https://bdl.stat.gov.pl/", "retrieved": null }, "indicator": "share65plus", "units": {} }
+{
+  "source": {
+    "label": "GUS Bank Danych Lokalnych",
+    "url": "https://bdl.stat.gov.pl/",
+    "retrieved": "2026-10-03"
+  },
+  "indicator": "share65plus",
+  "variables": {
+    "pop": "72305",
+    "pop65": [
+      "72239",
+      "72240"
+    ]
+  },
+  "units": {
+    "Warszawa": {
+      "unitId": "071412865011",
+      "year": 2024,
+      "pop": 1863845,
+      "pop65": 374351,
+      "share65": 0.2008
+    },
+    "Kraków": {
+      "unitId": "011212161011",
+      "year": 2024,
+      "pop": 809168,
+      "pop65": 160928,
+      "share65": 0.1989
+    },
+    "Gdańsk": {
+      "unitId": "042214361011",
+      "year": 2024,
+      "pop": 488651,
+      "pop65": 101597,
+      "share65": 0.2079
+    },
+    "Wrocław": {
+      "unitId": "030210564011",
+      "year": 2024,
+      "pop": 672882,
+      "pop65": 139405,
+      "share65": 0.2072
+    },
+    "Poznań": {
+      "unitId": "023016264011",
+      "year": 2024,
+      "pop": 536151,
+      "pop65": 115859,
+      "share65": 0.2161
+    },
+    "Łódź": {
+      "unitId": "051011661011",
+      "year": 2024,
+      "pop": 645693,
+      "pop65": 167412,
+      "share65": 0.2593
+    },
+    "Szczecin": {
+      "unitId": "023216562011",
+      "year": 2024,
+      "pop": 386706,
+      "pop65": 90569,
+      "share65": 0.2342
+    },
+    "Lublin": {
+      "unitId": "060611163011",
+      "year": 2024,
+      "pop": 328305,
+      "pop65": 73361,
+      "share65": 0.2235
+    }
+  }
+}
