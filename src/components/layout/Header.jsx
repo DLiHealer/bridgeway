@@ -7,12 +7,12 @@ import { Button } from '../ui';
 import { cx } from '../ui';
 
 const NAV = [
-  { to: '/mapa', key: 'map' },
-  { to: '/pomysly', key: 'ideas' },
   { to: '/rozwiazania', key: 'solutions' },
+  { to: '/mapa', key: 'map' },
+  { to: '/projekty', key: 'projects' },
   { to: '/eksperci', key: 'experts' },
   { to: '/finansowanie', key: 'funding' },
-  { to: '/projekty', key: 'projects' },
+  { to: '/pomysly', key: 'ideas' },
 ];
 
 function LanguageSwitch() {

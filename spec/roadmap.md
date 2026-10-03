@@ -78,10 +78,11 @@ Conventions:
 - Done when: each case shows a score with a per-factor breakdown and the source of every input. Update `architecture.md` §7.
 - Result: `src/utils/transferScore.js` + `ScoreBreakdown`; only problem type and evidence have data, context/budget/partners show "no data" (score preliminary) until Step 15 / a real registry.
 
-### Step 8 (P7). Status: Open
+### Step 8 (P7). Status: Done
 **Home repositioning.** Slogan "Problem został już gdzieś rozwiązany." (pl; en equivalent, via i18n), two CTAs, 5-step "how it works", cases as the navigation centre; demote Pomysły / Profil / Analityka per concept §5.5.
 - Effort S · Value ●●○ · After: P5
 - Done when: the first screen explains the value in ~5 seconds. Update `architecture.md` §4.
+- Result: new slogan + two CTAs (find a case / report), cases shown in hero and right after it, ideas section removed from Home, nav reordered (Ideas last), map teaser labelled demo.
 
 ## Layer 3 — Social value & responsibility (~20% effort → ~+12% value)
 

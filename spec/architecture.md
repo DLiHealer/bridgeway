@@ -39,7 +39,7 @@ src/
 ## 4. Routes (Polish slugs)
 | Path | Page |
 |---|---|
-| `/` | Home |
+| `/` | Home (slogan “Problem został już gdzieś rozwiązany.”, CTAs: find a case → `/rozwiazania`, report → `/zglos`; sections: verified cases, 5-step how-it-works, demo-map teaser) |
 | `/mapa` | MapPage |
 | `/zglos` | SubmitPage (report problem / propose idea) |
 | `/pomysly`, `/pomysly/:id` | IdeasPage, IdeaDetail |
@@ -51,6 +51,8 @@ src/
 | `/analityka` | AnalyticsPage |
 | `/o-nas` | AboutPage |
 | `*` | NotFound |
+
+Nav order (concept §5.5): Solutions (centre), Map, Projects, Experts, Funding, Ideas (demoted, last). Profile only in the avatar menu; Analytics not linked until roadmap Step 18.
 
 ## 5. State & persistence
 `AppProvider` (`useApp()`) holds: `user`, `signals`, `ideas`, `projects`, `saved`, `filters`, `toasts`, plus actions (`addSignal`, `addIdea`, `addProject` (returns the created project),  `saveItem`, `isSaved`, `setFilters`, `clearFilters`) and `data` (static datasets).

@@ -16,11 +16,11 @@ export default function Footer() {
         <div>
           <h4 className="mb-3 text-sm font-semibold text-neutral-900">{t('footer.platform')}</h4>
           <ul className="space-y-2 text-sm text-neutral-400">
-            <li><Link className="hover:text-brand-primary" to="/mapa">{t('nav.map')}</Link></li>
-            <li><Link className="hover:text-brand-primary" to="/pomysly">{t('nav.ideas')}</Link></li>
             <li><Link className="hover:text-brand-primary" to="/rozwiazania">{t('nav.solutions')}</Link></li>
+            <li><Link className="hover:text-brand-primary" to="/mapa">{t('nav.map')}</Link></li>
             <li><Link className="hover:text-brand-primary" to="/eksperci">{t('nav.experts')}</Link></li>
             <li><Link className="hover:text-brand-primary" to="/finansowanie">{t('nav.funding')}</Link></li>
+            <li><Link className="hover:text-brand-primary" to="/pomysly">{t('nav.ideas')}</Link></li>
           </ul>
         </div>
         <div>
