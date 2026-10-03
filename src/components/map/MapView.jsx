@@ -35,7 +35,6 @@ export default function MapView({ items = [], height = '100%', zoom = 6, center 
                   <Link to={item.type === 'idea' ? `/pomysly/${item.id}` : `/mapa?focus=${item.id}`}>
                     <Button size="sm" variant="secondary">Szczegóły</Button>
                   </Link>
-                  <Button size="sm">Przyłącz się</Button>
                 </div>
               </div>
             </Popup>

@@ -1,15 +1,13 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext.jsx';
 import { categoryById } from '../data';
-import { Badge, Button, Card, EmptyState, Modal } from '../components/ui';
-import { useState } from 'react';
+import { Badge, Button, Card, EmptyState } from '../components/ui';
 import { Bookmark } from 'lucide-react';
 
 export default function IdeaDetail() {
   const { id } = useParams();
   const { ideas, data, saveItem, isSaved, user } = useApp();
   const idea = ideas.find(i => i.id === id);
-  const [joinOpen, setJoinOpen] = useState(false);
   const navigate = useNavigate();
 
   if (!idea) {
@@ -129,37 +127,12 @@ export default function IdeaDetail() {
             </div>
           </Card>
 
-          <Button className="w-full" onClick={() => setJoinOpen(true)}>
-            Przyłącz się do zespołu
-          </Button>
           <Button variant="ghost" className="w-full" onClick={() => saveItem(idea.id)}>
             <Bookmark size={16} /> {isSaved(idea.id) ? 'Zapisane' : 'Zapisz'}
           </Button>
         </aside>
       </div>
 
-      <Modal open={joinOpen} onClose={() => setJoinOpen(false)} title="Dołącz do zespołu">
-        <p className="text-sm text-neutral-400">Zgłoszenie zostanie wysłane do lidera projektu.</p>
-        <div className="mt-4 space-y-3">
-          <input
-            className="h-11 w-full rounded-btn border border-border px-3 text-sm"
-            defaultValue={user.name}
-          />
-          <input
-            className="h-11 w-full rounded-btn border border-border px-3 text-sm"
-            placeholder="Twoja rola"
-          />
-          <textarea
-            className="w-full rounded-btn border border-border px-3 py-2 text-sm"
-            rows={3}
-            placeholder="Dlaczego chcesz dołączyć?"
-          />
-        </div>
-        <div className="mt-4 flex justify-end gap-2">
-          <Button variant="ghost" onClick={() => setJoinOpen(false)}>Anuluj</Button>
-          <Button onClick={() => setJoinOpen(false)}>Wyślij</Button>
-        </div>
-      </Modal>
     </div>
   );
 }

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { Menu, Search, Plus, X, Bell, User, LogOut } from 'lucide-react';
+import { Menu, Plus, X, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useApp } from '../../context/AppContext.jsx';
-import { Button, Modal, Input } from '../ui';
+import { Button } from '../ui';
 import { cx } from '../ui';
 
 const NAV = [
@@ -35,7 +35,6 @@ export default function Header() {
   const { user } = useApp();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
   const [avatarOpen, setAvatarOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -76,7 +75,6 @@ export default function Header() {
               <LanguageSwitch />
             </div>
 
-            <button onClick={() => setSearchOpen(true)} className="rounded-btn p-2 hover:bg-neutral-100" aria-label={t('nav.search')}><Search size={18} /></button>
 
             <Button size="sm" onClick={() => navigate('/zglos')} className="hidden sm:inline-flex">
               <Plus size={16} /> {t('nav.add')}
@@ -94,8 +92,6 @@ export default function Header() {
                   <Link to="/profil?tab=signals" onClick={() => setAvatarOpen(false)} className="block px-3 py-2 text-sm hover:bg-neutral-100">Moje sygnały</Link>
                   <Link to="/profil?tab=ideas" onClick={() => setAvatarOpen(false)} className="block px-3 py-2 text-sm hover:bg-neutral-100">Moje pomysły</Link>
                   <Link to="/profil?tab=projects" onClick={() => setAvatarOpen(false)} className="block px-3 py-2 text-sm hover:bg-neutral-100">Moje projekty</Link>
-                  <div className="my-1 border-t border-border" />
-                  <button className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-neutral-100"><LogOut size={14} /> Wyloguj</button>
                 </div>
               )}
             </div>
@@ -152,10 +148,6 @@ export default function Header() {
         </div>
       )}
 
-      <Modal open={searchOpen} onClose={() => setSearchOpen(false)} title={t('nav.search')}>
-        <Input placeholder={t('nav.search') + '…'} autoFocus />
-        <p className="mt-3 text-xs text-neutral-400">Wpisz frazę, aby zobaczyć wyniki (mock)</p>
-      </Modal>
     </>
   );
 }

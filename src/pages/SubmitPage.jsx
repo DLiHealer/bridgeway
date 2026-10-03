@@ -112,7 +112,6 @@ export default function SubmitPage() {
           </Card>
 
           <div className="flex flex-wrap gap-3">
-            <Button type="button" variant="ghost">Zapisz jako szkic</Button>
             <Button type="submit">Opublikuj</Button>
           </div>
         </form>

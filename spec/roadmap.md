@@ -53,7 +53,7 @@ Conventions:
 - Effort S · Value ●●● · After: —
 - Done when: the scenario runs without dead ends; the projects list is a real list.
 
-### Step 4 (P3). Status: Open
+### Step 4 (P3). Status: Done
 **Remove dead UI.** Each non-working control is either implemented minimally, hidden, or labelled "prototype" (search, logout, save draft, upload, chat, export PDF, join team).
 - Effort S · Value ●●● · After: —
 - Done when: the demo path contains no button without an effect.

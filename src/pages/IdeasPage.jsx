@@ -73,7 +73,6 @@ export default function IdeasPage() {
                       </div>
                       <span className="text-xs text-neutral-400">{i.teamSize}/{i.teamTarget}</span>
                     </div>
-                    <Button size="sm" className="mt-4">Przyłącz się</Button>
                   </div>
                 </Card>
               </Link>

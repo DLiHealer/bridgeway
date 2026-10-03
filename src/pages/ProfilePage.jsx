@@ -39,7 +39,6 @@ export default function ProfilePage() {
                 <h1 className="text-2xl font-bold">{user.name}</h1>
                 <p className="text-neutral-400">{user.role} · {user.city}</p>
               </div>
-              <Button variant="secondary" className="ml-auto">Edytuj</Button>
             </div>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
               <label className="text-sm">Imię<input className="mt-1 h-11 w-full rounded-btn border border-border px-3" value={user.name} onChange={e => setUser({ ...user, name: e.target.value })} /></label>

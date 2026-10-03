@@ -72,6 +72,7 @@ Helpers: `categoryById`, `categoryName` (language via `window.__i18nLang`).
 - Security headers for Netlify in `netlify.toml`; Cloudflare uses `wrangler.jsonc`.
 
 ## 9. Known gaps / tech debt
+- Non-functional controls are hidden, not faked (no search, logout, drafts, join-team, chat, upload/invite in Project Room); they return only with real backing (see roadmap P15).
 - `toasts` persisted in localStorage under a placeholder key.
 - No tests, no auth, no backend; data not shared across devices.
 - Some comments in code are in Russian.
