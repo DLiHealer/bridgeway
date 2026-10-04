@@ -1,24 +1,24 @@
-# Accessibility checklist (roadmap Step 11 / P10)
+# Lista kontrolna dostępności (roadmapa, krok 11 / P10)
 
-Target: WCAG 2.1 AA, honestly reported. Public statement: route `/dostepnosc` (i18n `a11y.*`).
+Cel: WCAG 2.1 AA, raportowany uczciwie. Deklaracja publiczna: trasa `/dostepnosc` (i18n `a11y.*`).
 
-| Item | Status | How |
+| Element | Status | Jak |
 |---|---|---|
-| Keyboard: skip link, all controls reachable, Esc closes menu/drawer/modal | Done (code) | Header, `Modal`, `a11y.skip` |
-| Visible focus | Done | global `:focus-visible` ring in `index.css` |
-| Contrast ≥ 4.5:1 | Done (computed) | `neutral-400` #56647A, `brand.danger` #C0392B, `Badge` darkens text colour; hero subtitle white |
-| Text scaling 200% | Done (layout) | header `min-h`, no `user-scalable=no`; not tested on every page |
-| Landmarks | Done | `header`, labelled `nav`s, `main` (focused on route change), `footer` |
-| Icon/button names | Done | i18n `aria-label`s, decorative icons `aria-hidden` |
-| Form labels | Done for SubmitPage | `htmlFor`/`id`, grouped radios; ProfilePage wraps inputs in `<label>` |
-| Reduced motion | Done | CSS media query + `MotionConfig reducedMotion="user"` |
-| Page title / focus on navigation | Done | `Layout` |
-| Accessibility statement | Done | `/dostepnosc`, footer link |
-| Keyboard-only run of main scenario | **Pending (human)** | Home → case → copy → project → report |
-| Screen reader run (NVDA/VoiceOver) | **Pending (human)** | same scenario |
+| Klawiatura: link „przejdź do treści”, wszystkie kontrolki osiągalne, Esc zamyka menu/szufladę/okno modalne | Zrobione (kod) | Header, `Modal`, `a11y.skip` |
+| Widoczny fokus | Zrobione | globalna obwódka `:focus-visible` w `index.css` |
+| Kontrast ≥ 4,5:1 | Zrobione (wyliczone) | `neutral-400` #56647A, `brand.danger` #C0392B, `Badge` przyciemnia kolor tekstu; podtytuł w sekcji hero biały |
+| Skalowanie tekstu 200% | Zrobione (układ) | `min-h` w nagłówku, brak `user-scalable=no`; nie testowane na każdej stronie |
+| Landmarki | Zrobione | `header`, opisane `nav`, `main` (z fokusem przy zmianie trasy), `footer` |
+| Nazwy ikon/przycisków | Zrobione | `aria-label` z i18n, ikony dekoracyjne `aria-hidden` |
+| Etykiety formularzy | Zrobione dla SubmitPage | `htmlFor`/`id`, pogrupowane przyciski radio; ProfilePage opakowuje pola w `<label>` |
+| Ograniczony ruch | Zrobione | media query w CSS + `MotionConfig reducedMotion="user"` |
+| Tytuł strony / fokus przy nawigacji | Zrobione | `Layout` |
+| Deklaracja dostępności | Zrobione | `/dostepnosc`, link w stopce |
+| Przejście głównego scenariusza tylko klawiaturą | **Czeka (człowiek)** | Home → przypadek → kopiowanie → projekt → zgłoszenie |
+| Przejście z czytnikiem ekranu (NVDA/VoiceOver) | **Czeka (człowiek)** | ten sam scenariusz |
 
-## Known limitations
-- Map (Leaflet) only partly keyboard-accessible; list next to it is the alternative.
-- Colour-blindness not verified for category colours.
-- Contrast computed from tokens, not scanned on rendered pages (no axe/Lighthouse run yet).
-- Modal has focus on open/restore but no full focus trap.
+## Znane ograniczenia
+- Mapa (Leaflet) jest tylko częściowo dostępna z klawiatury; alternatywą jest lista obok niej.
+- Nie zweryfikowano kolorów kategorii pod kątem daltonizmu.
+- Kontrast wyliczony z tokenów, a nie zeskanowany na wyrenderowanych stronach (jeszcze bez uruchomienia axe/Lighthouse).
+- Okno modalne ustawia fokus przy otwarciu i przywraca go po zamknięciu, ale nie ma pełnej pułapki fokusu.

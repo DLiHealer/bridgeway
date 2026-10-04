@@ -1,107 +1,107 @@
-# BridgeWay — Architecture Spec
+# BridgeWay — specyfikacja architektury
 
-> Source of truth for how the app is built. Update in the same change as any code change that affects it.
+> Źródło prawdy o tym, jak zbudowana jest aplikacja. Aktualizuj w tej samej zmianie co każdą zmianę kodu, która jej dotyczy.
 
-## 1. Overview
-Polish-language civic engagement SPA ("bridge between a problem and a solution"). Residents report problems (signals), pitch ideas, get matched to solutions/experts/NGOs/funding, and follow community projects on a map. MVP: client-side SPA with mocked/local data; since Step 16 an optional Cloudflare Worker + D1 backend shares problem reports across browsers (magic-link login). Without the backend the app stays local and says so. **Data honesty rule:** every seeded dataset is demo data and is labelled as such in the UI (`common.demo`, `common.demoNote`); no invented KPIs, ratings, "verified" claims, effects or contacts.
+## 1. Przegląd
+Polskojęzyczna aplikacja SPA do zaangażowania obywatelskiego („most między problemem a rozwiązaniem”). Mieszkańcy zgłaszają problemy (sygnały), proponują pomysły, otrzymują dopasowania do rozwiązań/ekspertów/organizacji/finansowania i śledzą projekty społeczne na mapie. MVP: SPA po stronie klienta z danymi demo/lokalnymi; od kroku 16 opcjonalny backend Cloudflare Worker + D1 współdzieli zgłoszenia problemów między przeglądarkami (logowanie magic linkiem). Bez backendu aplikacja pozostaje lokalna i to komunikuje. **Zasada uczciwości danych:** każdy wprowadzony zbiór danych to dane demo i jest tak oznaczony w UI (`common.demo`, `common.demoNote`); żadnych wymyślonych KPI, ocen, deklaracji „zweryfikowano”, efektów ani kontaktów.
 
-## 2. Stack
-| Concern | Choice |
+## 2. Stos
+| Obszar | Wybór |
 |---|---|
-| Build | Vite 5 (`npm run dev/build/preview`), output `dist/` |
-| UI | React 18, Tailwind CSS 3 (custom `brand` colors in `tailwind.config.js`), framer-motion, lucide-react |
-| Routing | react-router-dom v6, `BrowserRouter`, all pages lazy-loaded |
-| Forms | react-hook-form |
-| Map | leaflet + react-leaflet |
-| i18n | i18next + react-i18next, languages `pl` (default) and `en`; inline resources in `src/i18n.js` |
-| Hosting | Cloudflare Workers Static Assets (`wrangler.jsonc`, SPA fallback); `netlify.toml` kept as alt. See `DEPLOYMENT.md` |
-| Backend | Cloudflare Worker `worker/index.js` (+ D1 `DB`, `migrations/`), `/api/*` only; assets via `ASSETS` binding (`run_worker_first: ["/api/*"]`). Dev: `npm run dev:api` (wrangler, 8787) + `npm run dev` (Vite proxies `/api`); `npm run db:migrate:local` |
-| LLM | OpenRouter (`OPENROUTER_API_KEY` secret), model chosen by a responder on `/admin` (D1 `settings.llmModel`, default `openai/gpt-4o-mini` in `worker/adaptPlan.js`); only for the adaptation plan (Step 17) |
-| Tests | none yet |
+| Build | Vite 5 (`npm run dev/build/preview`), wynik w `dist/` |
+| UI | React 18, Tailwind CSS 3 (własne kolory `brand` w `tailwind.config.js`), framer-motion, lucide-react |
+| Routing | react-router-dom v6, `BrowserRouter`, wszystkie strony ładowane leniwie |
+| Formularze | react-hook-form |
+| Mapa | leaflet + react-leaflet |
+| i18n | i18next + react-i18next, języki `pl` (domyślny) i `en`; zasoby inline w `src/i18n.js` |
+| Hosting | Cloudflare Workers Static Assets (`wrangler.jsonc`, fallback SPA); `netlify.toml` zachowany jako alternatywa. Zobacz `DEPLOYMENT.md` |
+| Backend | Cloudflare Worker `worker/index.js` (+ D1 `DB`, `migrations/`), tylko `/api/*`; pliki przez binding `ASSETS` (`run_worker_first: ["/api/*"]`). Dev: `npm run dev:api` (wrangler, 8787) + `npm run dev` (Vite przekierowuje `/api`); `npm run db:migrate:local` |
+| LLM | OpenRouter (sekret `OPENROUTER_API_KEY`), model wybierany przez odpowiadającego w `/admin` (D1 `settings.llmModel`, domyślnie `openai/gpt-4o-mini` w `worker/adaptPlan.js`); tylko dla planu adaptacji (krok 17) |
+| Testy | jeszcze brak |
 
-## 3. Directory layout
+## 3. Struktura katalogów
 ```
 src/
-  main.jsx            entry: providers (Router, AppProvider), i18n import
-  App.jsx             route table (lazy pages, Suspense)
-  i18n.js             pl/en resources, language persisted in localStorage
-  index.css           Tailwind layers + shared classes (e.g. container-app)
-  context/AppContext.jsx   global state (see §5)
-  context/AuthContext.jsx  backend availability + magic-link session (§5)
-  api.js              fetch client for /api/*
-  components/RequireAuth.jsx  route guard: with a backend and no account → redirect to /logowanie
-worker/index.js     API Worker (auth, reports, adapt-plan); worker/adaptPlan.js (retrieval + quote validation); migrations/ (0001 init, 0002 registrations, 0003 settings, 0004 profiles, 0005 adapt_log, 0006 user_data)
-  data/index.js       mock datasets + category/city helpers
-  data/bdlContext.json  GUS BDL snapshot (share of 65+ per city), written by scripts/fetch-bdl-context.mjs
-  utils/              matching.js (keyword scoring), transferScore.js (case transfer score), privacy.js (sensitive categories, coordinate coarsening), geo.js (distanceKm), formatters.js
+  main.jsx            punkt wejścia: providery (Router, AppProvider), import i18n
+  App.jsx             tablica tras (leniwe strony, Suspense)
+  i18n.js             zasoby pl/en, język zapisywany w localStorage
+  index.css           warstwy Tailwind + wspólne klasy (np. container-app)
+  context/AppContext.jsx   stan globalny (zobacz §5)
+  context/AuthContext.jsx  dostępność backendu + sesja magic link (§5)
+  api.js              klient fetch dla /api/*
+  components/RequireAuth.jsx  strażnik trasy: z backendem i bez konta → przekierowanie do /logowanie
+worker/index.js     API Worker (auth, zgłoszenia, adapt-plan); worker/adaptPlan.js (wyszukiwanie + walidacja cytatów); migrations/ (0001 init, 0002 registrations, 0003 settings, 0004 profiles, 0005 adapt_log, 0006 user_data)
+  data/index.js       zbiory demo + pomocniki kategorii/miast
+  data/bdlContext.json  migawka GUS BDL (odsetek 65+ per miasto), zapisywana przez scripts/fetch-bdl-context.mjs
+  utils/              matching.js (punktacja słów kluczowych), transferScore.js (wskaźnik transferu przypadku), privacy.js (wrażliwe kategorie, zgrubienie współrzędnych), geo.js (distanceKm), formatters.js
   hooks/              useLocalStorage, useDebounce
   components/
     layout/           Layout (Header, Footer, Outlet)
-    map/MapView.jsx   Leaflet wrapper
-    cases/ScoreBreakdown.jsx   per-factor transfer score card
-    cases/AdaptPlan.jsx        LLM adaptation plan card on the case page (items with verbatim quotes)
-    ui/index.jsx      design-system primitives (Button, Card, Badge, Chip, Input, Textarea, Select, Modal, Toast, EmptyState, Skeleton, cx)
-  pages/              one file per route
+    map/MapView.jsx   wrapper Leaflet
+    cases/ScoreBreakdown.jsx   karta wskaźnika transferu z rozbiciem na czynniki
+    cases/AdaptPlan.jsx        karta planu adaptacji LLM na stronie przypadku (elementy z dosłownymi cytatami)
+    ui/index.jsx      prymitywy design systemu (Button, Card, Badge, Chip, Input, Textarea, Select, Modal, Toast, EmptyState, Skeleton, cx)
+  pages/              jeden plik na trasę
 ```
 
-Docs: public specs linked from `README.md` / `docs/` live in the repo root (`architecture.md`, `roadmap.md`, `concept_v1.0.md`, `sourcing-spike.md`, `accessibility.md`, `validation.md`). `spec/` (index, pitch, reviews, HackYeah submission + deck) and `crs/` are gitignored, internal only.
+Dokumentacja: publiczne specyfikacje linkowane z `README.md` / `docs/` są w katalogu głównym repozytorium (`architecture.md`, `roadmap.md`, `concept_v1.0.md`, `sourcing-spike.md`, `accessibility.md`, `validation.md`). `spec/` (indeks, pitch, recenzje, zgłoszenie HackYeah + prezentacja) i `crs/` są w gitignore, tylko do użytku wewnętrznego. Dokumentacja publiczna jest po polsku; `LICENSE` pozostaje po angielsku jako tekst wiążący (tłumaczenie: `LICENSE.pl`).
 
-## 4. Routes (Polish slugs)
-| Path | Page |
+## 4. Trasy (polskie ścieżki)
+| Ścieżka | Strona |
 |---|---|
-| `/` | Home (slogan “Problem został już gdzieś rozwiązany.”, CTAs: find a case → `/rozwiazania`, report → `/zglos`; sections: verified cases, 5-step how-it-works, demo-map teaser) |
+| `/` | Home (slogan „Problem został już gdzieś rozwiązany.”, przyciski: znajdź przypadek → `/rozwiazania`, zgłoś → `/zglos`; sekcje: zweryfikowane przypadki, 5 kroków „jak to działa”, zapowiedź mapy demo) |
 | `/mapa` | MapPage |
-| `/zglos` | SubmitPage (report problem / propose idea) |
+| `/zglos` | SubmitPage (zgłoszenie problemu / propozycja pomysłu) |
 | `/pomysly`, `/pomysly/:id` | IdeasPage, IdeaDetail |
 | `/rozwiazania`, `/rozwiazania/:id` | SolutionsPage, SolutionDetail |
 | `/eksperci`, `/eksperci/:id` | ExpertsPage, ExpertDetail |
-| `/finansowanie` | FundingPage (detail component: FundingDetail) |
-| `/projekty`, `/projekty/:id` | ProjectsPage (list of projects, empty state → `/rozwiazania`), ProjectRoom |
-| `/zgloszenia`, `/zgloszenia/:id` | ReportsPage (public shared reports from the backend, status timeline; responder form for role `responder`) |
-| `/admin` | AdminPage (login required via `RequireAuth`; responder only): registration setting — radio *require approval* (default) / *test mode*, explicit descriptions + Save, current-state banner; LLM model picker (type-ahead dropdown of OpenRouter models with USD/1M tokens in/out + Save); registration requests list with approve/reject |
-| `/logowanie` | LoginPage (email → magic link; consumes `?token=`) |
-| `/profil` | ProfilePage (login required via `RequireAuth` when a backend exists; profile / my-* menu links hidden while logged out) |
-| `/analityka` | AnalyticsPage (Step 18: computed metrics from `GET /api/metrics`; needs the backend, otherwise a "no server" note) |
+| `/finansowanie` | FundingPage (komponent szczegółów: FundingDetail) |
+| `/projekty`, `/projekty/:id` | ProjectsPage (lista projektów, stan pusty → `/rozwiazania`), ProjectRoom |
+| `/zgloszenia`, `/zgloszenia/:id` | ReportsPage (publiczne udostępniane zgłoszenia z backendu, oś czasu statusów; formularz odpowiadającego dla roli `responder`) |
+| `/admin` | AdminPage (wymaga logowania przez `RequireAuth`; tylko odpowiadający): ustawienie rejestracji — radio *wymagaj akceptacji* (domyślnie) / *tryb testowy*, jawne opisy + Zapisz, baner bieżącego stanu; wybór modelu LLM (lista modeli OpenRouter z podpowiadaniem, z cenami USD/1M tokenów wejście/wyjście + Zapisz); lista próśb o rejestrację z akceptacją/odrzuceniem |
+| `/logowanie` | LoginPage (e-mail → magic link; obsługuje `?token=`) |
+| `/profil` | ProfilePage (wymaga logowania przez `RequireAuth`, gdy istnieje backend; linki profil / moje-* w menu ukryte po wylogowaniu) |
+| `/analityka` | AnalyticsPage (krok 18: metryki liczone z `GET /api/metrics`; wymaga backendu, w przeciwnym razie komunikat „brak serwera”) |
 | `/o-nas` | AboutPage |
-| `/dostepnosc` | AccessibilityPage (accessibility statement, linked from footer) |
-| `/prywatnosc`, `/regulamin` | LegalPage (`kind="privacy"`/`"terms"`; prototype drafts, linked from footer) |
+| `/dostepnosc` | AccessibilityPage (deklaracja dostępności, link w stopce) |
+| `/prywatnosc`, `/regulamin` | LegalPage (`kind="privacy"`/`"terms"`; projekty dokumentów prototypu, linki w stopce) |
 | `*` | NotFound |
 
-Nav order (concept §5.5): Solutions (centre), Map, Projects, Reports (shared, Step 16), Experts, Funding, Ideas (demoted, last). Analytics (Step 18) before Ideas; Profile only in the avatar menu.
+Kolejność nawigacji (koncepcja §5.5): Rozwiązania (w centrum), Mapa, Projekty, Zgłoszenia (udostępniane, krok 16), Eksperci, Finansowanie, Pomysły (zdegradowane, na końcu). Analityka (krok 18) przed Pomysłami; Profil tylko w menu awatara.
 
-## 5. State & persistence
-`AppProvider` (`useApp()`) holds: `user`, `signals`, `ideas`, `projects`, `saved`, `filters`, `toasts`, plus actions (`addSignal`, `addIdea`, `addProject` (returns the created project; defaults `responsibleBody: null`, `statusHistory: [received]`), `updateProject(id, patch|fn)`,  `saveItem`, `isSaved`, `setFilters`, `clearFilters`) and `data` (static datasets).
-- Each slice persists via `useLocalStorage` under `bridgeart-*` keys (`-user`, `-signals`, `-ideas`, `-projects`, `-saved`, `-filters`, `-toasts-placeholder`, plus `bridgeart-lang` for language).
-- Seeded from `src/data/index.js` on first load. **Guests** (no login or no backend): slices per browser in localStorage. **Logged in:** `user`, `signals`, `ideas`, `projects`, `saved` are per account, held in `AppProvider` state (not localStorage), loaded from D1 on login (`GET /api/profile` + `GET /api/user-data`; missing slice = demo seed; name defaults to the email local part), saved debounced (500 ms) via `PUT /api/user-data/:slice` (table `user_data(email, slice, json)`, slices signals|ideas|projects|saved, JSON array ≤256 KB, login required, private). On logout/account switch the previous account's state is dropped (no leak between accounts; guest data untouched).
-- **Shared slice (Step 16):** only problem *reports* live in D1. `AuthProvider` (`useAuth()`: `backend` null|true|false from `GET /api/health`, `account` `{email, role}`, `login`, `logout`). Magic link: `POST /api/auth/request` (token hash in `login_tokens`, 15 min, single use; no rate limit on logins — removed in Issue 2) → mail via Resend HTTP API (`RESEND_API_KEY`, optional `MAIL_FROM`) or the `EMAIL` binding + `MAIL_FROM` (Resend confirmed in production, Cloudflare binding untested) or, with `DEV_MAGIC_LINK=true` in `.dev.vars` only, link in the response → `/logowanie?token=` → `POST /api/auth/verify` → HttpOnly `bw_session` cookie (hash in `sessions`, 30 d). **Registration:** a link is issued only to responders and `approved` emails; any other address becomes a `pending` row in `registrations` (`{pending:true}`, max 200 pending) until a responder approves/rejects it on `/logowanie` (`GET /api/admin/registrations`, `POST /api/admin/registrations/decide`, responder only); rejected → 403. `DEV_MAGIC_LINK=true` (local only) bypasses it. **Test mode** (`settings.testMode`, default off; `GET/POST /api/admin/settings`, responder only; LLM model: `GET/POST /api/admin/llm` (validated against the catalogue), `GET /api/admin/llm/models` (OpenRouter `/models` proxy, 10 min cache, price per 1M tokens), setting and request list on `/admin`; menu link only for responders): new and pending emails are auto-approved and get a real emailed link (rejected stay blocked; global cap 50 links/h). Intended for live demos; turn off afterwards. Roles: `responder` iff email in `RESPONDER_EMAILS`, else `resident`. API: `GET /api/reports[/:id]` public (no email/coords), `POST /api/reports` (login), `POST /api/reports/:id/status` (responder; `rejected` needs note; optional `responsibleBody`). POSTs need JSON content-type and same-origin `Origin`. **Profile:** table `profiles` (email PK; name, roleLabel ∈ Mieszkaniec/Aktywista/Ekspert/NGO/Instytut, city, bio ≤500), `GET/PUT /api/profile` (login required, private — never returned in public reports). ProfilePage form has a draft + *Save* button (disabled until changed, name ≥2 chars): logged in → saved to the account and loaded into `user` on login (`AppProvider` effect); guests → localStorage only (stated in the UI). Email is read-only (from the account). The former dead *Settings* tab was removed. SubmitPage (problem tab) additionally posts a shared copy (title, description, category, city, onBehalf) when logged in; the local signal is unchanged.
-- **Adaptation plan (Step 17):** `POST /api/adapt-plan {caseId, city, lang}` (login, JSON same-origin, 10/h per account in `adapt_log`; 404 unknown case, 503 `llm_unavailable` without `OPENROUTER_API_KEY`, 502 `llm_failed`, 429 `rate_limited`; model from `settings.llmModel`). The only corpus is the chosen case (`src/data/index.js`); the LLM returns `{items:[{action, evidence:[{field, quote}]}]}`; `validate` keeps an item only if `action` has no digits and a quote is a substring of the cited case passage (replaced by the source text); source link = `case.source`; `gaps` = case fields that are `null`. Result is not stored.
-- **Metrics (Step 18):** `GET /api/metrics` (public, aggregate only): `reports{total, byStatus, responded}`, `firstResponse{n, medianMs}|null` (first non-`received` status minus report creation, median), `reuse{accounts, projects, fromCases, accountsReusing, rate|null, byCase}` (parsed from `user_data` slice `projects`, `sourceSolutionId`). Computed per request, no storage, no PII.
-- Static, read-only entities (solutions, experts, ngos, fundings) are read from `data` directly.
+## 5. Stan i trwałość
+`AppProvider` (`useApp()`) przechowuje: `user`, `signals`, `ideas`, `projects`, `saved`, `filters`, `toasts` oraz akcje (`addSignal`, `addIdea`, `addProject` (zwraca utworzony projekt; domyślnie `responsibleBody: null`, `statusHistory: [received]`), `updateProject(id, patch|fn)`, `saveItem`, `isSaved`, `setFilters`, `clearFilters`) i `data` (zbiory statyczne).
+- Każdy fragment jest zapisywany przez `useLocalStorage` pod kluczami `bridgeart-*` (`-user`, `-signals`, `-ideas`, `-projects`, `-saved`, `-filters`, `-toasts-placeholder`, a także `bridgeart-lang` dla języka).
+- Przy pierwszym uruchomieniu wypełniany z `src/data/index.js`. **Goście** (bez logowania lub bez backendu): fragmenty per przeglądarka w localStorage. **Zalogowani:** `user`, `signals`, `ideas`, `projects`, `saved` są per konto, trzymane w stanie `AppProvider` (nie w localStorage), ładowane z D1 przy logowaniu (`GET /api/profile` + `GET /api/user-data`; brak fragmentu = dane demo; nazwa domyślnie z części lokalnej e-maila), zapisywane z opóźnieniem (500 ms) przez `PUT /api/user-data/:slice` (tabela `user_data(email, slice, json)`, fragmenty signals|ideas|projects|saved, tablica JSON ≤256 KB, wymaga logowania, prywatne). Przy wylogowaniu/zmianie konta stan poprzedniego konta jest porzucany (brak przecieków między kontami; dane gościa nienaruszone).
+- **Fragment współdzielony (krok 16):** w D1 znajdują się tylko *zgłoszenia* problemów. `AuthProvider` (`useAuth()`: `backend` null|true|false z `GET /api/health`, `account` `{email, role}`, `login`, `logout`). Magic link: `POST /api/auth/request` (hasz tokenu w `login_tokens`, 15 min, jednorazowy; brak limitu logowań — usunięty w Issue 2) → e-mail przez Resend HTTP API (`RESEND_API_KEY`, opcjonalnie `MAIL_FROM`) albo binding `EMAIL` + `MAIL_FROM` (Resend potwierdzony na produkcji, binding Cloudflare nieprzetestowany) albo, z `DEV_MAGIC_LINK=true` wyłącznie w `.dev.vars`, link w odpowiedzi → `/logowanie?token=` → `POST /api/auth/verify` → ciasteczko HttpOnly `bw_session` (hasz w `sessions`, 30 dni). **Rejestracja:** link jest wydawany tylko odpowiadającym i adresom `approved`; każdy inny adres staje się wierszem `pending` w `registrations` (`{pending:true}`, maks. 200 oczekujących), dopóki odpowiadający go nie zaakceptuje/odrzuci w `/logowanie` (`GET /api/admin/registrations`, `POST /api/admin/registrations/decide`, tylko odpowiadający); odrzucony → 403. `DEV_MAGIC_LINK=true` (tylko lokalnie) to omija. **Tryb testowy** (`settings.testMode`, domyślnie wyłączony; `GET/POST /api/admin/settings`, tylko odpowiadający; model LLM: `GET/POST /api/admin/llm` (walidowany względem katalogu), `GET /api/admin/llm/models` (proxy OpenRouter `/models`, cache 10 min, cena za 1M tokenów), ustawienie i lista próśb w `/admin`; link w menu tylko dla odpowiadających): nowe i oczekujące adresy są automatycznie akceptowane i dostają prawdziwy link e-mailem (odrzucone pozostają zablokowane; globalny limit 50 linków/h). Przeznaczony do pokazów na żywo; potem wyłączyć. Role: `responder` wtedy i tylko wtedy, gdy e-mail jest w `RESPONDER_EMAILS`, w przeciwnym razie `resident`. API: `GET /api/reports[/:id]` publiczne (bez e-maili/współrzędnych), `POST /api/reports` (logowanie), `POST /api/reports/:id/status` (odpowiadający; `rejected` wymaga uzasadnienia; opcjonalnie `responsibleBody`). Żądania POST wymagają typu treści JSON i nagłówka `Origin` z tego samego źródła. **Profil:** tabela `profiles` (email PK; name, roleLabel ∈ Mieszkaniec/Aktywista/Ekspert/NGO/Instytut, city, bio ≤500), `GET/PUT /api/profile` (wymaga logowania, prywatne — nigdy nie zwracane w publicznych zgłoszeniach). Formularz ProfilePage ma wersję roboczą + przycisk *Zapisz* (nieaktywny do czasu zmiany, imię ≥2 znaki): zalogowany → zapis na koncie i wczytanie do `user` przy logowaniu (efekt w `AppProvider`); goście → tylko localStorage (komunikat w UI). E-mail tylko do odczytu (z konta). Dawna martwa zakładka *Ustawienia* została usunięta. SubmitPage (zakładka problemu) dodatkowo wysyła udostępnianą kopię (tytuł, opis, kategoria, miasto, onBehalf), gdy użytkownik jest zalogowany; lokalny sygnał bez zmian.
+- **Plan adaptacji (krok 17):** `POST /api/adapt-plan {caseId, city, lang}` (logowanie, JSON same-origin, 10/h na konto w `adapt_log`; 404 nieznany przypadek, 503 `llm_unavailable` bez `OPENROUTER_API_KEY`, 502 `llm_failed`, 429 `rate_limited`; model z `settings.llmModel`). Jedynym korpusem jest wybrany przypadek (`src/data/index.js`); LLM zwraca `{items:[{action, evidence:[{field, quote}]}]}`; `validate` zachowuje element tylko wtedy, gdy `action` nie zawiera cyfr, a cytat jest fragmentem cytowanego pola przypadku (zastępowany tekstem źródła); link do źródła = `case.source`; `gaps` = pola przypadku o wartości `null`. Wynik nie jest przechowywany.
+- **Metryki (krok 18):** `GET /api/metrics` (publiczne, tylko agregaty): `reports{total, byStatus, responded}`, `firstResponse{n, medianMs}|null` (pierwszy status inny niż `received` minus utworzenie zgłoszenia, mediana), `reuse{accounts, projects, fromCases, accountsReusing, rate|null, byCase}` (z fragmentu `projects` w `user_data`, `sourceSolutionId`). Liczone przy każdym żądaniu, bez przechowywania, bez danych osobowych.
+- Statyczne encje tylko do odczytu (solutions, experts, ngos, fundings) są czytane bezpośrednio z `data`.
 
-## 6. Domain model (mock, in `src/data/index.js`)
-Entities: `categories` (id, name, nameEn, color), `cities` (id, name, coords), `signals`, `ideas`, `solutions`, `experts`, `ngos`, `fundings`, `projects`. (No `analytics` dataset: the Analytics page shows only server-computed metrics, §5. Experts have no `rating`/`email`, NGOs no project counts.)
-`solutions` are **evidence-backed cases** (route `/rozwiazania`), loaded from `sourcing-spike.md`: `id`, `kind` (`case` | `route`), `category`, `city`, `country`, `year`, `title`, `organisation`, `problem`, `solution`, `cost`, `duration`, `outcome`, `outcomeMethod`, `evidenceLevel` (A–D: A systematic review, B controlled study, C evaluation / uncontrolled outcome, D outputs only), `context`, `source` (`{label,url}`), `steps`. Text fields are `{pl,en}` objects read with `loc()`; `null` = not stated in the source (UI shows "not stated"/"not measured", never an invented value). Every case must be real, sourced and graded; unverifiable cases are not added. `kind: 'route'` is a recommended process (accessibility audit → responsible body → technically approved solution), replacing the removed unsafe DIY-ramp case. Cases without `steps` produce generic `cases.defaultSteps` tasks on copy. Category ids: mieszkanie, seniorzy, dostepnosc, cyfrowe, ekologia, integracja, inne. `projects` have optional `sourceSolutionId` (set when copied from a case; its `steps` or `cases.defaultSteps` become `todo` tasks). `projects` also carry `responsibleBody` (string | null — null is flagged in Project Room) and `statusHistory[]` (`{status, date, note}`, status ∈ received | assigned | inprogress | resolved | rejected; rejection requires a note); shown/edited in the Project Room overview, labelled demo/local. `signals` may carry `onBehalf` (bool) + `consentAt` (ISO) — set by SubmitPage (problem tab) only when the proxy flag and the consent checkbox are both ticked; demo signal `s6` is a proxy report; MapView popup shows a badge. **Privacy:** `utils/privacy.js` `isSensitive` = problem with category `seniorzy`/`mieszkanie` or `onBehalf`; such signals are drawn on the map as a 3 km `Circle` at coords snapped to a 0.1° grid (display-time, plus stored coarse by SubmitPage). Only a city is collected, never an address. IDs of user-created items are prefixed (`s`/`i`/`p` + timestamp).
-Helpers: `categoryById`, `categoryName`, `loc` (language via `window.__i18nLang`). UI: `EvidenceBadge` in `components/ui`.
+## 6. Model domenowy (demo, w `src/data/index.js`)
+Encje: `categories` (id, name, nameEn, color), `cities` (id, name, coords), `signals`, `ideas`, `solutions`, `experts`, `ngos`, `fundings`, `projects`. (Brak zbioru `analytics`: strona Analityka pokazuje tylko metryki liczone na serwerze, §5. Eksperci nie mają `rating`/`email`, organizacje nie mają liczby projektów.)
+`solutions` to **przypadki poparte dowodami** (trasa `/rozwiazania`), wczytane z `sourcing-spike.md`: `id`, `kind` (`case` | `route`), `category`, `city`, `country`, `year`, `title`, `organisation`, `problem`, `solution`, `cost`, `duration`, `outcome`, `outcomeMethod`, `evidenceLevel` (A–D: A przegląd systematyczny, B badanie kontrolowane, C ewaluacja / efekt bez kontroli, D tylko produkty), `context`, `source` (`{label,url}`), `steps`. Pola tekstowe to obiekty `{pl,en}` czytane przez `loc()`; `null` = nie podano w źródle (UI pokazuje „nie podano”/„nie zmierzono”, nigdy wymyślonej wartości). Każdy przypadek musi być realny, mieć źródło i ocenę; przypadków, których nie da się zweryfikować, nie dodaje się. `kind: 'route'` to zalecany proces (audyt dostępności → odpowiedzialny organ → technicznie zatwierdzone rozwiązanie), zastępujący usunięty niebezpieczny przypadek podjazdu „zrób to sam”. Przypadki bez `steps` przy kopiowaniu tworzą ogólne zadania `cases.defaultSteps`. Identyfikatory kategorii: mieszkanie, seniorzy, dostepnosc, cyfrowe, ekologia, integracja, inne. `projects` mają opcjonalne `sourceSolutionId` (ustawiane przy kopiowaniu z przypadku; jego `steps` lub `cases.defaultSteps` stają się zadaniami `todo`). `projects` mają też `responsibleBody` (string | null — null jest sygnalizowane w Project Room) i `statusHistory[]` (`{status, date, note}`, status ∈ received | assigned | inprogress | resolved | rejected; odrzucenie wymaga uzasadnienia); pokazywane/edytowane w przeglądzie Project Room, oznaczone jako demo/lokalne. `signals` mogą mieć `onBehalf` (bool) + `consentAt` (ISO) — ustawiane przez SubmitPage (zakładka problemu) tylko wtedy, gdy zaznaczono zarówno flagę pełnomocnika, jak i zgodę; sygnał demo `s6` jest zgłoszeniem przez pełnomocnika; popup MapView pokazuje plakietkę. **Prywatność:** `utils/privacy.js` `isSensitive` = problem z kategorią `seniorzy`/`mieszkanie` lub `onBehalf`; takie sygnały są rysowane na mapie jako `Circle` 3 km we współrzędnych przyciągniętych do siatki 0,1° (przy wyświetlaniu, a także zapisywane zgrubnie przez SubmitPage). Zbierane jest tylko miasto, nigdy adres. Identyfikatory elementów utworzonych przez użytkownika mają prefiks (`s`/`i`/`p` + znacznik czasu).
+Pomocniki: `categoryById`, `categoryName`, `loc` (język przez `window.__i18nLang`). UI: `EvidenceBadge` w `components/ui`.
 
-## 7. Matching (`src/utils/`)
-**Cases (`transferScore.js`, used by `matchSolutions`, SolutionsPage, SolutionDetail, SubmitPage, IdeaDetail):** `scoreCase(case, {category, city, available})` → `{excluded, score|null, preliminary, factors[]}`. Weights (concept §6.3, a hypothesis shown in the UI): problem type 30, context 25, budget 15, partners 15, evidence 15. Score = weighted mean of factors **that have data**, 0–100; factors without data are `value: null` → "no data" and the score is marked preliminary. Currently with data: problem type (case category = chosen category; null without a category) and evidence (A 1, B .75, C .5, D .25 — assumption). Context similarity (Step 15): `1 − min(1, |share65_user − share65_case| / 0.10)` from the GUS BDL snapshot `data/bdlContext.json` (`units[city].share65`, year, source/retrieval date shown in `ScoreBreakdown`), only when both the user's city (`input.city`; city select on SolutionsPage, `?city=` on detail) and the case city are in the snapshot — otherwise "no data" (foreign cities, voivodeships). 10 pp gap = 0 is an assumption. Snapshot (retrieved 2026-10-03, year 2024, BDL variables 72305 total / 72239 + 72240 aged 65+, gmina level) holds all 8 demo cities; refresh with `node scripts/fetch-bdl-context.mjs` (optional `BDL_CLIENT_ID` key). Always "no data": budget (case costs are free text, no user budget), partners (no real registry). Hard constraints first: `case.requires[]` not in `input.available[]` → excluded (hook; no case declares `requires` yet). SolutionDetail reads input from `?cat=&city=`.
-**Other entities (`matching.js`):** `matchExperts/Ngos/Fundings/Ideas` via `matchAll` — keyword scoring: category (100/0, 40 neutral), keyword hits (25 per word ≥3 chars, diacritic-normalized), city (30). Label is "Suggestions … (model, no AI)". Specialization strings mapped via `SPEC_TO_CAT`.
+## 7. Dopasowanie (`src/utils/`)
+**Przypadki (`transferScore.js`, używany przez `matchSolutions`, SolutionsPage, SolutionDetail, SubmitPage, IdeaDetail):** `scoreCase(case, {category, city, available})` → `{excluded, score|null, preliminary, factors[]}`. Wagi (koncepcja §6.3, hipoteza pokazywana w UI): typ problemu 30, kontekst 25, budżet 15, partnerzy 15, dowody 15. Wynik = średnia ważona czynników, **dla których są dane**, 0–100; czynniki bez danych mają `value: null` → „brak danych”, a wynik jest oznaczony jako wstępny. Obecnie z danymi: typ problemu (kategoria przypadku = wybrana kategoria; null bez kategorii) i dowody (A 1, B 0,75, C 0,5, D 0,25 — założenie). Podobieństwo kontekstu (krok 15): `1 − min(1, |share65_user − share65_case| / 0.10)` z migawki GUS BDL `data/bdlContext.json` (`units[city].share65`, rok, źródło/data pobrania pokazywane w `ScoreBreakdown`), tylko gdy zarówno miasto użytkownika (`input.city`; wybór miasta w SolutionsPage, `?city=` w szczegółach), jak i miasto przypadku są w migawce — w przeciwnym razie „brak danych” (miasta zagraniczne, województwa). Różnica 10 pp = 0 to założenie. Migawka (pobrana 2026-10-03, rok 2024, zmienne BDL 72305 ogółem / 72239 + 72240 w wieku 65+, poziom gminy) obejmuje wszystkie 8 miast demo; odświeżanie: `node scripts/fetch-bdl-context.mjs` (opcjonalny klucz `BDL_CLIENT_ID`). Zawsze „brak danych”: budżet (koszty przypadków to dowolny tekst, brak budżetu użytkownika), partnerzy (brak realnego rejestru). Najpierw twarde ograniczenia: `case.requires[]` nieobecne w `input.available[]` → wykluczenie (punkt zaczepienia; żaden przypadek nie deklaruje jeszcze `requires`). SolutionDetail czyta dane wejściowe z `?cat=&city=`.
+**Pozostałe encje (`matching.js`):** `matchExperts/Ngos/Fundings/Ideas` przez `matchAll` — punktacja słów kluczowych: kategoria (100/0, 40 neutralna), trafienia słów kluczowych (25 za słowo ≥3 znaki, znormalizowane znaki diakrytyczne), miasto (30). Etykieta: „Sugestie … (model, bez AI)”. Ciągi specjalizacji mapowane przez `SPEC_TO_CAT`.
 
-## 8. Conventions
-- UI text goes through i18n keys (pl + en); never hardcode user-facing strings in new code.
-- Use `components/ui` primitives and Tailwind classes; brand colors from tailwind config.
-- New route = page in `src/pages`, lazy entry + `<Route>` in `App.jsx`, nav/i18n update, update §4 here.
-- Backend env (Step 16, see `DEPLOYMENT.md`): `RESPONDER_EMAILS`, `RESEND_API_KEY`, `MAIL_FROM`, optional `PUBLIC_URL` (vars/secrets), `EMAIL` binding; local `.dev.vars` (gitignored). No secrets in the client. External calls only: map tiles, dicebear avatars (`formatters.avatarUrl`). GUS BDL is fetched at build time by `scripts/fetch-bdl-context.mjs` (never at runtime).
-- Accessibility (WCAG AA, see `accessibility.md`): text colours must keep ≥4.5:1 (`neutral-400` is already AA; don't use `brand-secondary/accent` as text colour); icon-only buttons need an i18n `aria-label` (`a11y.*`) and decorative icons `aria-hidden`; form controls need `htmlFor`/`id`; `Layout` focuses `<main>` and sets the tab title from `<h1>` on route change; framer-motion runs under `MotionConfig reducedMotion="user"`.
-- Privacy: SubmitPage shows a third-party personal data warning; sensitive reports never get exact map points (`utils/privacy.js`); policy/terms text lives in i18n `legal.*`.
-- LLM output is never shown unless every item passes the quote check (Step 17); no generated facts, numbers or sources.
-- Security headers for Netlify in `netlify.toml`; Cloudflare uses `wrangler.jsonc`.
+## 8. Konwencje
+- Teksty UI przechodzą przez klucze i18n (pl + en); w nowym kodzie nigdy nie zapisuj na sztywno tekstów widocznych dla użytkownika.
+- Używaj prymitywów `components/ui` i klas Tailwind; kolory marki z konfiguracji Tailwind.
+- Nowa trasa = strona w `src/pages`, leniwy wpis + `<Route>` w `App.jsx`, aktualizacja nawigacji/i18n, aktualizacja §4 tutaj.
+- Środowisko backendu (krok 16, zobacz `DEPLOYMENT.md`): `RESPONDER_EMAILS`, `RESEND_API_KEY`, `MAIL_FROM`, opcjonalnie `PUBLIC_URL` (zmienne/sekrety), binding `EMAIL`; lokalnie `.dev.vars` (w gitignore). Żadnych sekretów w kliencie. Jedyne wywołania zewnętrzne: kafelki mapy, awatary dicebear (`formatters.avatarUrl`). GUS BDL jest pobierany w czasie buildu przez `scripts/fetch-bdl-context.mjs` (nigdy w czasie działania).
+- Dostępność (WCAG AA, zobacz `accessibility.md`): kolory tekstu muszą zachować ≥4,5:1 (`neutral-400` spełnia już AA; nie używaj `brand-secondary/accent` jako koloru tekstu); przyciski z samą ikoną wymagają `aria-label` z i18n (`a11y.*`), a ikony dekoracyjne `aria-hidden`; kontrolki formularzy wymagają `htmlFor`/`id`; `Layout` ustawia fokus na `<main>` i tytuł karty z `<h1>` przy zmianie trasy; framer-motion działa w `MotionConfig reducedMotion="user"`.
+- Prywatność: SubmitPage pokazuje ostrzeżenie o danych osobowych osób trzecich; wrażliwe zgłoszenia nigdy nie dostają dokładnych punktów na mapie (`utils/privacy.js`); teksty polityki/regulaminu są w i18n `legal.*`.
+- Wynik LLM nigdy nie jest pokazywany, jeśli którykolwiek element nie przejdzie sprawdzenia cytatów (krok 17); żadnych wygenerowanych faktów, liczb ani źródeł.
+- Nagłówki bezpieczeństwa dla Netlify w `netlify.toml`; Cloudflare używa `wrangler.jsonc`.
 
-## 9. Known gaps / tech debt
-- Non-functional controls are hidden, not faked (no search, drafts, join-team, chat, upload/invite in Project Room); some may return on the Step 16 backend (not done).
-- `toasts` persisted in localStorage under a placeholder key.
-- Accessibility: manual keyboard + screen-reader run pending; `Modal` has no full focus trap; map only partly keyboard-accessible.
-- GUS BDL snapshot is static (refresh manually); only the 8 demo cities, aged 65+ share is the single context indicator (population density etc. not used). Anonymous BDL quota is 100 requests/15 min.
-- No tests. Only reports are shared (ideas, projects, map signals stay local); no moderation of report content, no email-change/deletion flow; email delivery via Resend on mail.processtotool.com confirmed in production (Cloudflare Email Service path untested); no rate limit on login links; responder list is an env var, not a registry of real authorities.
-- Adaptation plan: `action` text is model paraphrase (only digit ban + quote requirement guard it); live model quality not yet checked; needs `OPENROUTER_API_KEY` secret.
-- Some comments in code are in Russian.
+## 9. Znane luki / dług techniczny
+- Niedziałające kontrolki są ukryte, a nie udawane (brak wyszukiwania, wersji roboczych, dołączania do zespołu, czatu, przesyłania plików/zaproszeń w Project Room); część może wrócić na backendzie z kroku 16 (niezrobione).
+- `toasts` zapisywane w localStorage pod kluczem zastępczym.
+- Dostępność: ręczny test klawiatury + czytnika ekranu w toku; `Modal` nie ma pełnej pułapki fokusu; mapa tylko częściowo dostępna z klawiatury.
+- Migawka GUS BDL jest statyczna (odświeżanie ręczne); tylko 8 miast demo, odsetek osób 65+ jest jedynym wskaźnikiem kontekstu (gęstość zaludnienia itp. nieużywane). Anonimowy limit BDL to 100 żądań/15 min.
+- Brak testów. Udostępniane są tylko zgłoszenia (pomysły, projekty, sygnały na mapie zostają lokalne); brak moderacji treści zgłoszeń, brak zmiany e-maila/usuwania konta; dostarczanie e-maili przez Resend z mail.processtotool.com potwierdzone na produkcji (ścieżka Cloudflare Email Service nieprzetestowana); brak limitu linków logowania; lista odpowiadających to zmienna środowiskowa, a nie rejestr realnych organów.
+- Plan adaptacji: tekst `action` jest parafrazą modelu (chronią go tylko zakaz cyfr i wymóg cytatu); jakość modelu na żywo jeszcze niesprawdzona; wymaga sekretu `OPENROUTER_API_KEY`.
+- Część komentarzy w kodzie jest po rosyjsku.

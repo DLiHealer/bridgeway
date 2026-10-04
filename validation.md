@@ -1,71 +1,71 @@
-# Validation (Roadmap Step 13 / P12)
+# Walidacja (roadmapa, krok 13 / P12)
 
-Status: **Postponed (cut for the hackathon) — no interviews recorded.** Interviews move to the post-hackathon pilot; for the demo, use the desk-evidence rules below. This file is filled by the team with real data only. Nothing below the "Results" heading may be invented, rounded up or paraphrased into a stronger claim.
+Status: **Odłożone (wycięte na czas hackathonu) — brak zapisanych wywiadów.** Wywiady przechodzą do pilotażu po hackathonie; na potrzeby demo obowiązują poniższe zasady dowodów zza biurka. Ten plik zespół wypełnia wyłącznie realnymi danymi. Niczego poniżej nagłówka „Wyniki” nie wolno wymyślać, zaokrąglać w górę ani parafrazować w mocniejsze twierdzenie.
 
-## Hackathon substitute: desk evidence
-Interviews are not feasible before the deadline. The pitch uses only **secondary evidence**, always labelled as such (never as user validation):
-- Verified cases from [sourcing-spike.md](./sourcing-spike.md) (problem exists and was solved elsewhere, with link).
-- Public statistics on problem scale (e.g. GUS, NIK, RPO) — only with a clickable source; to be added by the team below.
-- Public statements by municipalities/NGOs (reports, tenders), quoted verbatim with source link — not presented as interviews.
-- Optional async outreach (3-question form to 5–10 NGOs/libraries/offices): report responses as "n of N", including "0 responses"; quote only with consent.
+## Zastępstwo na hackathon: dowody zza biurka
+Wywiady nie są możliwe przed terminem. Pitch korzysta wyłącznie z **dowodów wtórnych**, zawsze tak oznaczonych (nigdy jako walidacja z użytkownikami):
+- Zweryfikowane przypadki z [sourcing-spike.md](./sourcing-spike.md) (problem istnieje i został rozwiązany gdzie indziej, z linkiem).
+- Publiczne statystyki o skali problemu (np. GUS, NIK, RPO) — tylko z klikalnym źródłem; zespół dopisuje je poniżej.
+- Publiczne wypowiedzi gmin/organizacji (raporty, przetargi), cytowane dosłownie z linkiem do źródła — nieprzedstawiane jako wywiady.
+- Opcjonalny kontakt asynchroniczny (formularz z 3 pytaniami do 5–10 organizacji/bibliotek/urzędów): odpowiedzi raportowane jako „n z N”, łącznie z „0 odpowiedzi”; cytaty tylko za zgodą.
 
-**Pitch wording (pl):** „Jeszcze nie zwalidowane z użytkownikami. Dowody: 6 zweryfikowanych przypadków ze źródłami. Następny krok: 5 wywiadów i pilotaż w jednej gminie."
-**Pitch wording (en):** "Not yet validated with users. Evidence so far: 6 verified cases with sources. Next step: 5 interviews and a pilot with one municipality."
+**Sformułowanie w pitchu (pl):** „Jeszcze nie zwalidowane z użytkownikami. Dowody: 6 zweryfikowanych przypadków ze źródłami. Następny krok: 5 wywiadów i pilotaż w jednej gminie.”
+**Sformułowanie w pitchu (en):** "Not yet validated with users. Evidence so far: 6 verified cases with sources. Next step: 5 interviews and a pilot with one municipality."
 
-### Desk-evidence register (verified links only)
-| # | Claim | Source (URL) | Publisher | Date accessed |
+### Rejestr dowodów zza biurka (tylko zweryfikowane linki)
+| # | Twierdzenie | Źródło (URL) | Wydawca | Data dostępu |
 |---|---|---|---|---|
 | — | — | — | — | — |
 
-## Quotas (post-hackathon pilot; from roadmap)
-| Segment | Target | Done |
+## Kwoty (pilotaż po hackathonie; z roadmapy)
+| Segment | Cel | Zrobione |
 |---|---|---|
-| Target-group interviews (people affected by an access/isolation problem) | 5 | 0 |
-| Municipality / district office | ≥ 1 | 0 |
-| NGOs | ≥ 2 | 0 |
-| Proxy point (library, senior club, social worker) | ≥ 1 | 0 |
-| Letter of intent or written quote | ≥ 1 | 0 |
+| Wywiady z grupą docelową (osoby dotknięte problemem dostępu/izolacji) | 5 | 0 |
+| Urząd gminy / powiatu | ≥ 1 | 0 |
+| Organizacje pozarządowe | ≥ 2 | 0 |
+| Punkt pomocy (biblioteka, klub seniora, pracownik socjalny) | ≥ 1 | 0 |
+| List intencyjny lub pisemny cytat | ≥ 1 | 0 |
 
-## Hypotheses to test (concept §6–7)
-1. The problem (inaccessible local/public service, isolation of seniors) is real and recurring for the interviewee.
-2. Interviewee does not know where to report, or reports get no visible answer.
-3. A "solved elsewhere" case with a source would change what they ask/do (municipality: would they read/use it; NGO: would they publish/contribute).
-4. Reporting on behalf of someone (proxy) is a real practice; proxy points would use such a form.
+## Hipotezy do sprawdzenia (koncepcja §6–7)
+1. Problem (niedostępna lokalna/publiczna usługa, izolacja seniorów) jest dla rozmówcy realny i powtarzalny.
+2. Rozmówca nie wie, gdzie zgłosić problem, albo zgłoszenia nie dostają widocznej odpowiedzi.
+3. Przypadek „rozwiązane gdzie indziej” ze źródłem zmieniłby to, o co prosi/co robi (gmina: czy by go przeczytała/wykorzystała; NGO: czy by go opublikowała/współtworzyła).
+4. Zgłaszanie w czyimś imieniu (przez pełnomocnika) to realna praktyka; punkty pomocy korzystałyby z takiego formularza.
 
-## Interview guide (≈20 min, pl)
+## Scenariusz wywiadu (≈20 min, pl)
 1. Opowiedz o ostatnim razie, gdy usługa/miejsce publiczne była dla Ciebie (lub osoby, której pomagasz) niedostępna. Co się stało?
 2. Komu to zgłosiłeś/aś? Co usłyszałeś/aś? Ile to trwało?
 3. Skąd wiesz, że problem został (lub nie) rozwiązany?
 4. Gdybyś zobaczył/a, że podobny problem rozwiązano w innej gminie (ze źródłem, kosztem, wynikiem) — co byś z tym zrobił/a?
-5. (Proxy) Czy zgłaszasz sprawy w imieniu innych? Jak zbierasz zgodę?
+5. (Pełnomocnik) Czy zgłaszasz sprawy w imieniu innych? Jak zbierasz zgodę?
 6. (Gmina/NGO) Co musiałoby się zgadzać, żebyś użył/a takiego przypadku? Kto decyduje?
 7. Czy możemy zacytować Twoją wypowiedź? W jakiej formie (imię/rola/anonimowo)? Czy możesz dać krótki list intencyjny?
 
-Rules: ask about past behaviour, not hypothetical praise; do not pitch before Q4; record quotes verbatim.
+Zasady: pytaj o zachowania z przeszłości, a nie o hipotetyczne pochwały; nie prezentuj produktu przed pytaniem 4; zapisuj cytaty dosłownie.
 
-## Consent and data
-- Ask for consent to take notes and to quote before the interview; record the form of attribution agreed.
-- Store notes without contact details in the repo; contact details stay outside the repo.
-- Never publish a quote without recorded consent.
+## Zgoda i dane
+- Przed wywiadem poproś o zgodę na notatki i cytowanie; zapisz uzgodnioną formę przypisania autorstwa.
+- Notatki przechowuj w repozytorium bez danych kontaktowych; dane kontaktowe pozostają poza repozytorium.
+- Nigdy nie publikuj cytatu bez zapisanej zgody.
 
-## Pitch-usage rules
-- Show `n` with every number ("3 of 5 interviewees…"), never percentages of small n, no rounding up.
-- Quote verbatim with agreed attribution; mark translations as translated.
-- A segment with 0 done is not mentioned as validated.
+## Zasady użycia w pitchu
+- Przy każdej liczbie pokazuj `n` („3 z 5 rozmówców…”), nigdy procentów z małego n, bez zaokrąglania w górę.
+- Cytuj dosłownie z uzgodnionym przypisaniem; tłumaczenia oznaczaj jako tłumaczenia.
+- Segmentu z 0 wykonanych nie przedstawia się jako zwalidowanego.
 
-## Results
-### Interview log
-| # | Date | Segment | Consent to quote (y/n, form) | Confirms H1–H4 (which) | Notes file/ref |
+## Wyniki
+### Rejestr wywiadów
+| # | Data | Segment | Zgoda na cytat (t/n, forma) | Potwierdza H1–H4 (które) | Plik/odn. notatek |
 |---|---|---|---|---|---|
 | — | — | — | — | — | — |
 
-### Quotes register
-| # | Quote (verbatim) | Speaker role | Attribution agreed | Interview # | Cleared for pitch |
+### Rejestr cytatów
+| # | Cytat (dosłownie) | Rola rozmówcy | Uzgodnione przypisanie | Wywiad # | Zatwierdzony do pitchu |
 |---|---|---|---|---|---|
 | — | — | — | — | — | — |
 
-### Letters of intent
-None yet.
+### Listy intencyjne
+Jeszcze brak.
 
-### Honest summary
-To be written after the interviews (counts, what was NOT confirmed, limits of the sample).
+### Uczciwe podsumowanie
+Do napisania po wywiadach (liczby, co NIE zostało potwierdzone, ograniczenia próby).

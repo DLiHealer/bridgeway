@@ -1,29 +1,29 @@
-# Deployment Spec — GitHub + Cloudflare Pages (as-is, no backend)
+# Specyfikacja wdrożenia — GitHub + Cloudflare Pages (w obecnej postaci, bez backendu)
 
-Scope of this document: move the current static BridgeWay app to GitHub, then host it on Cloudflare Pages exactly as it works today (client-side mock data, `localStorage` state). Adding a real backend (Cloudflare Workers + D1) is a separate, later effort — not covered here.
+Zakres dokumentu: przeniesienie obecnej statycznej aplikacji BridgeWay na GitHub, a następnie hostowanie jej na Cloudflare Pages dokładnie tak, jak działa dziś (dane demo po stronie klienta, stan w `localStorage`). Dodanie prawdziwego backendu (Cloudflare Workers + D1) to osobne, późniejsze zadanie — nieopisane w tej części (zobacz sekcje na końcu dokumentu).
 
-## 1. Repo name
+## 1. Nazwa repozytorium
 
-**`bridgeway`** — matches the app's actual product name (page title, header, branding), not the stale `bridgeart` name that was in `package.json` (now fixed to match).
+**`bridgeway`** — zgodna z faktyczną nazwą produktu (tytuł strony, nagłówek, identyfikacja wizualna), a nie z nieaktualną nazwą `bridgeart`, która była w `package.json` (obecnie poprawiona).
 
-## 2. What's in the repo vs. what's ignored
+## 2. Co jest w repozytorium, a co ignorowane
 
-Tracked:
+Śledzone:
 ```
 .gitignore
 README.md
 DEPLOYMENT.md
 index.html
-netlify.toml          (harmless to keep; ignored by Cloudflare, only read by Netlify)
+netlify.toml          (można zostawić; Cloudflare go ignoruje, czyta go tylko Netlify)
 package.json / package-lock.json
 postcss.config.js
 tailwind.config.js
 vite.config.js
 public/               (favicon.svg, _redirects)
-src/                  (all app code)
+src/                  (cały kod aplikacji)
 ```
 
-Ignored (`.gitignore`):
+Ignorowane (`.gitignore`):
 ```
 node_modules
 dist
@@ -32,37 +32,37 @@ dist
 *.log
 ```
 
-`node_modules` is never committed — this is already handled. Anyone who clones the repo runs `npm install` to regenerate it.
+`node_modules` nigdy nie jest commitowany — to już jest zapewnione. Każdy, kto sklonuje repozytorium, uruchamia `npm install`, aby je odtworzyć.
 
-## 3. Local prep — already done
+## 3. Przygotowanie lokalne — wykonane
 
-The following was done in a clean working copy at a path with no spaces/Cyrillic characters (`~/Projects/bridgeway`), copied from the original ZIP extract, excluding `node_modules`, `dist`, `.netlify`, `.DS_Store`, and the stray `__MACOSX` folder:
+Poniższe kroki wykonano w czystej kopii roboczej w ścieżce bez spacji i cyrylicy (`~/Projects/bridgeway`), skopiowanej z oryginalnego archiwum ZIP z pominięciem `node_modules`, `dist`, `.netlify`, `.DS_Store` i zbędnego folderu `__MACOSX`:
 
-- [x] Cleaned directory (no macOS junk, no nested duplicate folder)
-- [x] `.gitignore` extended (`node_modules`, `dist`, `.netlify`, `.DS_Store`, `*.log`)
-- [x] `public/_redirects` added — `/* /index.html 200` (SPA fallback for Cloudflare Pages, equivalent to the existing Netlify `[[redirects]]` rule, needed because the app uses React Router's `BrowserRouter` with real paths like `/mapa`, `/pomysly/i1`)
-- [x] `package.json` `name` field corrected to `bridgeway`
-- [x] `git init` + initial commit (see below)
+- [x] Uporządkowany katalog (bez śmieci z macOS, bez zagnieżdżonego duplikatu folderu)
+- [x] Rozszerzony `.gitignore` (`node_modules`, `dist`, `.netlify`, `.DS_Store`, `*.log`)
+- [x] Dodany `public/_redirects` — `/* /index.html 200` (fallback SPA dla Cloudflare Pages, odpowiednik istniejącej reguły Netlify `[[redirects]]`, potrzebny, bo aplikacja używa `BrowserRouter` z React Router z prawdziwymi ścieżkami, np. `/mapa`, `/pomysly/i1`)
+- [x] Poprawione pole `name` w `package.json` na `bridgeway`
+- [x] `git init` + pierwszy commit (zobacz niżej)
 
-## 4. Push to GitHub
+## 4. Wypchnięcie na GitHub
 
-This environment has SSH access configured for GitHub (user `codriter`) but no `gh` CLI and no API token, so the empty repo has to be created once through the GitHub web UI — everything else is already done or scripted.
+To środowisko ma skonfigurowany dostęp SSH do GitHuba (użytkownik `codriter`), ale nie ma `gh` CLI ani tokenu API, więc puste repozytorium trzeba raz utworzyć przez interfejs WWW GitHuba — wszystko inne jest już zrobione lub oskryptowane.
 
-**Your one manual step:**
-1. Go to <https://github.com/new>
-2. Repository name: `bridgeway`
-3. Visibility: **Public**
-4. **Do not** check "Add a README", "Add .gitignore", or "Choose a license" — the repo must be created empty, otherwise the initial push will conflict with files already created on GitHub's side.
-5. Click **Create repository**.
+**Jedyny krok ręczny:**
+1. Wejdź na <https://github.com/new>
+2. Nazwa repozytorium: `bridgeway`
+3. Widoczność: **Public**
+4. **Nie** zaznaczaj „Add a README”, „Add .gitignore” ani „Choose a license” — repozytorium musi być puste, inaczej pierwszy push będzie w konflikcie z plikami utworzonymi po stronie GitHuba.
+5. Kliknij **Create repository**.
 
-Then push (done from `~/Projects/bridgeway`):
+Następnie wypchnij (z `~/Projects/bridgeway`):
 ```bash
 git remote add origin git@github.com:codriter/bridgeway.git
 git branch -M main
 git push -u origin main
 ```
 
-**To get a working copy elsewhere** (what you asked for — "clone it to another folder"):
+**Aby uzyskać kopię roboczą w innym miejscu** („sklonuj do innego folderu”):
 ```bash
 git clone git@github.com:codriter/bridgeway.git /path/to/another/folder
 cd /path/to/another/folder
@@ -70,47 +70,47 @@ npm install
 npm run dev
 ```
 
-## 5. Cloudflare Pages setup
+## 5. Konfiguracja Cloudflare Pages
 
 1. [dash.cloudflare.com](https://dash.cloudflare.com) → **Workers & Pages → Create → Pages → Connect to Git**
-2. Authorize Cloudflare's GitHub app, select the `bridgeway` repo
-3. Build settings:
-   | Setting | Value |
+2. Autoryzuj aplikację GitHub Cloudflare i wybierz repozytorium `bridgeway`
+3. Ustawienia buildu:
+   | Ustawienie | Wartość |
    |---|---|
    | Framework preset | Vite |
    | Build command | `npm run build` |
    | Build output directory | `dist` |
    | Root directory | `/` |
-   | Environment variables | none needed |
-4. Click **Save and Deploy**
+   | Environment variables | niepotrzebne |
+4. Kliknij **Save and Deploy**
 
-Cloudflare builds and serves the app at `https://bridgeway.pages.dev` (free `*.pages.dev` subdomain, included automatically). Every subsequent push to `main` triggers a new deployment; every pull request gets its own free preview URL.
+Cloudflare buduje i serwuje aplikację pod `https://bridgeway.pages.dev` (darmowa subdomena `*.pages.dev`, dodawana automatycznie). Każdy kolejny push do `main` uruchamia nowe wdrożenie; każdy pull request dostaje własny darmowy adres podglądu.
 
-## 6. Post-deploy verification checklist
+## 6. Lista kontrolna po wdrożeniu
 
-- [ ] Homepage loads at `https://bridgeway.pages.dev`
-- [ ] Client-side navigation works (click through to `/mapa`, `/pomysly`, etc.)
-- [ ] **Direct URL / page refresh on a sub-route works** (e.g. open `https://bridgeway.pages.dev/mapa` directly, or hit refresh while on it) — this is the specific case `public/_redirects` exists to fix; if it 404s, the `_redirects` file didn't make it into the `dist` build output
-- [ ] Map (Leaflet) renders correctly
-- [ ] Language switch (PL/EN via i18next) works
-- [ ] Submitting a problem/idea via `/zglos` still works (writes to `localStorage`, so this is per-browser only — expected with no backend)
+- [ ] Strona główna ładuje się pod `https://bridgeway.pages.dev`
+- [ ] Nawigacja po stronie klienta działa (przejście do `/mapa`, `/pomysly` itd.)
+- [ ] **Bezpośredni URL / odświeżenie podstrony działa** (np. otwórz bezpośrednio `https://bridgeway.pages.dev/mapa` albo odśwież będąc na niej) — dokładnie ten przypadek naprawia `public/_redirects`; jeśli pojawia się 404, plik `_redirects` nie trafił do wyniku buildu w `dist`
+- [ ] Mapa (Leaflet) renderuje się poprawnie
+- [ ] Przełącznik języka (PL/EN przez i18next) działa
+- [ ] Wysłanie problemu/pomysłu przez `/zglos` nadal działa (zapis do `localStorage`, więc tylko w danej przeglądarce — oczekiwane bez backendu)
 
-## 7. Free-tier fit
+## 7. Zgodność z darmowym planem
 
-Everything here runs on Cloudflare's free plan: unlimited static requests/bandwidth for Pages, free `*.pages.dev` subdomain and SSL, 500 builds/month. No credit card or custom domain required. (A custom domain can be attached later for free — you'd only pay a registrar for the domain name itself, not Cloudflare.)
+Wszystko tutaj działa w darmowym planie Cloudflare: nielimitowane statyczne żądania i transfer dla Pages, darmowa subdomena `*.pages.dev` i SSL, 500 buildów miesięcznie. Nie jest potrzebna karta płatnicza ani własna domena. (Własną domenę można później podpiąć za darmo — płaci się tylko rejestratorowi za samą nazwę domeny, nie Cloudflare.)
 
-## 8. Out of scope (future work)
+## 8. Poza zakresem (przyszłe prace)
 
-A real backend (Cloudflare Pages Functions + D1, replacing the mocked `src/data/index.js` and `localStorage` writes with a shared, persistent database) was discussed separately and deliberately left out of this migration. Revisit when ready — it's a small, well-bounded addition on top of this setup, not a rewrite.
+Prawdziwy backend (Cloudflare Pages Functions + D1, zastępujący dane demo w `src/data/index.js` i zapisy do `localStorage` współdzieloną, trwałą bazą danych) omówiono osobno i celowo pominięto w tej migracji. Do powrotu, gdy będzie gotowość — to mały, dobrze wydzielony dodatek do tej konfiguracji, a nie przepisanie aplikacji.
 
-## Backend (Step 16): Worker + D1 + magic-link login
-- Local: create `.dev.vars` (gitignored) with `DEV_MAGIC_LINK=true` and `RESPONDER_EMAILS=urzad@example.com`; `npm run build`, `npm run db:migrate:local`, `npm run dev:api` (serves site + API on :8787), or `npm run dev` + `npm run dev:api` (Vite proxies `/api`). With `DEV_MAGIC_LINK` the sign-in link is shown on the page instead of emailed.
-- Production: `npx wrangler d1 create bridgeway` (or let wrangler auto-provision), `npx wrangler d1 migrations apply bridgeway --remote`, then `wrangler secret put RESPONDER_EMAILS` (comma list) and set `MAIL_FROM` plus an `EMAIL` send binding (Cloudflare Email Service; sender domain must be onboarded). Never set `DEV_MAGIC_LINK` in production. `npx wrangler deploy` after `npm run build`.
-- Without the Worker (e.g. Netlify) the app runs as before; shared reports and login show a "no server / data is local" notice.
-- Email via Resend (no own domain): `wrangler secret put RESEND_API_KEY`. Without `MAIL_FROM` the sender is `onboarding@resend.dev`, which Resend delivers **only to the Resend account owner's email** — enough for a responder login; residents need a verified domain (`MAIL_FROM` on it). Sending order: dev link → Resend → Cloudflare `EMAIL` binding.
-- Registration with approval: new emails are stored as pending; a responder approves them on `/logowanie`. With Resend's shared test sender only the Resend account owner's inbox receives links, so approved residents can't log in until `MAIL_FROM` is on a verified domain (Resend or Cloudflare Email Service).
-- Production sender: `MAIL_FROM = BridgeWay <login@mail.processtotool.com>` (wrangler.jsonc vars; subdomain verified in Resend), so approved addresses can receive links. Real-inbox delivery confirmed by the owner (2026-10-04).
-- Test mode: responder can enable "send links to new addresses without approval" on `/admin` (stored in D1, default off, 50 links/h cap). Links are still emailed, so address ownership is verified. Disable after demos.
+## Backend (krok 16): Worker + D1 + logowanie magic linkiem
+- Lokalnie: utwórz `.dev.vars` (w gitignore) z `DEV_MAGIC_LINK=true` i `RESPONDER_EMAILS=urzad@example.com`; `npm run build`, `npm run db:migrate:local`, `npm run dev:api` (serwuje stronę + API na :8787) albo `npm run dev` + `npm run dev:api` (Vite przekierowuje `/api`). Z `DEV_MAGIC_LINK` link logowania pokazuje się na stronie zamiast w e-mailu.
+- Produkcja: `npx wrangler d1 create bridgeway` (albo automatyczne utworzenie przez wrangler), `npx wrangler d1 migrations apply bridgeway --remote`, następnie `wrangler secret put RESPONDER_EMAILS` (lista rozdzielona przecinkami) i ustawienie `MAIL_FROM` oraz bindingu wysyłki `EMAIL` (Cloudflare Email Service; domena nadawcy musi być dodana). Nigdy nie ustawiaj `DEV_MAGIC_LINK` na produkcji. `npx wrangler deploy` po `npm run build`.
+- Bez Workera (np. na Netlify) aplikacja działa jak wcześniej; udostępniane zgłoszenia i logowanie pokazują komunikat „brak serwera / dane są lokalne”.
+- E-mail przez Resend (bez własnej domeny): `wrangler secret put RESEND_API_KEY`. Bez `MAIL_FROM` nadawcą jest `onboarding@resend.dev`, z którego Resend dostarcza wiadomości **tylko na adres właściciela konta Resend** — wystarcza to do logowania odpowiadającego; mieszkańcy potrzebują zweryfikowanej domeny (`MAIL_FROM` w niej). Kolejność wysyłki: link deweloperski → Resend → binding Cloudflare `EMAIL`.
+- Rejestracja z akceptacją: nowe adresy są zapisywane jako oczekujące; odpowiadający akceptuje je w `/logowanie`. Ze wspólnym testowym nadawcą Resend linki otrzymuje tylko skrzynka właściciela konta Resend, więc zaakceptowani mieszkańcy nie zalogują się, dopóki `MAIL_FROM` nie będzie w zweryfikowanej domenie (Resend lub Cloudflare Email Service).
+- Nadawca produkcyjny: `MAIL_FROM = BridgeWay <login@mail.processtotool.com>` (zmienne w wrangler.jsonc; subdomena zweryfikowana w Resend), więc zaakceptowane adresy mogą otrzymywać linki. Dostarczanie do prawdziwej skrzynki potwierdzone przez właściciela (2026-10-04).
+- Tryb testowy: odpowiadający może włączyć w `/admin` opcję „wysyłaj linki na nowe adresy bez akceptacji” (zapisane w D1, domyślnie wyłączone, limit 50 linków/h). Linki nadal są wysyłane e-mailem, więc posiadanie adresu jest weryfikowane. Po pokazach wyłącz.
 
-### Adaptation plan (Step 17)
-Uses OpenRouter: secret `OPENROUTER_API_KEY` (`wrangler secret put OPENROUTER_API_KEY`); the model is chosen on `/admin` (D1 `settings.llmModel`). Apply the new migration (`wrangler d1 migrations apply bridgeway --remote`) before deploying; locally `npm run db:migrate:local`. Locally put `OPENROUTER_API_KEY` in `.dev.vars`; without it the endpoint returns `llm_unavailable`.
+### Plan adaptacji (krok 17)
+Korzysta z OpenRouter: sekret `OPENROUTER_API_KEY` (`wrangler secret put OPENROUTER_API_KEY`); model wybiera się w `/admin` (D1 `settings.llmModel`). Przed wdrożeniem zastosuj nową migrację (`wrangler d1 migrations apply bridgeway --remote`); lokalnie `npm run db:migrate:local`. Lokalnie umieść `OPENROUTER_API_KEY` w `.dev.vars`; bez niego endpoint zwraca `llm_unavailable`.

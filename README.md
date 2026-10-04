@@ -3,203 +3,203 @@
 # 🌉 BridgeWay
 
 ### „Problem został już gdzieś rozwiązany.”
-**This problem has already been solved somewhere.**
+**Wystarczy zbudować most.**
 
-A civic platform that connects a local social problem with a real, documented solution that has already worked somewhere else, and then follows it until something actually changes.
+Platforma obywatelska, która łączy lokalny problem społeczny z realnym, udokumentowanym rozwiązaniem, które już gdzieś zadziałało, a potem prowadzi sprawę, aż coś naprawdę się zmieni.
 
-[**Project**](#about) · [**Tech spec**](./docs/TECH_SPEC.md) · [**Architecture**](./docs/ARCHITECTURE.md) · [**License**](./docs/LICENSE.md)
+[**Projekt**](#o-projekcie) · [**Specyfikacja techniczna**](./docs/TECH_SPEC.md) · [**Architektura**](./docs/ARCHITECTURE.md) · [**Licencja**](./docs/LICENSE.md)
 
 </div>
 
-> **© 2026 Dominik Liahovich. All rights reserved.** BridgeWay is proprietary software. The code is published for evaluation only and may not be copied, reused or deployed. See [License](#license).
+> **© 2026 Dominik Liahovich. Wszelkie prawa zastrzeżone.** BridgeWay jest oprogramowaniem własnościowym. Kod jest udostępniony wyłącznie do oceny i nie może być kopiowany, ponownie wykorzystywany ani wdrażany. Zobacz [Licencja](#licencja).
 
 ---
 
-## Contents
-1. [About](#about)
-2. [The problem](#the-problem)
-3. [Our answer](#our-answer)
-4. [Who BridgeWay is for](#who-bridgeway-is-for)
-5. [A story: from problem to change](#a-story-from-problem-to-change)
-6. [What you can do in BridgeWay](#what-you-can-do-in-bridgeway)
-7. [Principles we don't compromise on](#principles-we-dont-compromise-on)
-8. [Inclusion and accessibility](#inclusion-and-accessibility)
-9. [Privacy by design](#privacy-by-design)
-10. [Measuring social impact](#measuring-social-impact)
-11. [Where BridgeWay fits](#where-bridgeway-fits)
-12. [Sustainability model](#sustainability-model)
-13. [Project status](#project-status)
-14. [Documentation](#documentation)
-15. [Quick start](#quick-start)
-16. [License](#license)
+## Spis treści
+1. [O projekcie](#o-projekcie)
+2. [Problem](#problem)
+3. [Nasza odpowiedź](#nasza-odpowiedź)
+4. [Dla kogo jest BridgeWay](#dla-kogo-jest-bridgeway)
+5. [Historia: od problemu do zmiany](#historia-od-problemu-do-zmiany)
+6. [Co można zrobić w BridgeWay](#co-można-zrobić-w-bridgeway)
+7. [Zasady, od których nie odstępujemy](#zasady-od-których-nie-odstępujemy)
+8. [Włączenie i dostępność](#włączenie-i-dostępność)
+9. [Prywatność w fazie projektowania](#prywatność-w-fazie-projektowania)
+10. [Mierzenie wpływu społecznego](#mierzenie-wpływu-społecznego)
+11. [Miejsce BridgeWay wśród innych narzędzi](#miejsce-bridgeway-wśród-innych-narzędzi)
+12. [Model trwałości](#model-trwałości)
+13. [Status projektu](#status-projektu)
+14. [Dokumentacja](#dokumentacja)
+15. [Szybki start](#szybki-start)
+16. [Licencja](#licencja)
 
 ---
 
-## About
+## O projekcie
 
-BridgeWay helps a **municipality (gmina), an NGO or an ordinary resident** stop reinventing solutions to social problems. It finds interventions that have already been carried out in Poland and the EU, shows how strong the evidence behind them really is, explains honestly how well they would fit *this* place, and walks the problem from a report to an owner, a status and a measured result.
+BridgeWay pomaga **gminie, organizacji pozarządowej albo zwykłemu mieszkańcowi** przestać wymyślać od nowa rozwiązania problemów społecznych. Wyszukuje interwencje, które już przeprowadzono w Polsce i UE, pokazuje, jak mocne są naprawdę stojące za nimi dowody, uczciwie wyjaśnia, na ile pasowałyby do *tego* miejsca, i prowadzi problem od zgłoszenia do właściciela, statusu i zmierzonego rezultatu.
 
-The interface is in Polish (with full English), because its first users are Polish communities.
+Interfejs jest po polsku (z pełną wersją angielską), bo pierwszymi użytkownikami są polskie społeczności.
 
-## The problem
+## Problem
 
-Every Polish town has the same set of hard, quiet problems: older people isolated at home, buildings and offices that people with disabilities cannot enter, neighbours left out of a digital world, families struggling with housing. These are not new problems, and many have already been tackled well somewhere.
+W każdym polskim mieście występuje ten sam zestaw trudnych, cichych problemów: starsze osoby osamotnione w domu, budynki i urzędy, do których nie wejdą osoby z niepełnosprawnościami, sąsiedzi wykluczeni ze świata cyfrowego, rodziny zmagające się z mieszkaniem. To nie są nowe problemy i wiele z nich zostało już gdzieś dobrze rozwiązanych.
 
-But that knowledge is scattered. It sits in evaluation reports, EU project summaries, foundation websites and conference slides. A social worker in one gmina rarely learns what worked in the next voivodeship, so:
+Ta wiedza jest jednak rozproszona. Leży w raportach z ewaluacji, podsumowaniach projektów unijnych, na stronach fundacji i w slajdach z konferencji. Pracownik socjalny w jednej gminie rzadko dowiaduje się, co zadziałało w sąsiednim województwie, dlatego:
 
-- **every community starts from zero**, spending time and public money on approaches that have already been tried;
-- **reports go nowhere**: a resident complains, but nobody is named as responsible and nothing visible happens;
-- **the people most affected are the least heard**: seniors and people with limited mobility often can't use complex websites or deal with institutions on their own.
+- **każda społeczność zaczyna od zera**, wydając czas i publiczne pieniądze na podejścia, które już ktoś wypróbował;
+- **zgłoszenia trafiają donikąd**: mieszkaniec się skarży, ale nikt nie zostaje wskazany jako odpowiedzialny i nic widocznego się nie dzieje;
+- **najbardziej dotknięci są najmniej słyszani**: seniorzy i osoby o ograniczonej mobilności często nie potrafią korzystać ze skomplikowanych stron ani samodzielnie załatwiać spraw w instytucjach.
 
-The scale is real. A 2026 audit of local-government accessibility by the Supreme Audit Office (NIK) found that **87% of the audited units failed minimum accessibility requirements**. None of the 34 websites checked was fully compliant ([source](https://www.prawo.pl/samorzad/dostepnosc-w-samorzadach-tylko-na-papierze-krytyczne-wyniki-kontroli-nik,1547387.html), recorded in [`sourcing-spike.md`](./sourcing-spike.md)).
+Skala jest realna. Kontrola Najwyższej Izby Kontroli (NIK) z 2026 roku dotycząca dostępności w samorządach wykazała, że **87% skontrolowanych jednostek nie spełniało minimalnych wymagań dostępności**. Żadna z 34 sprawdzonych stron internetowych nie była w pełni zgodna ([źródło](https://www.prawo.pl/samorzad/dostepnosc-w-samorzadach-tylko-na-papierze-krytyczne-wyniki-kontroli-nik,1547387.html), odnotowane w [`sourcing-spike.md`](./sourcing-spike.md)).
 
-## Our answer
+## Nasza odpowiedź
 
-**Evidence-based solution transfer:**
+**Transfer rozwiązań oparty na dowodach:**
 
 ```
-Problem → similar real cases → strength of evidence → fit to this place
-        → adaptation plan → responsible body → status → measured result
-        → back into the shared knowledge base
+Problem → podobne realne przypadki → siła dowodów → dopasowanie do miejsca
+        → plan adaptacji → odpowiedzialny organ → status → zmierzony rezultat
+        → powrót do wspólnej bazy wiedzy
 ```
 
-Each completed transfer makes the next one cheaper and faster. Over time, BridgeWay's real value is a structured base of interventions: *what was done, where, for whom, under what conditions, at what cost, and with what measured result.*
+Każdy zakończony transfer sprawia, że następny jest tańszy i szybszy. Z czasem prawdziwą wartością BridgeWay staje się uporządkowana baza interwencji: *co zrobiono, gdzie, dla kogo, w jakich warunkach, za ile i z jakim zmierzonym rezultatem.*
 
-## Who BridgeWay is for
+## Dla kogo jest BridgeWay
 
-| Role | Who | What BridgeWay gives them |
+| Rola | Kto | Co daje mu BridgeWay |
 |---|---|---|
-| **Reporter** | a resident, a family, neighbours | A clear path from "something is wrong" to action, with a visible status |
-| **Proxy helper** | a librarian, social worker, volunteer, senior club | The ability to report **on behalf of** someone who can't, with recorded consent |
-| **Implementer** | an NGO, a municipal department | A ready, source-backed adaptation plan instead of a blank page |
-| **Responsible body** | road/building authority, housing manager, social-welfare centre | A named addressee and a public status timeline to answer through |
-| **Funder** *(after the hackathon)* | grant programmes, foundations | Proven interventions worth funding, matched to real needs |
+| **Zgłaszający** | mieszkaniec, rodzina, sąsiedzi | Jasną drogę od „coś jest nie tak” do działania, z widocznym statusem |
+| **Pomocnik (pełnomocnik)** | bibliotekarka, pracownik socjalny, wolontariusz, klub seniora | Możliwość zgłoszenia **w imieniu** osoby, która nie może tego zrobić sama, z odnotowaną zgodą |
+| **Realizator** | organizacja pozarządowa, wydział urzędu | Gotowy, oparty na źródłach plan adaptacji zamiast pustej kartki |
+| **Odpowiedzialny organ** | zarząd dróg / nadzór budowlany, zarządca mieszkań, ośrodek pomocy społecznej | Wskazanego adresata i publiczną oś czasu statusów, przez którą może odpowiedzieć |
+| **Grantodawca** *(po hackathonie)* | programy grantowe, fundacje | Sprawdzone interwencje warte finansowania, dopasowane do realnych potrzeb |
 
-**The main beneficiaries are older people and people with limited mobility.** BridgeWay is designed so that they **don't have to use it themselves**: someone they trust can do it for them.
+**Głównymi beneficjentami są osoby starsze i osoby o ograniczonej mobilności.** BridgeWay zaprojektowano tak, by **nie musiały korzystać z niego same**: może to za nie zrobić ktoś, komu ufają.
 
-## A story: from problem to change
+## Historia: od problemu do zmiany
 
-> *Illustrative scenario (staged, as in our demo).*
+> *Scenariusz ilustracyjny (zainscenizowany, jak w naszym demo).*
 
-Anna's elderly neighbour uses a wheelchair and can no longer reach the local social-services centre. Anna opens BridgeWay:
+Starszy sąsiad Anny porusza się na wózku i nie może już dotrzeć do lokalnego ośrodka pomocy społecznej. Anna otwiera BridgeWay:
 
-1. **She reports the problem on his behalf.** She picks *accessibility*, chooses the city and ticks "reporting for another person". His consent is recorded. No address is collected.
-2. **BridgeWay shows matching real cases**, each with its organisation, cost, duration, measured outcome and an evidence level from A to D. Most real cases are C or D, and the app says so.
-3. **She opens a case and sees its transfer score**: which factors match her town, their weights, and which factors have **no data**. Missing factors are never guessed, and the score is marked *preliminary*.
-4. **One click creates a local project** with the case's steps as tasks.
-5. **The project names a responsible body.** If none is named yet, the gap is flagged. A public timeline follows the status: *received → assigned → in progress → resolved / rejected (with a reason)*.
+1. **Zgłasza problem w jego imieniu.** Wybiera kategorię *dostępność*, miasto i zaznacza „zgłaszam w imieniu innej osoby”. Jego zgoda zostaje odnotowana. Adres nie jest zbierany.
+2. **BridgeWay pokazuje pasujące realne przypadki**, każdy z organizacją, kosztem, czasem trwania, zmierzonym efektem i poziomem dowodów od A do D. Większość realnych przypadków to C lub D, a aplikacja mówi o tym wprost.
+3. **Otwiera przypadek i widzi jego wskaźnik transferu**: które czynniki pasują do jej miasta, jakie mają wagi i dla których czynników **brakuje danych**. Brakujące czynniki nigdy nie są zgadywane, a wynik jest oznaczony jako *wstępny*.
+4. **Jedno kliknięcie tworzy lokalny projekt** z krokami przypadku jako zadaniami.
+5. **Projekt wskazuje odpowiedzialny organ.** Jeśli jeszcze go nie wskazano, luka jest sygnalizowana. Publiczna oś czasu śledzi status: *przyjęte → przypisane → w realizacji → rozwiązane / odrzucone (z uzasadnieniem)*.
 
-## What you can do in BridgeWay
+## Co można zrobić w BridgeWay
 
-- 🔎 **Find solutions.** Browse verified cases from Poland and the EU, each with a source link and an evidence level.
-- 📊 **Check fit.** A transparent transfer score weighs problem type, local context (e.g. the share of residents aged 65+, from official GUS statistics), budget, partners and evidence.
-- 🧭 **Adapt.** Get an AI-assisted adaptation plan that is shown **only if every step is backed by a verbatim quote** from the case. The AI cannot add facts, numbers or sources.
-- 📣 **Report.** Submit local problems. Shared reports are public and have a status timeline that responders update.
-- 🤝 **Connect.** Find experts, NGOs and funding programmes matched to the problem by keywords and location.
-- 🗺️ **See the map** of local signals and community projects. Sensitive reports are shown only as a blurred area.
-- 💡 **Propose ideas** and turn cases into **projects** with tasks, an addressee and a status history.
-- 📈 **Measure.** Analytics are computed from real activity (time to first response, how often solutions are reused). There are no decorative charts.
+- 🔎 **Znajdować rozwiązania.** Przeglądać zweryfikowane przypadki z Polski i UE, każdy z linkiem do źródła i poziomem dowodów.
+- 📊 **Sprawdzać dopasowanie.** Przejrzysty wskaźnik transferu waży typ problemu, kontekst lokalny (np. odsetek mieszkańców w wieku 65+ z oficjalnych danych GUS), budżet, partnerów i dowody.
+- 🧭 **Adaptować.** Otrzymać plan adaptacji wspierany przez AI, który jest pokazywany **tylko wtedy, gdy każdy krok jest poparty dosłownym cytatem** z przypadku. AI nie może dodawać faktów, liczb ani źródeł.
+- 📣 **Zgłaszać.** Przesyłać lokalne problemy. Udostępnione zgłoszenia są publiczne i mają oś czasu statusów aktualizowaną przez odpowiadających.
+- 🤝 **Łączyć się.** Znajdować ekspertów, organizacje pozarządowe i programy finansowania dopasowane do problemu według słów kluczowych i lokalizacji.
+- 🗺️ **Oglądać mapę** lokalnych sygnałów i projektów społecznych. Wrażliwe zgłoszenia są pokazywane tylko jako rozmyty obszar.
+- 💡 **Proponować pomysły** i zamieniać przypadki w **projekty** z zadaniami, adresatem i historią statusów.
+- 📈 **Mierzyć.** Analityka jest liczona z realnej aktywności (czas do pierwszej odpowiedzi, jak często rozwiązania są ponownie wykorzystywane). Nie ma wykresów dla ozdoby.
 
-## Principles we don't compromise on
+## Zasady, od których nie odstępujemy
 
-1. **Every claim has a source.** No source, no fact on the screen.
-2. **Every score is explainable.** There is no "magic percentage": factors, weights and their origin are visible.
-3. **Every report has an addressee and a status.** A report without an owner is a ticket into the void.
-4. **Honest numbers only.** Every figure is either **real** (with a source), a **target** (labelled) or **demo** (labelled). Demo data is always marked in the interface.
-5. **AI is a tool, not the product.** It is guarded and auditable, and it is never the source of truth.
-6. **Safety first.** Unsafe do-it-yourself fixes (e.g. self-built ramps) are not recommended. BridgeWay points to the proper route instead: accessibility audit → responsible body → technically approved solution.
+1. **Każde twierdzenie ma źródło.** Bez źródła nie ma faktu na ekranie.
+2. **Każdy wynik da się wyjaśnić.** Nie ma „magicznego procentu”: czynniki, wagi i ich pochodzenie są widoczne.
+3. **Każde zgłoszenie ma adresata i status.** Zgłoszenie bez właściciela to bilet w próżnię.
+4. **Tylko uczciwe liczby.** Każda liczba jest albo **realna** (ze źródłem), albo **docelowa** (oznaczona), albo **demonstracyjna** (oznaczona). Dane demo są zawsze oznaczone w interfejsie.
+5. **AI to narzędzie, nie produkt.** Jest zabezpieczona i audytowalna, i nigdy nie jest źródłem prawdy.
+6. **Bezpieczeństwo przede wszystkim.** Nie polecamy niebezpiecznych rozwiązań typu „zrób to sam” (np. samodzielnie budowanych podjazdów). BridgeWay wskazuje właściwą drogę: audyt dostępności → odpowiedzialny organ → technicznie zatwierdzone rozwiązanie.
 
-## Inclusion and accessibility
+## Włączenie i dostępność
 
-- **Assisted (proxy) reporting** with explicit consent, so that people excluded from the web can still be heard.
-- **WCAG 2.1 AA target**: contrast ≥ 4.5:1, labelled controls, keyboard focus management, screen-reader-friendly page titles, and respect for the "reduced motion" setting.
-- **Bilingual interface** (Polish / English), switchable at any time.
-- An **accessibility statement** published inside the app (`/dostepnosc`, details in [`accessibility.md`](./accessibility.md)).
+- **Zgłaszanie z pomocą (przez pełnomocnika)** z wyraźną zgodą, aby osoby wykluczone z internetu też mogły zostać usłyszane.
+- **Cel: WCAG 2.1 AA**: kontrast ≥ 4,5:1, opisane kontrolki, zarządzanie fokusem klawiatury, tytuły stron przyjazne czytnikom ekranu i respektowanie ustawienia „ograniczonego ruchu”.
+- **Dwujęzyczny interfejs** (polski / angielski), przełączany w dowolnym momencie.
+- **Deklaracja dostępności** opublikowana w aplikacji (`/dostepnosc`, szczegóły w [`accessibility.md`](./accessibility.md)).
 
-## Privacy by design
+## Prywatność w fazie projektowania
 
-- Only a **city** is collected, never a street address.
-- **Sensitive reports** (seniors, housing, or reports made on behalf of someone else) are never pinned to an exact point. The map shows a 3 km area on a coarse grid instead.
-- A warning about third-party personal data is shown before a report is submitted.
-- Logging in uses **one-time email links**: there are no passwords to leak. Each account's data is private.
-- Draft privacy policy and terms are included in the app (`/prywatnosc`, `/regulamin`).
+- Zbierane jest tylko **miasto**, nigdy adres.
+- **Wrażliwe zgłoszenia** (seniorzy, mieszkalnictwo lub zgłoszenia w imieniu innej osoby) nigdy nie są przypinane do dokładnego punktu. Mapa pokazuje zamiast tego obszar 3 km na zgrubnej siatce.
+- Przed wysłaniem zgłoszenia wyświetlane jest ostrzeżenie dotyczące danych osobowych osób trzecich.
+- Logowanie odbywa się przez **jednorazowe linki e-mail**: nie ma haseł, które mogłyby wyciec. Dane każdego konta są prywatne.
+- Projekty polityki prywatności i regulaminu są dostępne w aplikacji (`/prywatnosc`, `/regulamin`).
 
-## Measuring social impact
+## Mierzenie wpływu społecznego
 
-**Theory of change:** problem described → applicable proven case found → owner assigned → solution implemented → result measured → case enriches the base → the next place needs less time and money.
+**Teoria zmiany:** problem opisany → znaleziony pasujący sprawdzony przypadek → przypisany właściciel → rozwiązanie wdrożone → rezultat zmierzony → przypadek wzbogaca bazę → kolejne miejsce potrzebuje mniej czasu i pieniędzy.
 
-| Level | Metric | Why it matters |
+| Poziom | Miara | Dlaczego to ważne |
 |---|---|---|
-| Output | Share of reports with a named addressee | Accountability, not volume |
-| Output | Number of cases with a source and an evidence level | Growth of the knowledge base |
-| Outcome | **Time to first response** (median) | Whether institutions actually react |
-| Outcome | **Reuse rate**: share of new problems tackled with an existing case | BridgeWay's signature metric |
-| Outcome | Share of cases resolved within 30 / 60 / 90 days | Real progress |
-| Impact | People whose access to a place or service improved | The change that matters |
+| Produkt | Odsetek zgłoszeń ze wskazanym adresatem | Odpowiedzialność, a nie liczba zgłoszeń |
+| Produkt | Liczba przypadków ze źródłem i poziomem dowodów | Wzrost bazy wiedzy |
+| Rezultat | **Czas do pierwszej odpowiedzi** (mediana) | Czy instytucje faktycznie reagują |
+| Rezultat | **Wskaźnik ponownego wykorzystania**: odsetek nowych problemów rozwiązywanych istniejącym przypadkiem | Charakterystyczna miara BridgeWay |
+| Rezultat | Odsetek spraw rozwiązanych w ciągu 30 / 60 / 90 dni | Realny postęp |
+| Wpływ | Osoby, którym poprawił się dostęp do miejsca lub usługi | Zmiana, która się liczy |
 
-**North Star:** *the number of successfully transferred solutions.* Today's baseline is zero, and we don't hide that.
+**Gwiazda Polarna:** *liczba skutecznie przeniesionych rozwiązań.* Dzisiejszy punkt wyjścia to zero i nie ukrywamy tego.
 
-## Where BridgeWay fits
+## Miejsce BridgeWay wśród innych narzędzi
 
-BridgeWay does not replace existing tools. It is the **layer of knowledge and accountability between them**: *what to do* and *who is responsible*.
+BridgeWay nie zastępuje istniejących narzędzi. Jest **warstwą wiedzy i odpowiedzialności pomiędzy nimi**: *co zrobić* i *kto za to odpowiada*.
 
-| Existing tool | What it does well | What BridgeWay adds |
+| Istniejące narzędzie | Co robi dobrze | Co dodaje BridgeWay |
 |---|---|---|
-| City "report a problem" portals | Collect complaints | Proven solutions from elsewhere + a public status |
-| Participatory budgets and platforms | Ideas and voting | An evidence base + an adaptation plan through to a result |
-| NGO directories | Who is out there | Matching the right partner to a specific case |
-| Crowdfunding | Raising money | Checking *what* is worth funding before the money is raised |
-| Neighbourhood social-media groups | Fast discussion | Structured knowledge that doesn't get lost |
+| Miejskie portale „zgłoś problem” | Zbierają skargi | Sprawdzone rozwiązania z innych miejsc + publiczny status |
+| Budżety obywatelskie i platformy partycypacyjne | Pomysły i głosowanie | Bazę dowodów + plan adaptacji aż do rezultatu |
+| Katalogi organizacji pozarządowych | Kto działa w okolicy | Dopasowanie właściwego partnera do konkretnego przypadku |
+| Crowdfunding | Zbieranie pieniędzy | Sprawdzenie, *co* warto finansować, zanim pieniądze zostaną zebrane |
+| Osiedlowe grupy w mediach społecznościowych | Szybka dyskusja | Uporządkowaną wiedzę, która nie ginie |
 
-*(This comparison is a working hypothesis. See [`concept_v1.0.md`](./concept_v1.0.md) §11.)*
+*(To porównanie jest roboczą hipotezą. Zobacz [`concept_v1.0.md`](./concept_v1.0.md) §11.)*
 
-## Sustainability model
+## Model trwałości
 
-*(A hypothesis, not yet validated. No prices are named before validation.)*
+*(Hipoteza, jeszcze niezweryfikowana. Przed walidacją nie podajemy cen.)*
 
-- **Free for residents and NGOs.**
-- **Municipalities:** a dashboard of open reports, response times, transferable cases and reports.
-- **Foundations and programmes:** effectiveness reporting and a catalogue of proven interventions.
-- **Researchers and partners:** anonymised data access by agreement.
+- **Bezpłatnie dla mieszkańców i organizacji pozarządowych.**
+- **Gminy:** panel otwartych zgłoszeń, czasów odpowiedzi, przenaszalnych przypadków i raportów.
+- **Fundacje i programy:** raportowanie skuteczności i katalog sprawdzonych interwencji.
+- **Badacze i partnerzy:** dostęp do zanonimizowanych danych na podstawie umowy.
 
-## Project status
+## Status projektu
 
-**Hackathon MVP. Working and deployed on Cloudflare.**
+**MVP z hackathonu. Działa i jest wdrożone na Cloudflare.**
 
-- ✅ Verified case base (real sources, evidence levels A–D), transfer score, matching, map, ideas and projects
-- ✅ Optional backend: shared reports, magic-link login with registration approval, responder workflow, per-account data
-- ✅ Guarded LLM adaptation plan, computed analytics, accessibility pass, privacy safeguards
-- ⏳ User validation interviews (postponed): the product is **not yet validated with users** ([`validation.md`](./validation.md))
-- ⏳ After the hackathon: real funding calls, a registry of responsible bodies, moderation, automated tests
+- ✅ Zweryfikowana baza przypadków (realne źródła, poziomy dowodów A–D), wskaźnik transferu, dopasowanie, mapa, pomysły i projekty
+- ✅ Opcjonalny backend: udostępniane zgłoszenia, logowanie przez magic link z akceptacją rejestracji, obsługa przez odpowiadających, dane per konto
+- ✅ Zabezpieczony plan adaptacji LLM, liczona analityka, przegląd dostępności, zabezpieczenia prywatności
+- ⏳ Wywiady walidacyjne z użytkownikami (odłożone): produkt **nie został jeszcze zweryfikowany z użytkownikami** ([`validation.md`](./validation.md))
+- ⏳ Po hackathonie: realne nabory grantowe, rejestr odpowiedzialnych organów, moderacja, testy automatyczne
 
-Seeded experts, NGOs, funding entries, ideas and projects are **demo data** and are labelled as such. Full plan: [`roadmap.md`](./roadmap.md).
+Wprowadzeni eksperci, organizacje, źródła finansowania, pomysły i projekty to **dane demonstracyjne** i są tak oznaczone. Pełny plan: [`roadmap.md`](./roadmap.md).
 
 ---
 
-## Documentation
+## Dokumentacja
 
-| Tab | What's inside |
+| Zakładka | Zawartość |
 |---|---|
-| [**Tech spec**](./docs/TECH_SPEC.md) | Functional modules, routes, API, data model, scoring formulas, LLM guardrails, security, configuration, limitations |
-| [**Architecture**](./docs/ARCHITECTURE.md) | System context, components, request flows, storage, D1 schema, deployment, design decisions |
-| [**License**](./docs/LICENSE.md) | Copyright, what is and isn't allowed, third-party notices |
+| [**Specyfikacja techniczna**](./docs/TECH_SPEC.md) | Moduły funkcjonalne, trasy, API, model danych, wzory punktacji, zabezpieczenia LLM, bezpieczeństwo, konfiguracja, ograniczenia |
+| [**Architektura**](./docs/ARCHITECTURE.md) | Kontekst systemu, komponenty, przepływy żądań, przechowywanie danych, schemat D1, wdrożenie, decyzje projektowe |
+| [**Licencja**](./docs/LICENSE.md) | Prawa autorskie, co jest dozwolone, a co nie, informacje o komponentach zewnętrznych |
 
-Deep-dive specs: [`architecture.md`](./architecture.md), [`roadmap.md`](./roadmap.md), [`concept_v1.0.md`](./concept_v1.0.md), [`sourcing-spike.md`](./sourcing-spike.md), [`accessibility.md`](./accessibility.md), [`validation.md`](./validation.md). Deployment steps are in [`DEPLOYMENT.md`](./DEPLOYMENT.md).
+Szczegółowe specyfikacje: [`architecture.md`](./architecture.md), [`roadmap.md`](./roadmap.md), [`concept_v1.0.md`](./concept_v1.0.md), [`sourcing-spike.md`](./sourcing-spike.md), [`accessibility.md`](./accessibility.md), [`validation.md`](./validation.md). Kroki wdrożenia opisuje [`DEPLOYMENT.md`](./DEPLOYMENT.md).
 
-## Quick start
+## Szybki start
 
 ```bash
 npm install
-npm run dev        # frontend at http://localhost:5173
-npm run build      # production build to dist/
+npm run dev        # frontend pod http://localhost:5173
+npm run build      # build produkcyjny do dist/
 ```
 
-Shared reports, login and the adaptation plan need the API Worker (`npm run dev:api`; see [Tech spec → Run, build, deploy](./docs/TECH_SPEC.md#12-run-build-deploy)). Without it, the app runs in **local mode** and says so.
+Udostępniane zgłoszenia, logowanie i plan adaptacji wymagają API Workera (`npm run dev:api`; zobacz [Specyfikacja techniczna → Uruchomienie, build, wdrożenie](./docs/TECH_SPEC.md#12-uruchomienie-build-wdrożenie)). Bez niego aplikacja działa w **trybie lokalnym** i to komunikuje.
 
-## License
+## Licencja
 
-**Copyright © 2026 Dominik Liahovich. All rights reserved.**
+**Copyright © 2026 Dominik Liahovich. Wszelkie prawa zastrzeżone.**
 
-BridgeWay is **proprietary software, not open source**. The source code, design, texts and curated case base are visible **for evaluation only** (for example, by a hackathon jury). Without prior written permission from the copyright holder, you may not copy, fork, modify, deploy, host, redistribute or reuse it in another product, or use any part of it for text and data mining or AI training. This applies to commercial and non-commercial use alike.
+BridgeWay jest **oprogramowaniem własnościowym, a nie open source**. Kod źródłowy, projekt graficzny, teksty i opracowana baza przypadków są udostępnione **wyłącznie do oceny** (na przykład przez jury hackathonu). Bez uprzedniej pisemnej zgody właściciela praw autorskich nie wolno ich kopiować, forkować, modyfikować, wdrażać, hostować, rozpowszechniać ani ponownie wykorzystywać w innym produkcie, ani używać żadnej ich części do eksploracji tekstów i danych (text and data mining) lub trenowania AI. Dotyczy to w równym stopniu użytku komercyjnego i niekomercyjnego.
 
-Full terms: [`LICENSE`](./LICENSE) · Summary and third-party notices: [`docs/LICENSE.md`](./docs/LICENSE.md)
+Pełne warunki: [`LICENSE`](./LICENSE) (wiążące, po angielsku) · tłumaczenie: [`LICENSE.pl`](./LICENSE.pl) · Podsumowanie i informacje o komponentach zewnętrznych: [`docs/LICENSE.md`](./docs/LICENSE.md)

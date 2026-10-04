@@ -1,443 +1,445 @@
-# BridgeWay — Концепция v1.0
+# BridgeWay — Koncepcja v1.0
 
-**Статус:** утверждена (v1.0). Roadmap-раздел (§17) на ревью; в `roadmap.md` пока не перенесён
-**Дата:** 2026-10-03
-**Заменяет по смыслу:** `concept_review_v0.1.md` (строгий разбор), `concept_review_v0.2.md` (стратегия + длинный roadmap)
-**Назначение документа:** единая, сжатая и *исполнимая* концепция. Это не разбор и не список задач — это решение: что именно мы делаем, для кого, как докажем ценность и что сознательно НЕ делаем.
+**Status:** zatwierdzona (v1.0). Sekcja roadmapy (§17) w recenzji; do `roadmap.md` jeszcze nie przeniesiona
+**Data:** 2026-10-03
+**Zastępuje merytorycznie:** `concept_review_v0.1.md` (surowa analiza), `concept_review_v0.2.md` (strategia + długa roadmapa)
+**Przeznaczenie dokumentu:** jedna, zwięzła i *wykonalna* koncepcja. To nie analiza ani lista zadań — to decyzja: co dokładnie robimy, dla kogo, jak udowodnimy wartość i czego świadomie NIE robimy.
 
-> Как читать: §1–4 — суть. §5–6 — что строим и демо. §7–9 — доказательства, данные, честность. §10–13 — impact, деньги, конкуренты, валидация. §14–15 — риски и открытые вопросы к вам.
+> Jak czytać: §1–4 — istota. §5–6 — co budujemy i demo. §7–9 — dowody, dane, uczciwość. §10–13 — wpływ, pieniądze, konkurencja, walidacja. §14–15 — ryzyka i otwarte pytania do was.
 
 ---
 
-## 0. Что изменилось относительно v0.1 / v0.2 (v1.0 = утверждённая v0.3)
+## 0. Co się zmieniło względem v0.1 / v0.2 (v1.0 = zatwierdzona v0.3)
 
-| Проблема в прошлых версиях | Решение в v1.0 |
+| Problem w poprzednich wersjach | Rozwiązanie w v1.0 |
 |---|---|
-| v0.2: 6 итераций, 40+ задач, 12 внешних API — нереализуемо за хакатон | Жёсткая **линия отсечения** (§5): всё, что не входит в «ядро демо», явно помечено «после хакатона» |
-| USP держится на данных, которых нет | Обязательный **sourcing spike** (§7) *до* любой разработки; питч подстраивается под результат |
-| Transfer score на моках = та же выдуманная метрика | Прозрачная **формула с видимыми весами** и пометкой «модель», без «89% context fit» из воздуха (§6.3) |
-| Inclusion отложен на Iteration 4, хотя целевая аудитория исключена из веба | Минимальный **assisted reporting + accessibility** входят в демо (§8) |
-| Нет валидации спроса | Конкретный **план валидации** с измеримым минимумом (§12) |
-| Нет ответа «почему не 19115 / Decidim / ngo.pl» | Таблица конкурентов и позиционирование (§11) |
-| Impact — сквозной рассказ про институции | В демо один **человеческий кейс до/после** (§5.4) |
-| Документ-монстр на 2258 строк | ≈ 1/5 объёма, один документ вместо двух |
+| v0.2: 6 iteracji, 40+ zadań, 12 zewnętrznych API — niewykonalne w czasie hackathonu | Twarda **linia odcięcia** (§5): wszystko, co nie wchodzi do „rdzenia demo”, jest wyraźnie oznaczone „po hackathonie” |
+| USP opiera się na danych, których nie ma | Obowiązkowe **rozpoznanie źródeł** (§7) *przed* jakimkolwiek programowaniem; pitch dostosowuje się do wyniku |
+| Wskaźnik transferu na danych demo = ta sama wymyślona metryka | Przejrzysta **formuła z widocznymi wagami** i oznaczeniem „model”, bez „89% context fit” wziętego z powietrza (§6.3) |
+| Włączenie odłożone do iteracji 4, choć grupa docelowa jest wykluczona z sieci | Minimalne **zgłaszanie z pomocą + dostępność** wchodzą do demo (§8) |
+| Brak walidacji popytu | Konkretny **plan walidacji** z mierzalnym minimum (§12) |
+| Brak odpowiedzi na pytanie „dlaczego nie 19115 / Decidim / ngo.pl” | Tabela konkurencji i pozycjonowanie (§11) |
+| Wpływ — ogólna opowieść o instytucjach | W demo jeden **ludzki przypadek przed/po** (§5.4) |
+| Dokument-potwór na 2258 wierszy | ≈ 1/5 objętości, jeden dokument zamiast dwóch |
 
 ---
 
-## 1. Одно предложение
+## 1. Jedno zdanie
 
-> **BridgeWay помогает гмине, НКО или жителю не изобретать решение социальной проблемы заново: находит уже реализованные в Польше и ЕС проверяемые решения, честно показывает, насколько они применимы именно здесь, и ведёт от заявки до измеренного результата.**
+> **BridgeWay pomaga gminie, organizacji pozarządowej lub mieszkańcowi nie wymyślać od nowa rozwiązania problemu społecznego: znajduje już wdrożone w Polsce i UE weryfikowalne rozwiązania, uczciwie pokazuje, na ile pasują właśnie tutaj, i prowadzi od zgłoszenia do zmierzonego rezultatu.**
 
-Короткий слоган (Home): **«Эту проблему уже где-то решили.»**
+Krótki slogan (Home): **„Problem został już gdzieś rozwiązany.”**
 
-Чего в этой фразе нет намеренно: «мост между проблемой и решением» (слишком общо), «AI-платформа» (AI — инструмент, не продукт), «платформа для всего».
-
----
-
-## 2. Проблема
-
-**Факт-гипотеза (проверить интервью, §12):** в Польше местные социальные проблемы (доступность, одиночество пожилых, цифровое исключение) решаются в каждой гмине / районе / НКО заново, а знание о том, что сработало в другом месте — разрознено по отчётам, сайтам фондов, конференциям и личным контактам.
-
-Три конкретные боли:
-
-1. **Заявитель** (житель, сосед, волонтёр) не знает, куда идти и что вообще возможно сделать.
-2. **Исполнитель** (НКО, отдел гмины, администрация здания) не знает, что аналогичное уже сделали и какой это дало результат, сколько стоило и где споткнулись.
-3. **Финансирующий** не видит, какие вмешательства реально работают → деньги идут на непроверенные проекты.
-
-Чего мы НЕ утверждаем: что люди не умеют жаловаться. Порталов жалоб достаточно. Дефицит — в **знании «что делать дальше»** и **ответственности «кто делает»**.
+Czego w tym zdaniu celowo nie ma: „most między problemem a rozwiązaniem” (zbyt ogólne), „platforma AI” (AI to narzędzie, nie produkt), „platforma do wszystkiego”.
 
 ---
 
-## 3. Целевые группы и их роли
+## 2. Problem
 
-| Роль | Кто | Что получает | Статус в демо |
+**Fakt-hipoteza (do sprawdzenia w wywiadach, §12):** w Polsce lokalne problemy społeczne (dostępność, samotność osób starszych, wykluczenie cyfrowe) są rozwiązywane w każdej gminie / dzielnicy / organizacji od nowa, a wiedza o tym, co zadziałało gdzie indziej, jest rozproszona po raportach, stronach fundacji, konferencjach i kontaktach osobistych.
+
+Trzy konkretne bolączki:
+
+1. **Zgłaszający** (mieszkaniec, sąsiad, wolontariusz) nie wie, dokąd iść i co w ogóle da się zrobić.
+2. **Realizator** (NGO, wydział gminy, zarządca budynku) nie wie, że podobną rzecz już zrobiono, jaki dała rezultat, ile kosztowała i gdzie pojawiły się trudności.
+3. **Grantodawca** nie widzi, które interwencje naprawdę działają → pieniądze trafiają na niesprawdzone projekty.
+
+Czego NIE twierdzimy: że ludzie nie potrafią się skarżyć. Portali do skarg jest wystarczająco dużo. Deficyt dotyczy **wiedzy „co robić dalej”** i **odpowiedzialności „kto to robi”**.
+
+---
+
+## 3. Grupy docelowe i ich role
+
+| Rola | Kto | Co otrzymuje | Status w demo |
 |---|---|---|---|
-| **Заявитель** | житель, семья, соседи | понятный путь от проблемы к действию | в демо |
-| **Помощник-прокси** | библиотекарь, соцработник, волонтёр, клуб сеньора | может подать заявку *за* другого человека | в демо (минимум) |
-| **Исполнитель** | НКО, отдел гмины | готовый, подкреплённый источниками план адаптации | в демо |
-| **Ответственный (duty holder)** | ZDM/ZIM, управляющая компания, ОПС | понятный адресат и статус заявки | в демо (одно поле + статус) |
-| **Финансирующий** | программы, фонды | реальные открытые конкурсы | после хакатона |
+| **Zgłaszający** | mieszkaniec, rodzina, sąsiedzi | zrozumiałą drogę od problemu do działania | w demo |
+| **Pomocnik-pełnomocnik** | bibliotekarz, pracownik socjalny, wolontariusz, klub seniora | może złożyć zgłoszenie *za* inną osobę | w demo (minimum) |
+| **Realizator** | NGO, wydział gminy | gotowy, poparty źródłami plan adaptacji | w demo |
+| **Odpowiedzialny (duty holder)** | ZDM/ZIM, zarządca nieruchomości, OPS | jasnego adresata i status zgłoszenia | w demo (jedno pole + status) |
+| **Grantodawca** | programy, fundacje | realne otwarte konkursy | po hackathonie |
 
-**Главный бенефициар** — люди с ограниченной мобильностью и пожилые. Продукт проектируется так, чтобы они *не обязаны* были пользоваться им сами.
+**Główny beneficjent** — osoby o ograniczonej mobilności i osoby starsze. Produkt jest projektowany tak, by *nie musiały* korzystać z niego same.
 
 ---
 
-## 4. Позиционирование и USP
+## 4. Pozycjonowanie i USP
 
-### 4.1. Ядро (то, что отличает нас)
+### 4.1. Rdzeń (to, co nas wyróżnia)
 
-**Evidence-based solution transfer:**
+**Transfer rozwiązań oparty na dowodach:**
 
 ```
-Проблема → Похожие реальные кейсы → Доказательность → Применимость к месту → План адаптации → Ответственный → Результат → (возврат в базу знаний)
+Problem → Podobne realne przypadki → Siła dowodów → Dopasowanie do miejsca → Plan adaptacji → Odpowiedzialny → Rezultat → (powrót do bazy wiedzy)
 ```
 
-### 4.2. Три «железных» принципа продукта
+### 4.2. Trzy „żelazne” zasady produktu
 
-1. **Каждое утверждение — с источником.** Нет источника — нет факта на экране.
-2. **Любая оценка объяснима.** Нет «магического процента»: видны факторы, веса и их происхождение.
-3. **Каждая заявка имеет адресата и статус.** Заявка без адресата — не заявка, а тикет в пустоту.
+1. **Każde twierdzenie — ze źródłem.** Nie ma źródła — nie ma faktu na ekranie.
+2. **Każda ocena jest wyjaśnialna.** Nie ma „magicznego procentu”: widać czynniki, wagi i ich pochodzenie.
+3. **Każde zgłoszenie ma adresata i status.** Zgłoszenie bez adresata to nie zgłoszenie, tylko bilet w próżnię.
 
-### 4.3. Что есть «наш актив» со временем (moat)
+### 4.3. Co z czasem staje się „naszym aktywem” (fosa)
 
-Структурированная база вмешательств: *что, где, для кого, при каких условиях, сколько стоило, какой измеренный результат*. UI, карта и React — не moat.
+Uporządkowana baza interwencji: *co, gdzie, dla kogo, w jakich warunkach, ile kosztowało, jaki zmierzony rezultat*. UI, mapa i React to nie fosa.
 
-> Честная оговорка: moat возникнет только при условии, что кейсов с реальными данными достаточно (§7). Если нет — актив придётся создавать самим (интервью, запросы к НКО), и это становится основной работой.
+> Uczciwe zastrzeżenie: fosa powstanie tylko wtedy, gdy przypadków z realnymi danymi będzie wystarczająco dużo (§7). Jeśli nie — aktyw trzeba będzie stworzyć samodzielnie (wywiady, zapytania do NGO), i to staje się główną pracą.
 
 ---
 
-## 5. Что строим: ядро и линия отсечения
+## 5. Co budujemy: rdzeń i linia odcięcia
 
-### 5.1. Принцип
+### 5.1. Zasada
 
-**Лучше 6 работающих сквозных вещей, чем 25 экранов.** Любая кнопка либо работает, либо скрыта, либо подписана «прототип».
+**Lepiej 6 działających rzeczy end-to-end niż 25 ekranów.** Każdy przycisk albo działa, albo jest ukryty, albo podpisany „prototyp”.
 
-### 5.2. Ядро демо (обязательно — «Tier 1»)
+### 5.2. Rdzeń demo (obowiązkowo — „poziom 1”)
 
-| # | Элемент | Критерий готовности |
+| # | Element | Kryterium gotowości |
 |---|---|---|
-| C1 | **Честность данных**: убраны выдуманные KPI/«verified»/рейтинги; демо-данные подписаны | на Home/Analytics нет цифр без источника или пометки |
-| C2 | **Исправлен основной flow** Решение → «Скопировать у себя» → Проект (сейчас ломается в `/projekty`) | сквозной сценарий проходится без тупиков |
-| C3 | **Честный matching** (на всех экранах рекомендаций, а не только на Submit) и убрана имитация «AI» | везде один алгоритм; ярлык «AI» не используется для keyword-совпадений |
-| C4 | **Схема кейса с доказательствами**: источник, организация, стоимость, срок, измеренный результат, уровень доказательности (A–D) | поля есть и отображаются |
-| C5 | **10–15 реальных кейсов с источниками** (результат sourcing spike) | у каждого кейса кликабельный источник |
-| C6 | **Transfer score с объяснением факторов** (§6.3) | видны факторы, веса, источник каждого входного числа |
-| C7 | **Адресат + статус** у заявки (одно поле `responsibleBody` и таймлайн статусов) | у демо-заявки виден адресат и история |
-| C8 | **Минимальный assisted reporting** и проход по accessibility (§8) | подача «за другого», клавиатура, контраст, крупный шрифт |
-| C9 | **Home переписан** под новое позиционирование (§1) | слоган, 2 CTA, «как это работает» из 5 шагов |
+| C1 | **Uczciwość danych**: usunięte wymyślone KPI/„verified”/oceny; dane demo podpisane | na Home/Analityce nie ma liczb bez źródła lub oznaczenia |
+| C2 | **Naprawiony główny przepływ** Rozwiązanie → „Skopiuj u siebie” → Projekt (obecnie psuje się na `/projekty`) | scenariusz end-to-end przechodzi bez ślepych zaułków |
+| C3 | **Uczciwe dopasowanie** (na wszystkich ekranach rekomendacji, a nie tylko w Zgłoś) i usunięta imitacja „AI” | wszędzie jeden algorytm; etykieta „AI” nie jest używana dla dopasowań po słowach kluczowych |
+| C4 | **Schemat przypadku z dowodami**: źródło, organizacja, koszt, czas, zmierzony rezultat, poziom dowodów (A–D) | pola istnieją i są wyświetlane |
+| C5 | **10–15 realnych przypadków ze źródłami** (wynik rozpoznania źródeł) | każdy przypadek ma klikalne źródło |
+| C6 | **Wskaźnik transferu z wyjaśnieniem czynników** (§6.3) | widać czynniki, wagi, źródło każdej liczby wejściowej |
+| C7 | **Adresat + status** zgłoszenia (jedno pole `responsibleBody` i oś czasu statusów) | zgłoszenie demo pokazuje adresata i historię |
+| C8 | **Minimalne zgłaszanie z pomocą** i przegląd dostępności (§8) | zgłoszenie „za kogoś”, klawiatura, kontrast, duża czcionka |
+| C9 | **Przepisana strona główna** pod nowe pozycjonowanie (§1) | slogan, 2 CTA, „jak to działa” w 5 krokach |
 
-### 5.3. Желательно, если останется время («Tier 2»)
+### 5.3. Pożądane, jeśli zostanie czas („poziom 2”)
 
-- Один настоящий источник контекста: GUS BDL (структура населения 65+, численность) для 2–3 гмин.
-- Общий backend для сквозного цикла (заявка → публичная страница → смена статуса другой ролью): минимальная БД + вход по magic-link. *Если не успеваем — демо честно подписано «прототип, данные локальны».*
-- Адаптационный план, сгенерированный LLM **только из загруженных кейсов** (RAG по нашей базе, каждое утверждение со ссылкой).
+- Jedno prawdziwe źródło kontekstu: GUS BDL (struktura ludności 65+, liczba ludności) dla 2–3 gmin.
+- Wspólny backend dla pełnej pętli (zgłoszenie → strona publiczna → zmiana statusu przez inną rolę): minimalna baza danych + logowanie magic linkiem. *Jeśli nie zdążymy — demo jest uczciwie podpisane „prototyp, dane lokalne”.*
+- Plan adaptacji wygenerowany przez LLM **wyłącznie z wczytanych przypadków** (RAG po naszej bazie, każde twierdzenie z linkiem).
 
-### 5.4. Явно «после хакатона» («Tier 3»)
+### 5.4. Wyraźnie „po hackathonie” („poziom 3”)
 
-Всё остальное из v0.2: 12 внешних API (KRS, REGON, GIOŚ, Eurostat, Geoportal и др.), реальные финансовые вызовы EU, B2G-дашборд, outcome-измерение в продакшене, модерация-система, пилоты с гминами, публичный API, мультиязычность помимо pl/en.
+Wszystko pozostałe z v0.2: 12 zewnętrznych API (KRS, REGON, GIOŚ, Eurostat, Geoportal i in.), realne nabory finansowania UE, panel B2G, pomiar efektów na produkcji, system moderacji, pilotaże z gminami, publiczne API, wielojęzyczność poza pl/en.
 
-### 5.5. Что понижаем в продукте
+### 5.5. Co degradujemy w produkcie
 
-| Раздел | Решение |
+| Sekcja | Decyzja |
 |---|---|
-| Rozwiązania (кейсы) | **центр продукта** |
-| Mapa | интерфейс, не продукт; приватность локаций (§9) |
-| Pomysły | понизить; склеить с Projekty |
-| Eksperci, NGO | слой исполнителей |
-| Finansowanie | оставить, но без выдуманных программ: либо реальные, либо скрыть |
-| Analityka | пересобрать на честные метрики или скрыть |
-| Profil, Search | вторичные; не делать вид, что работают |
+| Rozwiązania (przypadki) | **centrum produktu** |
+| Mapa | interfejs, nie produkt; prywatność lokalizacji (§9) |
+| Pomysły | zdegradować; połączyć z Projektami |
+| Eksperci, NGO | warstwa realizatorów |
+| Finansowanie | zostawić, ale bez wymyślonych programów: albo realne, albo ukryć |
+| Analityka | przebudować na uczciwe metryki albo ukryć |
+| Profil, Wyszukiwanie | drugorzędne; nie udawać, że działają |
 
 ---
 
-## 6. Демо-сценарий (90 секунд)
+## 6. Scenariusz demo (90 sekund)
 
-### 6.1. Выбор wedge
+### 6.1. Wybór klina wejścia
 
-**Доступность местных/публичных услуг** — понятно, картографируется, есть ответственные адресаты, результат измерим «до/после», много открытых данных (OSM).
-Не навсегда «только про это», но в демо и пилоте — только это (+ связанный кейс одиночества пожилых как второй пример).
+**Dostępność lokalnych/publicznych usług** — zrozumiała, daje się nanieść na mapę, ma odpowiedzialnych adresatów, rezultat jest mierzalny „przed/po”, dużo otwartych danych (OSM).
+Nie na zawsze „tylko o tym”, ale w demo i pilotażu — tylko to (+ powiązany przypadek samotności osób starszych jako drugi przykład).
 
-### 6.2. Сценарий
+### 6.2. Scenariusz
 
-**Персона:** Анна помогает пожилой соседке на коляске, которая не может попасть в центр социальных услуг.
+**Persona:** Anna pomaga starszej sąsiadce poruszającej się na wózku, która nie może dostać się do ośrodka usług społecznych.
 
-1. Анна (или библиотекарь за неё) описывает проблему — коротко, простыми словами.
-2. BridgeWay определяет категорию, уточняет место.
-3. Показывает **3 реальных похожих кейса** с источником, организацией, ценой, сроком, измеренным результатом, **уровнем доказательности**.
-4. Для каждого — **transfer score с раскладкой** («почему 71%»).
-5. Анна открывает лучший кейс → **«Dostosuj do mojej gminy»**.
-6. Получает план: ответственный орган (адресат), возможный исполнитель-НКО, шаги, ориентировочная стоимость и риски — все с источниками.
-7. «Start implementation» → Project Room → публичный статус заявки с адресатом.
-8. Заключительный кадр: **один реальный (или явно подписанный как постановочный) кейс «до/после»** с человеком в центре.
+1. Anna (albo bibliotekarka za nią) opisuje problem — krótko, prostymi słowami.
+2. BridgeWay ustala kategorię i doprecyzowuje miejsce.
+3. Pokazuje **3 realne podobne przypadki** ze źródłem, organizacją, ceną, czasem, zmierzonym rezultatem i **poziomem dowodów**.
+4. Dla każdego — **wskaźnik transferu z rozbiciem** („dlaczego 71%”).
+5. Anna otwiera najlepszy przypadek → **„Dostosuj do mojej gminy”**.
+6. Otrzymuje plan: odpowiedzialny organ (adresat), możliwy realizator-NGO, kroki, orientacyjny koszt i ryzyka — wszystko ze źródłami.
+7. „Rozpocznij wdrożenie” → Project Room → publiczny status zgłoszenia z adresatem.
+8. Kadr końcowy: **jeden realny (albo wyraźnie oznaczony jako zainscenizowany) przypadek „przed/po”** z człowiekiem w centrum.
 
-### 6.3. Модель transfer score (прозрачная, без «AI-магии»)
+### 6.3. Model wskaźnika transferu (przejrzysty, bez „magii AI”)
 
-Простая взвешенная сумма, все веса видны пользователю и могут быть оспорены:
+Prosta suma ważona; wszystkie wagi są widoczne dla użytkownika i można je kwestionować:
 
-| Фактор | Вес (предварительно) | Откуда данные |
+| Czynnik | Waga (wstępnie) | Skąd dane |
 |---|---|---|
-| Совпадение типа проблемы | 30% | наша разметка кейса |
-| Схожесть контекста (доля 65+, размер гмины) | 25% | GUS BDL (Tier 2) / либо вручную с источником |
-| Бюджет укладывается | 15% | кейс + ввод пользователя |
-| Нужные участники (НКО/орган) существуют локально | 15% | наши данные / KRS (Tier 3) |
-| Уровень доказательности кейса | 15% | оценка A–D |
+| Zgodność typu problemu | 30% | nasze oznaczenie przypadku |
+| Podobieństwo kontekstu (odsetek 65+, wielkość gminy) | 25% | GUS BDL (poziom 2) / albo ręcznie ze źródłem |
+| Budżet się mieści | 15% | przypadek + dane od użytkownika |
+| Potrzebni uczestnicy (NGO/organ) istnieją lokalnie | 15% | nasze dane / KRS (poziom 3) |
+| Poziom dowodów przypadku | 15% | ocena A–D |
 
-Правила:
-- Если нет реальных данных для фактора — фактор показывается как **«нет данных»**, а не заполняется выдуманным числом; общий score помечается «предварительный».
-- Веса — гипотеза, это явно написано в интерфейсе («модель, не прогноз»).
-- Жёсткие ограничения (hard constraints) сначала отсекают кейс, потом идёт скоринг (напр. кейс требует услуги, которой нет).
+Zasady:
+- Jeśli dla czynnika nie ma realnych danych — czynnik jest pokazywany jako **„brak danych”**, a nie wypełniany wymyśloną liczbą; łączny wynik jest oznaczany jako „wstępny”.
+- Wagi to hipoteza, co jest wprost napisane w interfejsie („model, nie prognoza”).
+- Twarde ograniczenia (hard constraints) najpierw odrzucają przypadek, potem następuje punktacja (np. przypadek wymaga usługi, której nie ma).
 
-### 6.4. Уровни доказательности (вместо «verified»)
+### 6.4. Poziomy dowodów (zamiast „verified”)
 
-| Уровень | Смысл |
+| Poziom | Znaczenie |
 |---|---|
-| **A** | Результат измерен независимым/официальным источником (оценка, публичная институция, рецензируемая работа) |
-| **B** | Результат опубликован исполнителем с описанием методики |
-| **C** | Реализация задокументирована, оценка результата слабая |
-| **D** | Идея/предложение без подтверждённого результата |
+| **A** | Rezultat zmierzony przez niezależne/oficjalne źródło (ewaluacja, instytucja publiczna, recenzowana publikacja) |
+| **B** | Rezultat opublikowany przez realizatora wraz z opisem metodyki |
+| **C** | Realizacja udokumentowana, ocena rezultatu słaba |
+| **D** | Pomysł/propozycja bez potwierdzonego rezultatu |
 
-Слово «verified» из продукта убираем.
+Słowo „verified” usuwamy z produktu.
 
-### 6.5. Роль LLM
+> Uwaga: w trakcie realizacji (krok 5 roadmapy) skala została doprecyzowana do wersji opartej na metodyce badania — zobacz [`sourcing-spike.md`](./sourcing-spike.md).
 
-LLM **не источник фактов**. Допустимо: краткое изложение, простой язык, перевод, объяснение совпадения, извлечение полей из документа, черновик плана адаптации **только по найденным кейсам**. Запрещено: придумывать цифры, источники, организации, оценивать «хорошо/плохо» без опоры.
-Нельзя называть AI то, что является keyword-поиском.
+### 6.5. Rola LLM
+
+LLM **nie jest źródłem faktów**. Dopuszczalne: krótkie streszczenie, prosty język, tłumaczenie, wyjaśnienie dopasowania, wyciąganie pól z dokumentu, szkic planu adaptacji **wyłącznie na podstawie znalezionych przypadków**. Zabronione: wymyślanie liczb, źródeł, organizacji, ocenianie „dobrze/źle” bez podstaw.
+Nie wolno nazywać AI czegoś, co jest wyszukiwaniem po słowach kluczowych.
 
 ---
 
-## 7. Данные и sourcing spike (первый обязательный шаг)
+## 7. Dane i rozpoznanie źródeł (pierwszy obowiązkowy krok)
 
-### 7.1. Почему это критично
+### 7.1. Dlaczego to krytyczne
 
-Вся ценность продукта = реальные кейсы с источниками. Если их мало или у большинства нет измеренных результатов, питч «проверенные решения» рушится и его надо менять **сейчас**, а не на защите.
+Cała wartość produktu = realne przypadki ze źródłami. Jeśli jest ich mało albo większość nie ma zmierzonych rezultatów, pitch o „sprawdzonych rozwiązaniach” się rozsypuje i trzeba go zmienić **teraz**, a nie na obronie.
 
-### 7.2. Задача
+### 7.2. Zadanie
 
-**Timebox: 1–2 дня, до начала любой разработки по C4–C6.** Найти и разобрать 10–15 реальных кейсов по доступности и/или поддержке пожилых (Польша приоритетно, затем ЕС).
+**Limit czasu: 1–2 dni, przed rozpoczęciem jakichkolwiek prac nad C4–C6.** Znaleźć i przeanalizować 10–15 realnych przypadków dotyczących dostępności i/lub wsparcia osób starszych (priorytetowo Polska, potem UE).
 
-Для каждого кейса зафиксировать: название, организация, место, год, проблема, вмешательство, стоимость, срок, **результат + как он измерен**, ссылка на источник, уровень A–D, лицензия/правила использования.
+Dla każdego przypadku zapisać: nazwę, organizację, miejsce, rok, problem, interwencję, koszt, czas, **rezultat + sposób jego pomiaru**, link do źródła, poziom A–D, licencję/zasady wykorzystania.
 
-### 7.3. Типы источников для поиска (направления, конкретные кейсы ещё надо найти и проверить)
+### 7.3. Typy źródeł do przeszukania (kierunki; konkretne przypadki trzeba jeszcze znaleźć i sprawdzić)
 
-- Отчёты и страницы польских НКО и фондов, работающих с доступностью и пожилыми.
-- Публикации городов/гмин, программы по доступности, оценки программ.
-- Открытые наборы данных и публикации: dane.gov.pl, GUS.
-- Европейские репозитории практик (программы соседства, healthy ageing, accessibility).
-- Академические работы по оценке вмешательств.
+- Raporty i strony polskich NGO i fundacji zajmujących się dostępnością i osobami starszymi.
+- Publikacje miast/gmin, programy dostępności, ewaluacje programów.
+- Otwarte zbiory danych i publikacje: dane.gov.pl, GUS.
+- Europejskie repozytoria praktyk (programy sąsiedzkie, healthy ageing, dostępność).
+- Prace naukowe oceniające interwencje.
 
-> Я здесь намеренно НЕ называю конкретные кейсы: их нужно найти и подтвердить по источнику. Любой кейс, который не удалось подтвердить, не попадает в базу.
+> Celowo NIE wymieniam tu konkretnych przypadków: trzeba je znaleźć i potwierdzić w źródle. Żaden przypadek, którego nie udało się potwierdzić, nie trafia do bazy.
 
-### 7.4. Критерий решения по итогам spike
+### 7.4. Kryterium decyzji po rozpoznaniu
 
-| Результат | Решение |
+| Wynik | Decyzja |
 |---|---|
-| ≥10 кейсов, ≥4 с уровнем A/B | идём по плану, USP «проверенные решения» оправдан |
-| 10 кейсов, но почти все C/D | меняем формулировку на «задокументированные решения + реестр доказательности», а *измерение результатов* становится частью продукта |
-| <10 кейсов | USP меняется на «структурированный реестр практик + помощь в сборе доказательств»; питч честно об этом |
+| ≥10 przypadków, ≥4 na poziomie A/B | idziemy zgodnie z planem, USP „sprawdzone rozwiązania” jest uzasadnione |
+| 10 przypadków, ale prawie wszystkie C/D | zmieniamy sformułowanie na „udokumentowane rozwiązania + rejestr dowodów”, a *pomiar rezultatów* staje się częścią produktu |
+| <10 przypadków | USP zmienia się na „uporządkowany rejestr praktyk + pomoc w zbieraniu dowodów”; pitch mówi o tym uczciwie |
 
-### 7.5. Безопасность кейсов
+### 7.5. Bezpieczeństwo przypadków
 
-Физические вмешательства (напр. рампы) рекомендуются **только** при наличии технической основы. Существующий кейс «самодельные деревянные рампы» убираем или заменяем маршрутом: *аудит доступности → ответственная организация → технически согласованное решение*.
-
----
-
-## 8. Inclusion: минимум для демо
-
-Продукт для тех, кому сложно пользоваться вебом, не может быть «только вебом».
-
-**В демо (обязательно):**
-1. **Подача за другого человека:** флаг «я подаю от имени…», без обязательной регистрации подопечного, согласие подопечного фиксируется (устно/по отметке).
-2. **Прокси-точки (как концепция + одна реальная договорённость, если получится):** библиотека, клуб сеньора, соцработник, НКО.
-3. **Accessibility-минимум:** полная навигация с клавиатуры, видимый фокус, контраст WCAG AA, масштабирование текста до 200%, простой язык, подписи у иконок, заголовки/ landmarks для скринридера. Заявление о доступности.
-4. **Реальная проверка** (клавиатура + скринридер хотя бы на основном сценарии) и честная фиксация того, что не покрыто.
-
-**После хакатона:** телефон/SMS/бумажная форма, крупношрифтовый режим-профиль, голосовой ввод, проверка WCAG 2.2 AA внешним аудитором.
+Interwencje fizyczne (np. podjazdy) są rekomendowane **tylko** wtedy, gdy mają podstawę techniczną. Istniejący przypadek „samodzielnie budowane drewniane podjazdy” usuwamy albo zastępujemy ścieżką: *audyt dostępności → odpowiedzialna instytucja → technicznie uzgodnione rozwiązanie*.
 
 ---
 
-## 9. Приватность и безопасность (минимум)
+## 8. Włączenie: minimum na demo
 
-| Тема | Правило |
+Produkt dla osób, którym trudno korzystać z sieci, nie może być „tylko w sieci”.
+
+**W demo (obowiązkowo):**
+1. **Zgłoszenie za inną osobę:** flaga „zgłaszam w imieniu…”, bez obowiązkowej rejestracji podopiecznego, zgoda podopiecznego jest zapisywana (ustnie/przez zaznaczenie).
+2. **Punkty pomocy (jako koncepcja + jedno realne porozumienie, jeśli się uda):** biblioteka, klub seniora, pracownik socjalny, NGO.
+3. **Minimum dostępności:** pełna nawigacja z klawiatury, widoczny fokus, kontrast WCAG AA, skalowanie tekstu do 200%, prosty język, podpisy ikon, nagłówki/landmarki dla czytników ekranu. Deklaracja dostępności.
+4. **Realne sprawdzenie** (klawiatura + czytnik ekranu przynajmniej w głównym scenariuszu) i uczciwe zapisanie tego, co nie jest pokryte.
+
+**Po hackathonie:** telefon/SMS/formularz papierowy, profil z dużą czcionką, wprowadzanie głosowe, audyt WCAG 2.2 AA przez zewnętrznego audytora.
+
+---
+
+## 9. Prywatność i bezpieczeństwo (minimum)
+
+| Temat | Zasada |
 |---|---|
-| Адреса и люди | Публичная карта **не показывает точные адреса** для чувствительных категорий (пожилые, одинокие); точка огрубляется |
-| Третьи лица | В свободном тексте запрещены имена и контакты третьих лиц; предупреждение + проверка |
-| Модерация | Кнопка «пожаловаться», ручной просмотр публичных заявок до публикации (в пилоте) |
-| Организации | Статус «проверено» только при реальной проверке (напр. номер KRS); иначе «не проверено» |
-| Эксперты | Не показываем рейтинги и контакты без механизма и согласия; выдуманные профили убираем |
-| RODO | Политика конфиденциальности и регламент — **реальные страницы**, а не подписи в футере; цель обработки, срок хранения, контакт |
-| Вход | Минимум — magic-link; никаких «автор» как свободный текст |
+| Adresy i ludzie | Publiczna mapa **nie pokazuje dokładnych adresów** dla wrażliwych kategorii (osoby starsze, samotne); punkt jest zgrubiany |
+| Osoby trzecie | W dowolnym tekście zakazane są imiona i kontakty osób trzecich; ostrzeżenie + sprawdzenie |
+| Moderacja | Przycisk „zgłoś nadużycie”, ręczny przegląd publicznych zgłoszeń przed publikacją (w pilotażu) |
+| Organizacje | Status „sprawdzono” tylko przy realnej weryfikacji (np. numer KRS); w przeciwnym razie „niesprawdzone” |
+| Eksperci | Nie pokazujemy ocen i kontaktów bez mechanizmu i zgody; wymyślone profile usuwamy |
+| RODO | Polityka prywatności i regulamin — **prawdziwe strony**, a nie podpisy w stopce; cel przetwarzania, okres przechowywania, kontakt |
+| Logowanie | Minimum — magic link; żadnego „autora” jako dowolnego tekstu |
 
 ---
 
-## 10. Impact: как измеряем (без «количества заявок»)
+## 10. Wpływ: jak mierzymy (bez „liczby zgłoszeń”)
 
-### 10.1. Theory of change (кратко)
+### 10.1. Teoria zmiany (w skrócie)
 
-Проблема описана → найден применимый доказанный кейс → назначен ответственный → решение внедрено → результат измерен → кейс обогащает базу → следующему месту нужно меньше времени и денег.
+Problem opisany → znaleziony pasujący sprawdzony przypadek → wyznaczony odpowiedzialny → rozwiązanie wdrożone → rezultat zmierzony → przypadek wzbogaca bazę → kolejne miejsce potrzebuje mniej czasu i pieniędzy.
 
-### 10.2. Метрики
+### 10.2. Metryki
 
-| Уровень | Метрика | Примечание |
+| Poziom | Metryka | Uwaga |
 |---|---|---|
-| Output | % заявок с назначенным адресатом | цель пилота; не «кол-во заявок» |
-| Output | кол-во кейсов с источником и уровнем доказательности | рост базы |
-| Outcome | **Time-to-first-response** (медиана) | сильный индикатор ответственности |
-| Outcome | **Time-to-action** (от заявки до начала внедрения) | сравнить с «без BridgeWay» через интервью |
-| Outcome | **Reuse rate**: доля новых проблем, закрытых с опорой на существующий кейс | фирменная метрика |
-| Outcome | % случаев решённых за 30/60/90 дней | на пилоте |
-| Impact | число людей, у которых улучшилась доступность / доступ к услуге | на пилоте, опрос |
-| Efficiency | стоимость на бенефициара | из проектов |
+| Produkt | % zgłoszeń z wyznaczonym adresatem | cel pilotażu; nie „liczba zgłoszeń” |
+| Produkt | liczba przypadków ze źródłem i poziomem dowodów | wzrost bazy |
+| Rezultat | **Czas do pierwszej odpowiedzi** (mediana) | silny wskaźnik odpowiedzialności |
+| Rezultat | **Czas do działania** (od zgłoszenia do rozpoczęcia wdrożenia) | porównać z „bez BridgeWay” na podstawie wywiadów |
+| Rezultat | **Wskaźnik ponownego wykorzystania**: odsetek nowych problemów rozwiązanych w oparciu o istniejący przypadek | charakterystyczna metryka |
+| Rezultat | % spraw rozwiązanych w ciągu 30/60/90 dni | w pilotażu |
+| Wpływ | liczba osób, którym poprawiła się dostępność / dostęp do usługi | w pilotażu, ankieta |
+| Efektywność | koszt na beneficjenta | z projektów |
 
-### 10.3. North Star
+### 10.3. Gwiazda Polarna
 
-**«Число успешно перенесённых решений»**: проблема возникла → найден существующий кейс → адаптирован → внедрён → результат измерен.
+**„Liczba skutecznie przeniesionych rozwiązań”**: problem się pojawił → znaleziono istniejący przypadek → zaadaptowano → wdrożono → zmierzono rezultat.
 
-### 10.4. Правило честности
+### 10.4. Zasada uczciwości
 
-Любая цифра в UI/питче: **реальная** (с источником), **цель** (подписана «цель») или **демо** (подписана «демо-данные»). Других вариантов нет.
+Każda liczba w UI/pitchu: **realna** (ze źródłem), **docelowa** (podpisana „cel”) albo **demo** (podpisana „dane demonstracyjne”). Innych wariantów nie ma.
 
-Базовые значения сегодня — нули; этого не стесняемся.
+Dzisiejsze wartości bazowe to zera; nie wstydzimy się tego.
 
 ---
 
-## 11. Конкуренты и дифференциация
+## 11. Konkurencja i wyróżnienie
 
-> Таблица — рабочая гипотеза. Каждую позицию нужно проверить по актуальным сайтам перед питчем; я не утверждаю детали функциональности без проверки.
+> Tabela to robocza hipoteza. Każdą pozycję trzeba sprawdzić na aktualnych stronach przed pitchem; nie twierdzę nic o szczegółach funkcjonalności bez sprawdzenia.
 
-| Тип решения | Примеры (проверить) | Что делают | Чего не делают (гипотеза) | Наше отличие |
+| Typ rozwiązania | Przykłady (do sprawdzenia) | Co robią | Czego nie robią (hipoteza) | Nasza różnica |
 |---|---|---|---|---|
-| Городские порталы жалоб | городские приложения «zgłoś problem», 19115 в Варшаве | принимают заявки | не показывают, что работало в других местах; результат — внутри ведомства | поиск и перенос кейсов + публичный статус |
-| Платформы партиципации | Decidim-подобные порталы, бюджеты обывательские | голосование, идеи | не доводят до проверяемого результата; мало «знания, что делать» | реестр доказательств + план адаптации |
-| Каталоги НКО | ngo.pl и подобные | справочник, объявления | не привязаны к конкретной проблеме/кейсу | привязка исполнителя к кейсу |
-| Краудфандинг | zrzutka.pl, polakpotrafi.pl | сбор денег | не помогают выбрать, *что* финансировать | оценка применимости перед сбором |
-| Соцсети/группы | районные группы | быстрое обсуждение | знание теряется, нет структуры | структурированная база |
+| Miejskie portale skarg | miejskie aplikacje „zgłoś problem”, 19115 w Warszawie | przyjmują zgłoszenia | nie pokazują, co zadziałało gdzie indziej; rezultat zostaje wewnątrz urzędu | wyszukiwanie i transfer przypadków + publiczny status |
+| Platformy partycypacji | portale typu Decidim, budżety obywatelskie | głosowanie, pomysły | nie doprowadzają do weryfikowalnego rezultatu; mało „wiedzy, co robić” | rejestr dowodów + plan adaptacji |
+| Katalogi NGO | ngo.pl i podobne | spis, ogłoszenia | niepowiązane z konkretnym problemem/przypadkiem | powiązanie realizatora z przypadkiem |
+| Crowdfunding | zrzutka.pl, polakpotrafi.pl | zbieranie pieniędzy | nie pomagają wybrać, *co* finansować | ocena dopasowania przed zbiórką |
+| Media społecznościowe/grupy | grupy osiedlowe | szybka dyskusja | wiedza ginie, brak struktury | uporządkowana baza |
 
-**Позиционирование:** мы не заменяем эти системы. Мы — слой знания и ответственности между ними: «что делать» и «кто отвечает».
+**Pozycjonowanie:** nie zastępujemy tych systemów. Jesteśmy warstwą wiedzy i odpowiedzialności pomiędzy nimi: „co robić” i „kto odpowiada”.
 
 ---
 
-## 12. Валидация (обязательная часть, не опция)
+## 12. Walidacja (część obowiązkowa, nie opcja)
 
-Минимум **до защиты**:
+Minimum **przed obroną**:
 
-| Что | Минимум | Зачем |
+| Co | Minimum | Po co |
 |---|---|---|
-| Интервью с целевой группой (пожилые/опекуны/люди с ограниченной мобильностью) | 5 | проверить боль и канал доступа |
-| Разговор с представителем гмины/района/отдела доступности | ≥1 | проверить, есть ли роль «ответственный» и готовы ли отвечать |
-| Разговор с НКО | ≥2 | проверить, нужен ли им реестр кейсов, дадут ли данные |
-| Прокси-точка (библиотека, клуб, соцработник) | ≥1 | проверить assisted reporting |
-| Письмо о намерении / цитата с разрешением | ≥1–2 | самое дешёвое сильное доказательство |
+| Wywiady z grupą docelową (osoby starsze/opiekunowie/osoby o ograniczonej mobilności) | 5 | sprawdzić bolączkę i kanał dostępu |
+| Rozmowa z przedstawicielem gminy/dzielnicy/wydziału dostępności | ≥1 | sprawdzić, czy istnieje rola „odpowiedzialnego” i czy są gotowi odpowiadać |
+| Rozmowa z NGO | ≥2 | sprawdzić, czy potrzebują rejestru przypadków i czy udostępnią dane |
+| Punkt pomocy (biblioteka, klub, pracownik socjalny) | ≥1 | sprawdzić zgłaszanie z pomocą |
+| List intencyjny / cytat za zgodą | ≥1–2 | najtańszy mocny dowód |
 
-Вопросы для интервью (набросок):
-- Что вы сделали в последний раз, когда столкнулись с такой проблемой? Куда обращались?
-- Знали ли вы, что в другом месте такое решали? Что бы изменилось?
-- Кто в вашей организации принимает такое решение и сколько времени это занимает?
-- Что вам нужно, чтобы довериться чужому кейсу?
-- Какие данные о результатах вы готовы публиковать?
+Pytania do wywiadów (szkic):
+- Co zrobił/a Pan/Pani ostatnio, gdy zetknął/zetknęła się z takim problemem? Gdzie się Pan/Pani zwracał/a?
+- Czy wiedział/a Pan/Pani, że gdzie indziej to rozwiązano? Co by to zmieniło?
+- Kto w Pana/Pani organizacji podejmuje taką decyzję i ile to trwa?
+- Czego Pan/Pani potrzebuje, aby zaufać cudzemu przypadkowi?
+- Jakie dane o rezultatach jest Pan/Pani gotów/gotowa publikować?
 
-Результаты интервью — в `spec/` отдельным файлом; в питче — реальные цитаты (с согласия) и **честное** число (напр. «5 интервью, 3 подтвердили»), без округления вверх.
+Wyniki wywiadów — w osobnym pliku (zobacz [`validation.md`](./validation.md)); w pitchu — realne cytaty (za zgodą) i **uczciwa** liczba (np. „5 wywiadów, 3 potwierdziły”), bez zaokrąglania w górę.
 
 ---
 
-## 13. Бизнес-модель (гипотеза, не обещание)
+## 13. Model biznesowy (hipoteza, nie obietnica)
 
-| Сегмент | Предложение | Оплата |
+| Segment | Oferta | Płatność |
 |---|---|---|
-| Жители, НКО | бесплатно | — |
-| Гмины / районы | панель: открытые заявки, время ответа, переносимые кейсы, отчёты | подписка (гипотеза) |
-| Фонды / программы | отчёт об эффективности и каталог проверенных вмешательств | подписка/грант (гипотеза) |
-| Исследователи, партнёры | открытый API/экспорт обезличенных данных | бесплатно/по соглашению |
+| Mieszkańcy, NGO | bezpłatnie | — |
+| Gminy / powiaty | panel: otwarte zgłoszenia, czas odpowiedzi, przenaszalne przypadki, raporty | subskrypcja (hipoteza) |
+| Fundacje / programy | raport skuteczności i katalog sprawdzonych interwencji | subskrypcja/grant (hipoteza) |
+| Badacze, partnerzy | otwarte API/eksport zanonimizowanych danych | bezpłatnie/na podstawie umowy |
 
-Что проверить: кто *конкретно* в гмине покупает (отдел социальной политики, отдел цифровизации?), есть ли бюджет, с какими системами нужна интеграция. До валидации — не называем цены.
+Do sprawdzenia: kto *konkretnie* w gminie kupuje (wydział polityki społecznej, wydział cyfryzacji?), czy jest budżet, z jakimi systemami potrzebna jest integracja. Przed walidacją — nie podajemy cen.
 
 ---
 
-## 14. Риски
+## 14. Ryzyka
 
-| Риск | Вероятность | Последствие | Смягчение |
+| Ryzyko | Prawdopodobieństwo | Skutek | Łagodzenie |
 |---|---|---|---|
-| Мало реальных кейсов с измеренным результатом | Высокая | USP не работает | sourcing spike (§7), смена формулировки по §7.4 |
-| Не успеваем за срок | Высокая | недоделанная платформа | линия отсечения (§5), Tier 2 только при запасе |
-| Transfer score воспринят как выдумка | Средняя | потеря доверия | прозрачная формула, «нет данных» вместо вымысла (§6.3) |
-| LLM «выдумывает» факты | Средняя | дезинформация | только RAG по нашей базе, ссылки, запрет генерации фактов |
-| Целевая группа не может пользоваться продуктом | Высокая | отрицательная оценка социальной ценности | прокси-путь + accessibility в демо (§8) |
-| Юридические риски (RODO, клевета) | Средняя | нельзя вести пилот | минимум §9 |
-| Гмина не заинтересована | Средняя | нет платящего | валидация (§12), начать с НКО/фондов |
+| Mało realnych przypadków ze zmierzonym rezultatem | Wysokie | USP nie działa | rozpoznanie źródeł (§7), zmiana sformułowania zgodnie z §7.4 |
+| Nie zdążymy w terminie | Wysokie | niedokończona platforma | linia odcięcia (§5), poziom 2 tylko przy zapasie czasu |
+| Wskaźnik transferu odebrany jako wymysł | Średnie | utrata zaufania | przejrzysta formuła, „brak danych” zamiast fikcji (§6.3) |
+| LLM „wymyśla” fakty | Średnie | dezinformacja | tylko RAG po naszej bazie, linki, zakaz generowania faktów |
+| Grupa docelowa nie może korzystać z produktu | Wysokie | negatywna ocena wartości społecznej | ścieżka przez pełnomocnika + dostępność w demo (§8) |
+| Ryzyka prawne (RODO, zniesławienie) | Średnie | nie można prowadzić pilotażu | minimum z §9 |
+| Gmina niezainteresowana | Średnie | brak płacącego | walidacja (§12), zacząć od NGO/fundacji |
 
 ---
 
-## 15. Открытые вопросы к вам (нужны решения до roadmap)
+## 15. Otwarte pytania do was (potrzebne decyzje przed roadmapą)
 
-1. **Срок и состав команды.** Сколько дней до хакатона/защиты и сколько человек реально разрабатывают? От этого зависит, попадает ли Tier 2 (общий backend, GUS BDL, LLM-адаптация).
-2. **Wedge.** Подтверждаем «доступность местных услуг» (+ изоляция пожилых как второй пример) или другой фокус?
-3. **География.** Один город/пара городов для демо? Предлагаю: две гмины, между которыми показывается перенос.
-4. **Язык демо.** Питч на польском/английском; интерфейс pl/en — оставляем? (Украинский язык — после хакатона.)
-5. **Кто делает sourcing spike** и есть ли у вас контакты в НКО/гмине для валидации?
-6. **Бэкенд.** Готовы ли тратить время на общую БД и вход по ссылке в рамках хакатона или честно показываем локальный прототип?
-7. **LLM.** Допустимы ли внешние API (стоимость, ключи, приватность)? Или демо без LLM, с детерминированным планом из кейса?
-8. **Какие документы объединяем:** оставить `concept_review_v0.1/0.2` как архив, а `concept_v1.0.md` — рабочей концепцией? Обновить `spec/README.md` соответственно.
-
----
-
-## 16. Критерий «концепция v1.0 принята»
-
-Считаем концепцию готовой к переводу в roadmap, когда:
-- [ ] ответы на §15 получены;
-- [ ] линия отсечения §5 подтверждена (или пересмотрена) с учётом срока и команды;
-- [ ] решено, какой формулировке USP следуем после sourcing spike (§7.4) — либо запланирован сам spike первым шагом roadmap;
-- [ ] принята формула scoring §6.3 и правило «нет данных вместо вымысла»;
-- [ ] принят минимальный план валидации §12.
-
-После этого roadmap строится *от линии отсечения*: сначала C1–C3 (доверие и сломанный flow), затем spike и C4–C6, затем C7–C9.
+1. **Termin i skład zespołu.** Ile dni do hackathonu/obrony i ile osób realnie programuje? Od tego zależy, czy wejdzie poziom 2 (wspólny backend, GUS BDL, adaptacja przez LLM).
+2. **Klin wejścia.** Potwierdzamy „dostępność lokalnych usług” (+ izolacja osób starszych jako drugi przykład) czy inny fokus?
+3. **Geografia.** Jedno miasto / para miast do demo? Proponuję: dwie gminy, między którymi pokazujemy transfer.
+4. **Język demo.** Pitch po polsku/angielsku; interfejs pl/en — zostawiamy? (Język ukraiński — po hackathonie.)
+5. **Kto robi rozpoznanie źródeł** i czy macie kontakty w NGO/gminie do walidacji?
+6. **Backend.** Czy jesteście gotowi poświęcić czas na wspólną bazę i logowanie linkiem w ramach hackathonu, czy uczciwie pokazujemy lokalny prototyp?
+7. **LLM.** Czy zewnętrzne API są dopuszczalne (koszt, klucze, prywatność)? Czy demo bez LLM, z deterministycznym planem z przypadku?
+8. **Które dokumenty łączymy:** zostawić `concept_review_v0.1/0.2` jako archiwum, a `concept_v1.0.md` jako roboczą koncepcję? Odpowiednio zaktualizować indeks specyfikacji.
 
 ---
 
-## 17. Roadmap по принципу Парето (от самого эффективного к наименее эффективному)
+## 16. Kryterium „koncepcja v1.0 przyjęta”
 
-> Статус: **на ревью**, в `roadmap.md` не перенесён. Ответы на §15 пока не получены, поэтому ниже явно заявлены допущения; при их изменении порядок/состав пересматривается.
+Uznajemy koncepcję za gotową do przeniesienia do roadmapy, gdy:
+- [ ] otrzymano odpowiedzi na §15;
+- [ ] linia odcięcia z §5 została potwierdzona (lub zrewidowana) z uwzględnieniem terminu i zespołu;
+- [ ] zdecydowano, którego sformułowania USP trzymamy się po rozpoznaniu źródeł (§7.4) — albo samo rozpoznanie zaplanowano jako pierwszy krok roadmapy;
+- [ ] przyjęto formułę punktacji z §6.3 i zasadę „brak danych zamiast fikcji”;
+- [ ] przyjęto minimalny plan walidacji z §12.
 
-### 17.1. Принцип ранжирования
+Następnie roadmapa jest budowana *od linii odcięcia*: najpierw C1–C3 (zaufanie i zepsuty przepływ), potem rozpoznanie i C4–C6, potem C7–C9.
 
-Шаги упорядочены по **отношению «вклад в оценку жюри / стоимость»**. Правило 80/20: первые ~20% усилий (шаги P1–P6) должны дать ~80% воспринимаемой ценности — доверие, работающий сквозной сценарий, видимое ядро USP. Каждый следующий шаг даёт убывающую отдачу.
+---
 
-Оценки усилия (S ≈ до полудня, M ≈ 1 день, L ≈ 2–3 дня) и ценности (●●● высокая … ● низкая) — ориентировочные, для команды из 1–2 разработчиков.
+## 17. Roadmapa według zasady Pareto (od najbardziej do najmniej efektywnego)
 
-### 17.2. Допущения (до ответов на §15)
+> Status: **w recenzji**, do `roadmap.md` nie przeniesiona. Odpowiedzi na §15 jeszcze nie otrzymano, dlatego poniżej wprost podano założenia; przy ich zmianie kolejność/skład są rewidowane.
 
-- Wedge: доступность местных услуг (+ изоляция пожилых как второй пример).
-- Демо: две гмины, перенос кейса из одной в другую; интерфейс pl/en.
-- Backend и LLM — **Tier 2**: не блокируют основное демо; без них прототип честно подписан «данные локальны».
-- Sourcing spike и валидацию делает команда параллельно с разработкой (не разработчик на критическом пути).
+### 17.1. Zasada szeregowania
 
-### 17.3. Шаги
+Kroki są uporządkowane według **stosunku „wkład w ocenę jury / koszt”**. Zasada 80/20: pierwsze ~20% wysiłku (kroki P1–P6) powinno dać ~80% postrzeganej wartości — zaufanie, działający scenariusz end-to-end, widoczny rdzeń USP. Każdy kolejny krok daje malejący zwrot.
 
-Зависимости указаны в колонке «После». Статус всех шагов при переносе в roadmap — Open.
+Szacunki nakładu (S ≈ do pół dnia, M ≈ 1 dzień, L ≈ 2–3 dni) i wartości (●●● wysoka … ● niska) są orientacyjne, dla zespołu 1–2 programistów.
 
-| # | Шаг | Покрывает | Усилие | Ценность | После | Результат / критерий готовности |
+### 17.2. Założenia (przed odpowiedziami na §15)
+
+- Klin wejścia: dostępność lokalnych usług (+ izolacja osób starszych jako drugi przykład).
+- Demo: dwie gminy, transfer przypadku z jednej do drugiej; interfejs pl/en.
+- Backend i LLM to **poziom 2**: nie blokują głównego demo; bez nich prototyp jest uczciwie podpisany „dane lokalne”.
+- Rozpoznanie źródeł i walidację prowadzi zespół równolegle z programowaniem (nie programista na ścieżce krytycznej).
+
+### 17.3. Kroki
+
+Zależności podano w kolumnie „Po”. Status wszystkich kroków przy przenoszeniu do roadmapy — Otwarte.
+
+| # | Krok | Pokrywa | Nakład | Wartość | Po | Rezultat / kryterium gotowości |
 |---|---|---|---|---|---|---|
-| **P1** | **Честность данных**: убрать выдуманные KPI (Home, Analytics), «verified», рейтинги и «effect»; демо-данные подписать; убрать/скрыть фейковые контакты экспертов | C1, §10.4 | S | ●●● | — | На UI нет числа без источника или пометки «демо/цель». Выдуманных организаций и рейтингов нет |
-| **P2** | **Починить сквозной flow** «Решение → Скопировать у себя → Проект» (`/projekty` сейчас копия Profile) | C2 | S | ●●● | — | Сценарий проходится без тупиков; список проектов — настоящий |
-| **P3** | **Убрать «мёртвый» UI**: нерабочие кнопки либо реализовать минимально, либо скрыть/подписать «прототип» (поиск, logout, save draft, upload, chat, export PDF, join team) | C1–C2 | S | ●●● | — | В демо-пути нет кнопок без эффекта |
-| **P4** | **Sourcing spike**: найти и подтвердить 10–15 реальных кейсов (источник, организация, цена, срок, результат и как измерен, уровень A–D) | §7, C5 | M (параллельно) | ●●● | — | Таблица кейсов с кликабельными источниками; решение по §7.4 принято и зафиксировано |
-| **P5** | **Схема кейса с доказательствами** (`source`, `organisation`, `cost`, `duration`, `outcome`, `outcomeMethod`, `evidenceLevel`, `context`) и загрузка кейсов из P4; удалить небезопасный кейс «самодельные рампы» | C4, C5, §7.5 | M | ●●● | P4 | Все кейсы в приложении реальные, с источником и уровнем A–D; заменённый кейс — маршрут «аудит → ответственный → согласованное решение» |
-| **P6** | **Transfer score с объяснением**: формула §6.3, видимые веса, «нет данных» вместо вымысла, hard constraints; единый matching на всех экранах рекомендаций; убрать ярлык «AI» с keyword-поиска | C3, C6 | M | ●●● | P5 | Для кейса виден score + раскладка по факторам и источнику каждого входа; все рекомендации используют один алгоритм |
-| **P7** | **Home под новое позиционирование**: слоган, 2 CTA, «как это работает» (5 шагов), раздел кейсов как центр навигации; понижение Pomysły/Profil/Analityka | C9, §5.5 | S | ●●○ | P5 | Первый экран объясняет ценность за 5 секунд; навигация соответствует §5.5 |
-| **P8** | **Адресат и статус заявки**: поле `responsibleBody`, таймлайн статусов (получена → назначена → в работе → решена/отклонена + причина), отображение в Project Room | C7, §4.2 | M | ●●○ | P2 | У демо-заявки виден адресат и история статусов; пустой адресат помечен |
-| **P9** | **Минимальный assisted reporting**: «подаю за другого», фиксация согласия, подсказка про прокси-точки | C8, §8 | S | ●●○ | — | Флаг и текст согласия в форме; сценарий демо идёт через прокси |
-| **P10** | **Accessibility-минимум и проверка**: клавиатура, фокус, контраст AA, текст до 200%, landmarks, подписи иконок, заявление о доступности; прогон основного сценария с клавиатурой и скринридером | C8, §8 | M | ●●○ | P7, P9 | Чек-лист пройден, ограничения честно перечислены |
-| **P11** | **Приватность и безопасность минимум**: огрубление точек на карте для чувствительных категорий, предупреждение о данных третьих лиц, реальные страницы Privacy и Terms | §9 | S–M | ●●○ | — | Страницы существуют и ссылаются из футера; точные адреса чувствительных категорий не публикуются |
-| **P12** | **Валидация**: 5 интервью, ≥1 гмина/район, ≥2 НКО, ≥1 прокси-точка, ≥1 письмо/цитата; результаты в отдельном файле `spec/` | §12 | M (параллельно) | ●●● | — | Цитаты и честные числа готовы для питча. *Низкая стоимость кода, поэтому ранжируется высоко по ценности, но по времени идёт параллельно с P1–P6* |
-| **P13** | **Сценарий демо и питч**: сквозной 90-секундный сценарий, кадр «до/после» (реальный или подписанный как постановочный), слайд конкурентов (§11), честная оговорка о моках | §6, §11 | M | ●●● | P6, P8, P9, P12 | Репетиция проходит без сбоев, все цифры помечены |
-| **P14** | **Один реальный источник контекста**: GUS BDL (доля 65+, численность) для 2 гмин в факторе «схожесть контекста» | Tier 2, §6.3 | M | ●●○ | P6 | Фактор контекста считается по реальным данным с указанием источника |
-| **P15** | **Общий backend + вход по magic-link** для цикла «заявка → публичная страница → смена статуса другой ролью» | Tier 2, §9 | L | ●●○ | P8 | Два браузера видят одни данные; иначе в демо остаётся подпись «данные локальны» |
-| **P16** | **LLM-план адаптации** строго по загруженным кейсам (RAG, ссылки на источник у каждого утверждения, запрет генерации фактов) | Tier 2, §6.5 | L | ●○○ | P5, P6 | Каждое утверждение плана имеет ссылку; без источника поле не заполняется |
-| **P17** | **Честная аналитика**: пересобрать Analityka на реальных метриках (Reuse rate, время ответа) либо скрыть раздел | §10 | M | ●○○ | P8, P15 | Нет декоративных графиков; только вычисляемые метрики |
-| **P18** | **Tier 3 (после хакатона)**: KRS/REGON проверка организаций, реальные финансовые вызовы, B2G-дашборд, модерация-система, пилоты, SMS/голос/бумага, мультиязычность помимо pl/en, публичный API | Tier 3, §5.4 | XL | ●○○ | выход из хакатона | Планируется отдельно, в roadmap не детализируется |
+| **P1** | **Uczciwość danych**: usunąć wymyślone KPI (Home, Analityka), „verified”, oceny i „efekty”; podpisać dane demo; usunąć/ukryć fałszywe kontakty ekspertów | C1, §10.4 | S | ●●● | — | W UI nie ma liczby bez źródła lub oznaczenia „demo/cel”. Nie ma wymyślonych organizacji i ocen |
+| **P2** | **Naprawić przepływ end-to-end** „Rozwiązanie → Skopiuj u siebie → Projekt” (`/projekty` jest obecnie kopią Profilu) | C2 | S | ●●● | — | Scenariusz przechodzi bez ślepych zaułków; lista projektów jest prawdziwa |
+| **P3** | **Usunąć „martwe” UI**: niedziałające przyciski albo zaimplementować minimalnie, albo ukryć/podpisać „prototyp” (wyszukiwanie, wylogowanie, zapis wersji roboczej, przesyłanie plików, czat, eksport PDF, dołączanie do zespołu) | C1–C2 | S | ●●● | — | Na ścieżce demo nie ma przycisków bez efektu |
+| **P4** | **Rozpoznanie źródeł**: znaleźć i potwierdzić 10–15 realnych przypadków (źródło, organizacja, cena, czas, rezultat i sposób pomiaru, poziom A–D) | §7, C5 | M (równolegle) | ●●● | — | Tabela przypadków z klikalnymi źródłami; decyzja według §7.4 podjęta i zapisana |
+| **P5** | **Schemat przypadku z dowodami** (`source`, `organisation`, `cost`, `duration`, `outcome`, `outcomeMethod`, `evidenceLevel`, `context`) i wczytanie przypadków z P4; usunąć niebezpieczny przypadek „samodzielnie budowane podjazdy” | C4, C5, §7.5 | M | ●●● | P4 | Wszystkie przypadki w aplikacji są realne, ze źródłem i poziomem A–D; zastąpiony przypadek — ścieżka „audyt → odpowiedzialny → uzgodnione rozwiązanie” |
+| **P6** | **Wskaźnik transferu z wyjaśnieniem**: formuła z §6.3, widoczne wagi, „brak danych” zamiast fikcji, twarde ograniczenia; jedno dopasowanie na wszystkich ekranach rekomendacji; usunąć etykietę „AI” z wyszukiwania po słowach kluczowych | C3, C6 | M | ●●● | P5 | Dla przypadku widać wynik + rozbicie na czynniki i źródło każdego wejścia; wszystkie rekomendacje używają jednego algorytmu |
+| **P7** | **Strona główna pod nowe pozycjonowanie**: slogan, 2 CTA, „jak to działa” (5 kroków), sekcja przypadków jako centrum nawigacji; degradacja Pomysłów/Profilu/Analityki | C9, §5.5 | S | ●●○ | P5 | Pierwszy ekran wyjaśnia wartość w 5 sekund; nawigacja zgodna z §5.5 |
+| **P8** | **Adresat i status zgłoszenia**: pole `responsibleBody`, oś czasu statusów (przyjęte → przypisane → w realizacji → rozwiązane/odrzucone + powód), wyświetlanie w Project Room | C7, §4.2 | M | ●●○ | P2 | Zgłoszenie demo pokazuje adresata i historię statusów; pusty adresat jest oznaczony |
+| **P9** | **Minimalne zgłaszanie z pomocą**: „zgłaszam za kogoś”, zapis zgody, podpowiedź o punktach pomocy | C8, §8 | S | ●●○ | — | Flaga i tekst zgody w formularzu; scenariusz demo przechodzi przez pełnomocnika |
+| **P10** | **Minimum dostępności i sprawdzenie**: klawiatura, fokus, kontrast AA, tekst do 200%, landmarki, podpisy ikon, deklaracja dostępności; przejście głównego scenariusza z klawiaturą i czytnikiem ekranu | C8, §8 | M | ●●○ | P7, P9 | Lista kontrolna zaliczona, ograniczenia uczciwie wymienione |
+| **P11** | **Minimum prywatności i bezpieczeństwa**: zgrubienie punktów na mapie dla wrażliwych kategorii, ostrzeżenie o danych osób trzecich, prawdziwe strony Polityki prywatności i Regulaminu | §9 | S–M | ●●○ | — | Strony istnieją i są linkowane w stopce; dokładne adresy wrażliwych kategorii nie są publikowane |
+| **P12** | **Walidacja**: 5 wywiadów, ≥1 gmina/powiat, ≥2 NGO, ≥1 punkt pomocy, ≥1 list/cytat; wyniki w osobnym pliku `spec/` | §12 | M (równolegle) | ●●● | — | Cytaty i uczciwe liczby gotowe do pitchu. *Niski koszt kodu, dlatego wysoko w rankingu wartości, ale czasowo idzie równolegle z P1–P6* |
+| **P13** | **Scenariusz demo i pitch**: 90-sekundowy scenariusz end-to-end, kadr „przed/po” (realny albo oznaczony jako zainscenizowany), slajd o konkurencji (§11), uczciwe zastrzeżenie o danych demo | §6, §11 | M | ●●● | P6, P8, P9, P12 | Próba przechodzi bez błędów, wszystkie liczby oznaczone |
+| **P14** | **Jedno realne źródło kontekstu**: GUS BDL (odsetek 65+, liczba ludności) dla 2 gmin w czynniku „podobieństwo kontekstu” | Poziom 2, §6.3 | M | ●●○ | P6 | Czynnik kontekstu liczony z realnych danych ze wskazaniem źródła |
+| **P15** | **Wspólny backend + logowanie magic linkiem** dla pętli „zgłoszenie → strona publiczna → zmiana statusu przez inną rolę” | Poziom 2, §9 | L | ●●○ | P8 | Dwie przeglądarki widzą te same dane; w przeciwnym razie demo zachowuje podpis „dane lokalne” |
+| **P16** | **Plan adaptacji LLM** ściśle według wczytanych przypadków (RAG, linki do źródła przy każdym twierdzeniu, zakaz generowania faktów) | Poziom 2, §6.5 | L | ●○○ | P5, P6 | Każde twierdzenie planu ma link; bez źródła pole nie jest wypełniane |
+| **P17** | **Uczciwa analityka**: przebudować Analitykę na realnych metrykach (wskaźnik ponownego wykorzystania, czas odpowiedzi) albo ukryć sekcję | §10 | M | ●○○ | P8, P15 | Brak wykresów dla ozdoby; tylko metryki liczone |
+| **P18** | **Poziom 3 (po hackathonie)**: weryfikacja organizacji w KRS/REGON, realne nabory finansowania, panel B2G, system moderacji, pilotaże, SMS/głos/papier, wielojęzyczność poza pl/en, publiczne API | Poziom 3, §5.4 | XL | ●○○ | wyjście z hackathonu | Planowane osobno, w roadmapie nieszczegółowe |
 
-### 17.4. Кривая отдачи (что даёт каждый «слой»)
+### 17.4. Krzywa zwrotu (co daje każda „warstwa”)
 
-| Слой | Шаги | Что получает жюри |
+| Warstwa | Kroki | Co otrzymuje jury |
 |---|---|---|
-| **1. Доверие и работоспособность** (≈ 20% усилий → ≈ 50% ценности) | P1, P2, P3 | Нет фальши, нет тупиков — демо не «сгорает» на первых кликах |
-| **2. Ядро USP** (≈ 25% усилий → ≈ +30% ценности) | P4, P5, P6, P7 | Видно, чем BridgeWay отличается: реальные кейсы, объяснимый score |
-| **3. Социальная значимость и ответственность** (≈ 20% усилий → ≈ +12% ценности) | P8, P9, P10, P11, P12 | Люди в центре, адресат, доступность, валидация |
-| **4. Упаковка** | P13 | Всё это превращается в убедительный 90-секундный рассказ |
-| **5. Усиление при запасе времени** (убывающая отдача) | P14, P15, P16, P17 | Дополнительный wow и «реальность» |
-| **6. После хакатона** | P18 | Путь к пилоту и инвестору |
+| **1. Zaufanie i sprawność** (≈ 20% wysiłku → ≈ 50% wartości) | P1, P2, P3 | Brak fałszu, brak ślepych zaułków — demo nie „pada” po pierwszych kliknięciach |
+| **2. Rdzeń USP** (≈ 25% wysiłku → ≈ +30% wartości) | P4, P5, P6, P7 | Widać, czym BridgeWay się wyróżnia: realne przypadki, wyjaśnialny wynik |
+| **3. Znaczenie społeczne i odpowiedzialność** (≈ 20% wysiłku → ≈ +12% wartości) | P8, P9, P10, P11, P12 | Ludzie w centrum, adresat, dostępność, walidacja |
+| **4. Pakowanie** | P13 | Wszystko to zamienia się w przekonującą 90-sekundową opowieść |
+| **5. Wzmocnienie przy zapasie czasu** (malejący zwrot) | P14, P15, P16, P17 | Dodatkowy efekt „wow” i „realność” |
+| **6. Po hackathonie** | P18 | Droga do pilotażu i inwestora |
 
-Проценты — ориентиры для приоритизации, а не измерения.
+Procenty to orientacyjne wskazówki do priorytetyzacji, a nie pomiary.
 
-### 17.5. Рекомендуемый порядок исполнения
+### 17.5. Zalecana kolejność realizacji
 
-1. **Параллельно с первого дня:** P4 (spike) и P12 (валидация) — это работа не для разработчика на критическом пути.
-2. **Разработка:** P1 → P2 → P3 (быстрые победы, 1 день) → P5 → P6 → P7 → P8 → P9 → P10 → P11.
-3. **Упаковка:** P13 — резервировать минимум 1 день на репетицию.
-4. **Только при запасе:** P14 → P15 → P16 → P17.
-5. **Ворота после P4:** если результат spike попадает в строки 2–3 таблицы §7.4, пересмотреть формулировку USP до начала P5–P6.
+1. **Równolegle od pierwszego dnia:** P4 (rozpoznanie) i P12 (walidacja) — to praca nie dla programisty na ścieżce krytycznej.
+2. **Programowanie:** P1 → P2 → P3 (szybkie zwycięstwa, 1 dzień) → P5 → P6 → P7 → P8 → P9 → P10 → P11.
+3. **Pakowanie:** P13 — zarezerwować minimum 1 dzień na próbę.
+4. **Tylko przy zapasie czasu:** P14 → P15 → P16 → P17.
+5. **Bramka po P4:** jeśli wynik rozpoznania trafia do wierszy 2–3 tabeli z §7.4, zrewidować sformułowanie USP przed rozpoczęciem P5–P6.
 
-### 17.6. Правила работы с roadmap
+### 17.6. Zasady pracy z roadmapą
 
-- При переносе в `roadmap.md` каждый шаг получает статус `Open`; закрытие — по критерию из столбца «Результат».
-- Любое изменение маршрутов, состояния, модели данных или зависимостей (P5, P6, P8, P15) сопровождается обновлением `architecture.md` в том же изменении.
-- Любая цифра в UI и питче — реальная с источником, «цель» или «демо» (§10.4).
-- Шаги P14–P17 не начинаются, пока P1–P13 не закрыты или осознанно урезаны.
+- Przy przenoszeniu do `roadmap.md` każdy krok otrzymuje status `Otwarte`; zamknięcie — według kryterium z kolumny „Rezultat”.
+- Każda zmiana tras, stanu, modelu danych lub zależności (P5, P6, P8, P15) jest połączona z aktualizacją `architecture.md` w tej samej zmianie.
+- Każda liczba w UI i pitchu jest realna ze źródłem, „cel” albo „demo” (§10.4).
+- Kroki P14–P17 nie zaczynają się, dopóki P1–P13 nie są zamknięte albo świadomie okrojone.

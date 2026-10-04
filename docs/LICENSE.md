@@ -1,72 +1,72 @@
-[← README](../README.md) · [Project](../README.md#about) · [Tech spec](./TECH_SPEC.md) · [Architecture](./ARCHITECTURE.md) · **License**
+[← README](../README.md) · [Projekt](../README.md#o-projekcie) · [Specyfikacja techniczna](./TECH_SPEC.md) · [Architektura](./ARCHITECTURE.md) · **Licencja**
 
-# BridgeWay: license
+# BridgeWay: licencja
 
-**Copyright © 2026 Dominik Liahovich. All rights reserved.**
+**Copyright © 2026 Dominik Liahovich. Wszelkie prawa zastrzeżone.**
 
-BridgeWay is **proprietary, source-available software for evaluation only**. It is **not open source**: being publicly visible does not mean it is free to use. This page is a plain-language summary. The legally binding text is [`LICENSE`](../LICENSE), and it prevails over this summary.
+BridgeWay jest **oprogramowaniem własnościowym z udostępnionym kodem, wyłącznie do oceny**. **Nie jest open source**: to, że kod jest publicznie widoczny, nie oznacza, że można z niego swobodnie korzystać. Ta strona jest podsumowaniem prostym językiem. Prawnie wiążący jest tekst [`LICENSE`](../LICENSE) (w języku angielskim; tłumaczenie na polski: [`LICENSE.pl`](../LICENSE.pl)), który ma pierwszeństwo przed tym podsumowaniem.
 
-## At a glance
+## W skrócie
 
-| ✅ You may | ❌ You may not (without written permission) |
+| ✅ Wolno | ❌ Nie wolno (bez pisemnej zgody) |
 |---|---|
-| View and read the code and docs | Copy, fork, mirror or republish it |
-| Run it privately on your own device to evaluate it (e.g. as a hackathon jury member, prospective partner or investor) | Modify it or build derivative works, including re-implementations that copy its structure, texts, design or data |
-| Link to the repository | Deploy, host or offer it as a service, or embed it in another product |
-| Contact the owner about licensing | Sell, sublicense, rent or give it to others |
-| | Extract or reuse the curated case base |
-| | Use it for text and data mining or to train / fine-tune AI models |
-| | Use the name "BridgeWay", its slogan or its branding |
-| | Remove copyright notices or this license |
+| Oglądać i czytać kod oraz dokumentację | Kopiować, forkować, tworzyć kopii lustrzanych ani publikować go ponownie |
+| Uruchomić go prywatnie na własnym urządzeniu w celu oceny (np. jako członek jury hackathonu, potencjalny partner lub inwestor) | Modyfikować go ani tworzyć utworów zależnych, w tym ponownych implementacji kopiujących jego strukturę, teksty, projekt graficzny lub dane |
+| Linkować do repozytorium | Wdrażać, hostować ani oferować go jako usługi, ani osadzać w innym produkcie |
+| Kontaktować się z właścicielem w sprawie licencji | Sprzedawać, sublicencjonować, wynajmować ani przekazywać go innym |
+| | Wydobywać ani ponownie wykorzystywać opracowanej bazy przypadków |
+| | Używać go do eksploracji tekstów i danych ani do trenowania / dostrajania modeli AI |
+| | Używać nazwy „BridgeWay”, jej sloganu ani identyfikacji wizualnej |
+| | Usuwać informacji o prawach autorskich ani tej licencji |
 
-These restrictions apply to **commercial and non-commercial use alike**.
+Ograniczenia te dotyczą **w równym stopniu użytku komercyjnego i niekomercyjnego**.
 
-## What is protected
+## Co jest chronione
 
-The whole project: source code, compiled output, database schema, scripts, UI design, texts and translations, documentation and specs, **the curated case base** (its selection, structure and summaries), the **transfer-score model and its weights**, and the **LLM prompts and quote-validation logic**.
+Cały projekt: kod źródłowy, wynik kompilacji, schemat bazy danych, skrypty, projekt interfejsu, teksty i tłumaczenia, dokumentacja i specyfikacje, **opracowana baza przypadków** (jej dobór, struktura i streszczenia), **model wskaźnika transferu i jego wagi** oraz **prompty LLM i logika walidacji cytatów**.
 
-The license relies on Polish copyright law (Act of 4 February 1994), the EU database right (Directive 96/9/EC), and an explicit **text-and-data-mining opt-out** under Art. 4(3) of Directive (EU) 2019/790.
+Licencja opiera się na polskim prawie autorskim (ustawa z 4 lutego 1994 r.), unijnym prawie sui generis do baz danych (dyrektywa 96/9/WE) oraz wyraźnym **zastrzeżeniu eksploracji tekstów i danych** na podstawie art. 4 ust. 3 dyrektywy (UE) 2019/790.
 
-## Contributions
+## Wkład
 
-Issues and pull requests don't give the contributor any rights in BridgeWay. By submitting one, you allow the owner to use it freely.
+Zgłoszenia (issues) i pull requesty nie dają ich autorowi żadnych praw do BridgeWay. Przesyłając je, pozwalasz właścicielowi na swobodne korzystanie z nich.
 
-## Termination and enforcement
+## Wygaśnięcie i egzekwowanie
 
-Any breach ends the evaluation permission immediately, and all copies must then be deleted. Unauthorised use is copyright infringement, and the owner may seek takedowns, injunctions and damages. The license is governed by Polish law.
+Każde naruszenie natychmiast kończy zgodę na ocenę, a wszystkie kopie muszą wtedy zostać usunięte. Nieuprawnione korzystanie stanowi naruszenie praw autorskich, a właściciel może żądać usunięcia treści, zabezpieczenia roszczeń i odszkodowania. Licencja podlega prawu polskiemu.
 
-## Third-party notices
+## Komponenty zewnętrzne
 
-BridgeWay's own license does not change the licenses of the open-source packages it depends on:
+Własna licencja BridgeWay nie zmienia licencji pakietów open source, z których korzysta:
 
-| Package | Version | License | Used at |
+| Pakiet | Wersja | Licencja | Używany |
 |---|---|---|---|
-| react, react-dom | 18.3.1 | MIT | runtime |
-| react-router-dom | 6.30.6 | MIT | runtime |
-| react-hook-form | 7.89.0 | MIT | runtime |
-| i18next | 23.16.8 | MIT | runtime |
-| react-i18next | 15.7.4 | MIT | runtime |
-| framer-motion | 14.0.0 | MIT | runtime |
-| lucide-react | 0.428.0 | ISC | runtime |
-| leaflet | 1.9.4 | BSD-2-Clause | runtime |
-| react-leaflet | 4.2.1 | Hippocratic License 2.1 | runtime |
+| react, react-dom | 18.3.1 | MIT | w czasie działania |
+| react-router-dom | 6.30.6 | MIT | w czasie działania |
+| react-hook-form | 7.89.0 | MIT | w czasie działania |
+| i18next | 23.16.8 | MIT | w czasie działania |
+| react-i18next | 15.7.4 | MIT | w czasie działania |
+| framer-motion | 14.0.0 | MIT | w czasie działania |
+| lucide-react | 0.428.0 | ISC | w czasie działania |
+| leaflet | 1.9.4 | BSD-2-Clause | w czasie działania |
+| react-leaflet | 4.2.1 | Hippocratic License 2.1 | w czasie działania |
 | vite, @vitejs/plugin-react | 5.4.21 / 4.7.0 | MIT | build |
 | tailwindcss, postcss, autoprefixer | 3.4.19 / 8.5.28 / 10.6.1 | MIT | build |
-| wrangler | 4.147.0 | MIT OR Apache-2.0 | build/deploy |
+| wrangler | 4.147.0 | MIT OR Apache-2.0 | build/wdrożenie |
 
-**Data and services**
+**Dane i usługi**
 
-| Source | Terms |
+| Źródło | Warunki |
 |---|---|
-| Map tiles | © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors, ODbL; tile usage policy applies |
-| Population statistics | GUS, Local Data Bank (BDL), per GUS terms of reuse |
-| Avatars | DiceBear "initials" style, per DiceBear licensing |
-| Case sources | Each case links to its original publication. Summaries are short factual descriptions written by the owner, and sources are not copied verbatim |
+| Kafelki mapy | © współtwórcy [OpenStreetMap](https://www.openstreetmap.org/copyright), ODbL; obowiązuje polityka korzystania z kafelków |
+| Statystyki ludności | GUS, Bank Danych Lokalnych (BDL), zgodnie z warunkami ponownego wykorzystania GUS |
+| Awatary | styl „initials” DiceBear, zgodnie z licencją DiceBear |
+| Źródła przypadków | Każdy przypadek zawiera link do oryginalnej publikacji. Streszczenia to krótkie opisy faktów napisane przez właściciela, a źródła nie są kopiowane dosłownie |
 
-## Licensing enquiries
+## Zapytania licencyjne
 
-For partnerships, pilots or any use beyond evaluation, contact **Dominik Liahovich** through the repository owner's profile.
+W sprawie partnerstw, pilotaży lub jakiegokolwiek użycia wykraczającego poza ocenę skontaktuj się z **Dominikiem Liahovichem** przez profil właściciela repozytorium.
 
 ---
 
-[← Architecture](./ARCHITECTURE.md) · [Back to README →](../README.md)
+[← Architektura](./ARCHITECTURE.md) · [Powrót do README →](../README.md)

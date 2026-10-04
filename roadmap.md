@@ -1,157 +1,157 @@
-## Roadmap for preparing MVP of the app
+## Roadmapa przygotowania MVP aplikacji
 
-Statuses:
-- Open
-- In progress
-- Blocked
-- Postponed
-- Done
+Statusy:
+- Otwarte
+- W toku
+- Zablokowane
+- Odłożone
+- Zrobione
 
 
-### Step 1. Status: Done
+### Krok 1. Status: Zrobione
 
-Create architectural spec and add documentation for claude code so that it supports this each time changes are implemented and also uses it as a reference for future changes.
+Utworzyć specyfikację architektury i dodać dokumentację dla Claude Code, aby była utrzymywana przy każdej wprowadzanej zmianie i służyła jako punkt odniesienia dla przyszłych zmian.
 
-Update .gitignore so that no instructions for AI appear in the repo
+Zaktualizować .gitignore tak, aby w repozytorium nie pojawiały się instrukcje dla AI.
 
-Create reference for specs that will also be supported in case of changes
+Utworzyć indeks specyfikacji, który również będzie aktualizowany przy zmianach.
 
 ---
 
-# Roadmap v1 — from `concept_v1.0.md` §17
+# Roadmapa v1 — z `concept_v1.0.md` §17
 
-Source: [concept_v1.0.md](./concept_v1.0.md) (approved). Steps are ordered by the Pareto principle: highest value/effort first. Step N = concept item P(N-1), IDs `P1…P18` are kept for traceability.
+Źródło: [concept_v1.0.md](./concept_v1.0.md) (zatwierdzona). Kroki są uporządkowane według zasady Pareto: najpierw najwyższy stosunek wartości do nakładu. Krok N = punkt koncepcji P(N-1); identyfikatory `P1…P18` zachowano dla identyfikowalności.
 
-Conventions:
-- Effort: S ≈ up to half a day, M ≈ 1 day, L ≈ 2–3 days, XL = post-hackathon. Value: ●●● high … ● low. Estimates are rough, for a 1–2 developer team.
-- Any change to routes, state, data model or dependencies (P5, P6, P8, P15) updates `architecture.md` in the same change.
-- Any number shown in the UI or pitch is **real** (with a source), a **target** (labelled), or **demo** (labelled). No other kind.
-- Steps P14–P17 do not start until P1–P13 are Done or consciously cut.
+Konwencje:
+- Nakład: S ≈ do pół dnia, M ≈ 1 dzień, L ≈ 2–3 dni, XL = po hackathonie. Wartość: ●●● wysoka … ● niska. Szacunki są przybliżone, dla zespołu 1–2 programistów.
+- Każda zmiana tras, stanu, modelu danych lub zależności (P5, P6, P8, P15) aktualizuje `architecture.md` w tej samej zmianie.
+- Każda liczba pokazana w UI lub w pitchu jest **realna** (ze źródłem), **docelowa** (oznaczona) albo **demonstracyjna** (oznaczona). Innych nie ma.
+- Kroki P14–P17 nie zaczynają się, dopóki P1–P13 nie są Zrobione albo świadomie wycięte.
 
-## Assumptions (open questions from concept §15 not yet answered)
-- Wedge: accessibility of local/public services (+ isolation of seniors as second example).
-- Demo: two municipalities, a case transferred from one to the other; UI in pl/en.
-- Backend and LLM are Tier 2: they do not block the core demo; without them the prototype is honestly labelled "data is local".
-- Sourcing spike (P4) and validation (P12) are run by the team in parallel, not by the developer on the critical path.
+## Założenia (otwarte pytania z koncepcji §15, na które jeszcze nie odpowiedziano)
+- Klin wejścia: dostępność lokalnych/publicznych usług (+ osamotnienie seniorów jako drugi przykład).
+- Demo: dwie gminy, przypadek przeniesiony z jednej do drugiej; UI w pl/en.
+- Backend i LLM to poziom 2: nie blokują głównego demo; bez nich prototyp jest uczciwie oznaczony „dane są lokalne”.
+- Rozpoznanie źródeł (P4) i walidację (P12) prowadzi zespół równolegle, a nie programista na ścieżce krytycznej.
 
-## Execution order
-1. In parallel from day one: **P4** (sourcing spike) and **P12** (validation).
-2. Development: P1 → P2 → P3 (quick wins) → P5 → P6 → P7 → P8 → P9 → P10 → P11.
-3. Packaging: **P13**; reserve at least one day for rehearsal.
-4. Only with spare time: P14 → P15 → P16 → P17.
-5. **Gate after P4:** if the spike result falls into rows 2–3 of concept §7.4, revisit the USP wording before starting P5–P6.
+## Kolejność realizacji
+1. Równolegle od pierwszego dnia: **P4** (rozpoznanie źródeł) i **P12** (walidacja).
+2. Rozwój: P1 → P2 → P3 (szybkie zwycięstwa) → P5 → P6 → P7 → P8 → P9 → P10 → P11.
+3. Pakowanie: **P13**; zarezerwować co najmniej jeden dzień na próbę.
+4. Tylko przy wolnym czasie: P14 → P15 → P16 → P17.
+5. **Bramka po P4:** jeśli wynik rozpoznania trafia do wierszy 2–3 z koncepcji §7.4, zrewidować sformułowanie USP przed rozpoczęciem P5–P6.
 
-## Layer 1 — Trust & a working flow (~20% effort → ~50% value)
+## Warstwa 1 — Zaufanie i działający przepływ (~20% nakładu → ~50% wartości)
 
-### Step 2 (P1). Status: Done
-**Data honesty.** Remove invented KPIs (Home, Analytics), "verified" badges, expert ratings and unsourced "effect" claims; label demo data; remove or hide fake expert contacts.
-- Effort S · Value ●●● · After: —
-- Done when: no number on the UI lacks a source or a "demo/target" label; no invented organisations or ratings remain.
+### Krok 2 (P1). Status: Zrobione
+**Uczciwość danych.** Usunąć wymyślone KPI (Home, Analityka), plakietki „zweryfikowano”, oceny ekspertów i deklaracje „efektu” bez źródeł; oznaczyć dane demo; usunąć lub ukryć fałszywe kontakty ekspertów.
+- Nakład S · Wartość ●●● · Po: —
+- Zrobione, gdy: żadna liczba w UI nie jest pozbawiona źródła lub etykiety „demo/cel”; nie zostały żadne wymyślone organizacje ani oceny.
 
-### Step 3 (P2). Status: Done
-**Fix the end-to-end flow** Solution → "Skopiuj to u siebie" → Project (`/projekty` is currently a copy of ProfilePage).
-- Effort S · Value ●●● · After: —
-- Done when: the scenario runs without dead ends; the projects list is a real list.
+### Krok 3 (P2). Status: Zrobione
+**Naprawić przepływ end-to-end** Rozwiązanie → „Skopiuj to u siebie” → Projekt (`/projekty` był kopią ProfilePage).
+- Nakład S · Wartość ●●● · Po: —
+- Zrobione, gdy: scenariusz przechodzi bez ślepych zaułków; lista projektów jest prawdziwą listą.
 
-### Step 4 (P3). Status: Done
-**Remove dead UI.** Each non-working control is either implemented minimally, hidden, or labelled "prototype" (search, logout, save draft, upload, chat, export PDF, join team).
-- Effort S · Value ●●● · After: —
-- Done when: the demo path contains no button without an effect.
+### Krok 4 (P3). Status: Zrobione
+**Usunąć martwe UI.** Każda niedziałająca kontrolka jest albo minimalnie zaimplementowana, albo ukryta, albo oznaczona jako „prototyp” (wyszukiwanie, wylogowanie, zapis wersji roboczej, przesyłanie plików, czat, eksport PDF, dołączanie do zespołu).
+- Nakład S · Wartość ●●● · Po: —
+- Zrobione, gdy: ścieżka demo nie zawiera żadnego przycisku bez efektu.
 
-## Layer 2 — Core USP (~25% effort → ~+30% value)
+## Warstwa 2 — Główne USP (~25% nakładu → ~+30% wartości)
 
-### Step 5 (P4). Status: Done
-**Sourcing spike.** Find and verify 10–15 real accessibility / senior-support cases (source, organisation, cost, duration, outcome and how it was measured, evidence level A–D, licence/reuse rules). Unverifiable cases are excluded. Run in parallel.
-- Effort M · Value ●●● · After: —
-- Done when: a table of cases with clickable sources exists and the decision per concept §7.4 is recorded.
-- Result ([sourcing-spike.md](./sourcing-spike.md)): 6 verified cases (<10) → §7.4 row 3; USP wording must be revisited before Steps 6–7. Team to extend the base in parallel.
+### Krok 5 (P4). Status: Zrobione
+**Rozpoznanie źródeł.** Znaleźć i zweryfikować 10–15 realnych przypadków dotyczących dostępności / wsparcia seniorów (źródło, organizacja, koszt, czas trwania, efekt i sposób jego pomiaru, poziom dowodów A–D, licencja/zasady ponownego wykorzystania). Przypadki, których nie da się zweryfikować, są wykluczane. Prowadzone równolegle.
+- Nakład M · Wartość ●●● · Po: —
+- Zrobione, gdy: istnieje tabela przypadków z klikalnymi źródłami, a decyzja zgodnie z koncepcją §7.4 jest zapisana.
+- Wynik ([sourcing-spike.md](./sourcing-spike.md)): 6 zweryfikowanych przypadków (<10) → §7.4 wiersz 3; sformułowanie USP trzeba zrewidować przed krokami 6–7. Zespół rozszerza bazę równolegle.
 
-### Step 6 (P5). Status: Done
-**Evidence-backed case schema.** Add `source`, `organisation`, `cost`, `duration`, `outcome`, `outcomeMethod`, `evidenceLevel`, `context`; load the cases from P4; remove the unsafe "DIY wooden ramps" case (replace with route: accessibility audit → responsible body → technically approved solution).
-- Effort M · Value ●●● · After: P4
-- Done when: all cases in the app are real, sourced and graded A–D. Update `architecture.md` §6.
-- Result: 6 verified cases + 1 route entry (`route1`, Dostępność Plus, level C) in `src/data/index.js`; evidence level, source, cost, outcome and measurement shown on list/detail pages; USP wording per Step 5 gate still to be applied in Step 8 (P7).
+### Krok 6 (P5). Status: Zrobione
+**Schemat przypadku popartego dowodami.** Dodać `source`, `organisation`, `cost`, `duration`, `outcome`, `outcomeMethod`, `evidenceLevel`, `context`; wczytać przypadki z P4; usunąć niebezpieczny przypadek „drewniane podjazdy zrób to sam” (zastąpić ścieżką: audyt dostępności → odpowiedzialny organ → technicznie zatwierdzone rozwiązanie).
+- Nakład M · Wartość ●●● · Po: P4
+- Zrobione, gdy: wszystkie przypadki w aplikacji są realne, mają źródła i ocenę A–D. Zaktualizować `architecture.md` §6.
+- Wynik: 6 zweryfikowanych przypadków + 1 wpis ścieżki (`route1`, Dostępność Plus, poziom C) w `src/data/index.js`; poziom dowodów, źródło, koszt, efekt i pomiar pokazane na stronach listy/szczegółów; sformułowanie USP zgodnie z bramką z kroku 5 do zastosowania w kroku 8 (P7).
 
-### Step 7 (P6). Status: Done
-**Transfer score with explanation.** Weighted formula from concept §6.3 with visible weights, "no data" instead of invented values, hard constraints first; one matching algorithm on every recommendation screen; remove the "AI" label from keyword matching.
-- Effort M · Value ●●● · After: P5
-- Done when: each case shows a score with a per-factor breakdown and the source of every input. Update `architecture.md` §7.
-- Result: `src/utils/transferScore.js` + `ScoreBreakdown`; only problem type and evidence have data, context/budget/partners show "no data" (score preliminary) until Step 15 / a real registry.
+### Krok 7 (P6). Status: Zrobione
+**Wskaźnik transferu z wyjaśnieniem.** Ważona formuła z koncepcji §6.3 z widocznymi wagami, „brak danych” zamiast wymyślonych wartości, najpierw twarde ograniczenia; jeden algorytm dopasowania na każdym ekranie rekomendacji; usunąć etykietę „AI” z dopasowania po słowach kluczowych.
+- Nakład M · Wartość ●●● · Po: P5
+- Zrobione, gdy: każdy przypadek pokazuje wynik z rozbiciem na czynniki i źródło każdej danej wejściowej. Zaktualizować `architecture.md` §7.
+- Wynik: `src/utils/transferScore.js` + `ScoreBreakdown`; dane mają tylko typ problemu i dowody, kontekst/budżet/partnerzy pokazują „brak danych” (wynik wstępny) do kroku 15 / realnego rejestru.
 
-### Step 8 (P7). Status: Done
-**Home repositioning.** Slogan "Problem został już gdzieś rozwiązany." (pl; en equivalent, via i18n), two CTAs, 5-step "how it works", cases as the navigation centre; demote Pomysły / Profil / Analityka per concept §5.5.
-- Effort S · Value ●●○ · After: P5
-- Done when: the first screen explains the value in ~5 seconds. Update `architecture.md` §4.
-- Result: new slogan + two CTAs (find a case / report), cases shown in hero and right after it, ideas section removed from Home, nav reordered (Ideas last), map teaser labelled demo.
+### Krok 8 (P7). Status: Zrobione
+**Nowe pozycjonowanie strony głównej.** Slogan „Problem został już gdzieś rozwiązany.” (pl; odpowiednik en, przez i18n), dwa przyciski CTA, 5 kroków „jak to działa”, przypadki jako centrum nawigacji; zdegradować Pomysły / Profil / Analitykę zgodnie z koncepcją §5.5.
+- Nakład S · Wartość ●●○ · Po: P5
+- Zrobione, gdy: pierwszy ekran wyjaśnia wartość w ~5 sekund. Zaktualizować `architecture.md` §4.
+- Wynik: nowy slogan + dwa CTA (znajdź przypadek / zgłoś), przypadki pokazane w sekcji hero i zaraz po niej, sekcja pomysłów usunięta ze strony głównej, nawigacja przestawiona (Pomysły na końcu), zapowiedź mapy oznaczona jako demo.
 
-## Layer 3 — Social value & responsibility (~20% effort → ~+12% value)
+## Warstwa 3 — Wartość społeczna i odpowiedzialność (~20% nakładu → ~+12% wartości)
 
-### Step 9 (P8). Status: Done
-**Addressee and status of a report.** Field `responsibleBody`, status timeline (received → assigned → in progress → resolved/rejected + reason), shown in Project Room.
-- Effort M · Value ●●○ · After: P2
-- Done when: the demo report shows an addressee and status history; an empty addressee is flagged. Update `architecture.md` §6.
-- Result: `responsibleBody` + `statusHistory` on projects, timeline and addressee card in Project Room overview (empty addressee flagged, rejection needs a reason).
+### Krok 9 (P8). Status: Zrobione
+**Adresat i status zgłoszenia.** Pole `responsibleBody`, oś czasu statusów (przyjęte → przypisane → w realizacji → rozwiązane/odrzucone + uzasadnienie), pokazywane w Project Room.
+- Nakład M · Wartość ●●○ · Po: P2
+- Zrobione, gdy: zgłoszenie demo pokazuje adresata i historię statusów; pusty adresat jest sygnalizowany. Zaktualizować `architecture.md` §6.
+- Wynik: `responsibleBody` + `statusHistory` w projektach, oś czasu i karta adresata w przeglądzie Project Room (pusty adresat sygnalizowany, odrzucenie wymaga uzasadnienia).
 
-### Step 10 (P9). Status: Done
-**Minimal assisted reporting.** "I'm reporting on behalf of someone" flag, recorded consent, hint about proxy points (library, senior club, social worker, NGO).
-- Effort S · Value ●●○ · After: —
-- Done when: the flag and consent text are in the form; the demo scenario goes through a proxy.
-- Result: proxy checkbox + required consent + proxy-points hint in the report form (problem tab), `onBehalf`/`consentAt` stored on the signal, demo signal `s6` is a proxy report, badge in map popup.
+### Krok 10 (P9). Status: Zrobione
+**Minimalne zgłaszanie z pomocą.** Flaga „zgłaszam w imieniu innej osoby”, zapisana zgoda, podpowiedź o punktach pomocy (biblioteka, klub seniora, pracownik socjalny, NGO).
+- Nakład S · Wartość ●●○ · Po: —
+- Zrobione, gdy: flaga i tekst zgody są w formularzu; scenariusz demo przechodzi przez pełnomocnika.
+- Wynik: pole wyboru pełnomocnika + wymagana zgoda + podpowiedź o punktach pomocy w formularzu zgłoszenia (zakładka problemu), `onBehalf`/`consentAt` zapisane w sygnale, sygnał demo `s6` jest zgłoszeniem przez pełnomocnika, plakietka w popupie mapy.
 
-### Step 11 (P10). Status: Done
-**Accessibility minimum and check.** Keyboard navigation, visible focus, WCAG AA contrast, text scaling to 200%, landmarks, icon labels, accessibility statement; run the main scenario with keyboard and a screen reader.
-- Effort M · Value ●●○ · After: P7, P9
-- Done when: checklist passed; remaining limitations listed honestly.
-- Result: code-level checklist done ([accessibility.md](./accessibility.md)) — contrast tokens, labelled landmarks/icons/forms, Esc handling, focus on route change, reduced motion, statement at `/dostepnosc`. **Manual keyboard + screen-reader run is still pending (human)** and listed as a limitation.
+### Krok 11 (P10). Status: Zrobione
+**Minimum dostępności i sprawdzenie.** Nawigacja klawiaturą, widoczny fokus, kontrast WCAG AA, skalowanie tekstu do 200%, landmarki, etykiety ikon, deklaracja dostępności; przejście głównego scenariusza z klawiaturą i czytnikiem ekranu.
+- Nakład M · Wartość ●●○ · Po: P7, P9
+- Zrobione, gdy: lista kontrolna zaliczona; pozostałe ograniczenia uczciwie wymienione.
+- Wynik: lista kontrolna na poziomie kodu wykonana ([accessibility.md](./accessibility.md)) — tokeny kontrastu, opisane landmarki/ikony/formularze, obsługa Esc, fokus przy zmianie trasy, ograniczony ruch, deklaracja pod `/dostepnosc`. **Ręczny test klawiatury + czytnika ekranu wciąż czeka (człowiek)** i jest wymieniony jako ograniczenie.
 
-### Step 12 (P11). Status: Done
-**Privacy & safety minimum.** Coarsen map points for sensitive categories, warning about third-party personal data, real Privacy and Terms pages linked from the footer.
-- Effort S–M · Value ●●○ · After: —
-- Done when: pages exist; exact addresses of sensitive categories are not published.
-- Result: `/prywatnosc` + `/regulamin` (footer-linked, prototype drafts, pl/en), third-party data warning in report form, sensitive categories (seniors, housing) and proxy reports shown as approximate 3 km area on the map. Legal text needs real legal review before production.
+### Krok 12 (P11). Status: Zrobione
+**Minimum prywatności i bezpieczeństwa.** Zgrubienie punktów na mapie dla wrażliwych kategorii, ostrzeżenie o danych osobowych osób trzecich, prawdziwe strony Polityki prywatności i Regulaminu linkowane w stopce.
+- Nakład S–M · Wartość ●●○ · Po: —
+- Zrobione, gdy: strony istnieją; dokładne adresy wrażliwych kategorii nie są publikowane.
+- Wynik: `/prywatnosc` + `/regulamin` (linki w stopce, projekty prototypowe, pl/en), ostrzeżenie o danych osób trzecich w formularzu zgłoszenia, wrażliwe kategorie (seniorzy, mieszkalnictwo) i zgłoszenia przez pełnomocnika pokazywane na mapie jako przybliżony obszar 3 km. Teksty prawne wymagają prawdziwej weryfikacji prawnej przed produkcją.
 
-### Step 13 (P12). Status: Postponed
-**Validation.** 5 interviews with the target group, ≥1 municipality/district, ≥2 NGOs, ≥1 proxy point, ≥1 letter of intent or quote; results in a separate file under `spec/`. Run in parallel.
-- Effort M · Value ●●● · After: —
-- Done when: real quotes and honest numbers are ready for the pitch (no rounding up).
-- Decision: **consciously cut for the hackathon** — no access to respondents before the deadline. Replaced by desk evidence (secondary, labelled as such) and an honest "not yet validated" statement in the pitch; optional async outreach, results reported with n. Plan, interview guide and logs kept in [validation.md](./validation.md) for the post-hackathon pilot.
+### Krok 13 (P12). Status: Odłożone
+**Walidacja.** 5 wywiadów z grupą docelową, ≥1 gmina/powiat, ≥2 NGO, ≥1 punkt pomocy, ≥1 list intencyjny lub cytat; wyniki w osobnym pliku w `spec/`. Prowadzone równolegle.
+- Nakład M · Wartość ●●● · Po: —
+- Zrobione, gdy: realne cytaty i uczciwe liczby są gotowe do pitchu (bez zaokrąglania w górę).
+- Decyzja: **świadomie wycięte na czas hackathonu** — brak dostępu do respondentów przed terminem. Zastąpione dowodami zza biurka (wtórnymi, tak oznaczonymi) i uczciwą deklaracją „jeszcze niezweryfikowane” w pitchu; opcjonalny kontakt asynchroniczny, wyniki raportowane z n. Plan, scenariusz wywiadu i logi zachowane w [validation.md](./validation.md) na pilotaż po hackathonie.
 
-## Layer 4 — Packaging
+## Warstwa 4 — Pakowanie
 
-### Step 14 (P13). Status: Done
-**Demo scenario and pitch.** End-to-end 90-second scenario, a before/after frame (real, or clearly labelled as staged), competitor slide (concept §11), honest statement of what is mocked.
-- Effort M · Value ●●● · After: P6, P8, P9 (P12 cut)
-- Done when: rehearsal runs without failures and every figure is labelled; a validation slide shows the real status (desk evidence + "not yet validated with users", next step: interviews/pilot).
-- Result: pitch.md (`spec/pitch.md`, internal) — 90 s script mapped to routes, staged (labelled) before/after plus one real measured outcome (c1, level B), competitor slide marked unverified, mocked-vs-real list, figure register, validation slide. **Human rehearsal and competitor-site check still pending** (checklist in pitch.md).
+### Krok 14 (P13). Status: Zrobione
+**Scenariusz demo i pitch.** 90-sekundowy scenariusz end-to-end, kadr przed/po (prawdziwy albo wyraźnie oznaczony jako zainscenizowany), slajd o konkurencji (koncepcja §11), uczciwa informacja, co jest symulowane.
+- Nakład M · Wartość ●●● · Po: P6, P8, P9 (P12 wycięte)
+- Zrobione, gdy: próba przechodzi bez błędów, a każda liczba jest oznaczona; slajd walidacji pokazuje realny status (dowody zza biurka + „jeszcze niezweryfikowane z użytkownikami”, kolejny krok: wywiady/pilotaż).
+- Wynik: pitch.md (`spec/pitch.md`, wewnętrzny) — 90-sekundowy scenariusz przypisany do tras, zainscenizowany (oznaczony) kadr przed/po plus jeden realny zmierzony efekt (c1, poziom B), slajd o konkurencji oznaczony jako niezweryfikowany, lista symulowane-vs-realne, rejestr liczb, slajd walidacji. **Próba z ludźmi i sprawdzenie stron konkurencji wciąż czekają** (lista kontrolna w pitch.md).
 
-## Layer 5 — Reinforcement if time remains (diminishing returns)
+## Warstwa 5 — Wzmocnienie, jeśli zostanie czas (malejące korzyści)
 
-### Step 15 (P14). Status: Done
-**One real context source.** GUS BDL (share of 65+, population) for 2 municipalities feeding the "context similarity" factor.
-- Effort M · Value ●●○ · After: P6
-- Done when: the factor is computed from real data with the source shown.
-- Result: `src/data/bdlContext.json` — real GUS BDL snapshot (share of 65+, 2024, gmina level) for the 8 demo cities, produced by `scripts/fetch-bdl-context.mjs`; context factor = 1 − gap/10 pp (assumed scale) when both cities have data, source + values shown in the score card, city select on the cases list. Foreign/regional cases stay "no data".
+### Krok 15 (P14). Status: Zrobione
+**Jedno realne źródło kontekstu.** GUS BDL (odsetek 65+, ludność) dla 2 gmin, zasilające czynnik „podobieństwa kontekstu”.
+- Nakład M · Wartość ●●○ · Po: P6
+- Zrobione, gdy: czynnik jest liczony z realnych danych z pokazanym źródłem.
+- Wynik: `src/data/bdlContext.json` — realna migawka GUS BDL (odsetek 65+, 2024, poziom gminy) dla 8 miast demo, tworzona przez `scripts/fetch-bdl-context.mjs`; czynnik kontekstu = 1 − różnica/10 pp (przyjęta skala), gdy oba miasta mają dane, źródło + wartości pokazane w karcie wyniku, wybór miasta na liście przypadków. Przypadki zagraniczne/regionalne pozostają „brak danych”.
 
-### Step 16 (P15). Status: Done
-**Shared backend + magic-link login** for the loop report → public page → status change by another role.
-- Effort L · Value ●●○ · After: P8
-- Done when: two browsers see the same data; otherwise the demo keeps the "data is local" label. Update `architecture.md` §2, §5, §9.
-- Result (+ registration with responder approval): Worker + D1 (`worker/index.js`), magic-link login, public `/zgloszenia` with status timeline, responder role (env list) changes status; verified by a local `wrangler dev` curl run of the full loop (incl. token reuse, role and origin checks). Later verified: local two-client UI run, production deploy (https://bridgeway.najvendo.workers.dev) and real email delivery via Resend. Only reports are shared; everything else stays local.
+### Krok 16 (P15). Status: Zrobione
+**Współdzielony backend + logowanie magic linkiem** dla pętli zgłoszenie → strona publiczna → zmiana statusu przez inną rolę.
+- Nakład L · Wartość ●●○ · Po: P8
+- Zrobione, gdy: dwie przeglądarki widzą te same dane; w przeciwnym razie demo zachowuje etykietę „dane są lokalne”. Zaktualizować `architecture.md` §2, §5, §9.
+- Wynik (+ rejestracja z akceptacją odpowiadającego): Worker + D1 (`worker/index.js`), logowanie magic linkiem, publiczne `/zgloszenia` z osią czasu statusów, rola odpowiadającego (lista w env) zmienia status; zweryfikowane lokalnie przez `wrangler dev` i curl dla całej pętli (w tym ponowne użycie tokenu, sprawdzenia roli i origin). Później zweryfikowane: lokalny test UI z dwoma klientami, wdrożenie produkcyjne (https://bridgeway.najvendo.workers.dev) i realne dostarczanie e-maili przez Resend. Udostępniane są tylko zgłoszenia; wszystko inne zostaje lokalne.
 
-### Step 17 (P16). Status: Done
-**LLM adaptation plan** strictly from loaded cases (RAG, a source link for every claim, no generated facts).
-- Effort L · Value ●○○ · After: P5, P6
-- Done when: every statement in the plan has a source link; fields without a source stay empty.
-- Result: `POST /api/adapt-plan` (Workers AI, login, 10/h) + `worker/adaptPlan.js`: one case as the only corpus, items kept only with verbatim source quotes (server-checked, digits banned in the action text), source link from the case, missing fields listed as gaps; card on the case page. Live model run not yet verified locally; wording of `action` is still model paraphrase.
+### Krok 17 (P16). Status: Zrobione
+**Plan adaptacji LLM** wyłącznie z wczytanych przypadków (RAG, link do źródła dla każdego twierdzenia, żadnych wygenerowanych faktów).
+- Nakład L · Wartość ●○○ · Po: P5, P6
+- Zrobione, gdy: każde stwierdzenie w planie ma link do źródła; pola bez źródła pozostają puste.
+- Wynik: `POST /api/adapt-plan` (Workers AI, logowanie, 10/h) + `worker/adaptPlan.js`: jeden przypadek jako jedyny korpus, elementy zachowywane tylko z dosłownymi cytatami ze źródła (sprawdzane na serwerze, cyfry zakazane w tekście akcji), link do źródła z przypadku, brakujące pola wymienione jako luki; karta na stronie przypadku. Uruchomienie modelu na żywo nie zostało jeszcze zweryfikowane lokalnie; sformułowanie `action` wciąż jest parafrazą modelu. (Później przeniesione na OpenRouter z wyborem modelu w `/admin` — Issue 2.)
 
-### Step 18 (P17). Status: Done
-**Honest analytics.** Rebuild Analityka on real metrics (reuse rate, time to first response) or hide the section.
-- Effort M · Value ●○○ · After: P8, P15
-- Done when: no decorative charts; only computed metrics.
-- Result: `GET /api/metrics` (public aggregate from D1) + rebuilt `/analityka`: median time to first response, share of reports with a response, reuse rate (accounts that copied a case / accounts with projects), tables by status and by case; "no data" when n = 0, n and limitations shown; map, local-count KPIs and category table removed. Linked in the header nav.
+### Krok 18 (P17). Status: Zrobione
+**Uczciwa analityka.** Przebudować Analitykę na realnych metrykach (wskaźnik ponownego wykorzystania, czas do pierwszej odpowiedzi) albo ukryć sekcję.
+- Nakład M · Wartość ●○○ · Po: P8, P15
+- Zrobione, gdy: brak wykresów dla ozdoby; tylko metryki liczone.
+- Wynik: `GET /api/metrics` (publiczny agregat z D1) + przebudowana `/analityka`: mediana czasu do pierwszej odpowiedzi, odsetek zgłoszeń z odpowiedzią, wskaźnik ponownego wykorzystania (konta, które skopiowały przypadek / konta z projektami), tabele według statusu i według przypadku; „brak danych” przy n = 0, pokazane n i ograniczenia; usunięte mapa, KPI z lokalnych liczników i tabela kategorii. Link w nawigacji nagłówka.
 
-## Layer 6 — After the hackathon
+## Warstwa 6 — Po hackathonie
 
-### Step 19 (P18). Status: Postponed
-**Tier 3.** KRS/REGON organisation checks, real funding calls, B2G dashboard, moderation system, municipal pilots, SMS/voice/paper channels, languages beyond pl/en, public API. Planned separately; not detailed here.
-- Effort XL · Value ●○○ · After: exit from the hackathon
+### Krok 19 (P18). Status: Odłożone
+**Poziom 3.** Weryfikacja organizacji w KRS/REGON, realne nabory grantowe, panel B2G, system moderacji, pilotaże w gminach, kanały SMS/głosowe/papierowe, języki poza pl/en, publiczne API. Planowane osobno; tu nieopisane.
+- Nakład XL · Wartość ●○○ · Po: wyjście z hackathonu
