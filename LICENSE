@@ -1,33 +1,167 @@
-BridgeWay — Proprietary License
+BRIDGEWAY — PROPRIETARY SOURCE-AVAILABLE LICENSE (EVALUATION ONLY)
+Version 2.0, October 2026
 
 Copyright (c) 2026 Dominik Liahovich. All rights reserved.
 
-This software, including its source code, design, text, data compilations,
-documentation and all related materials (the "Software"), is the exclusive
-property of Dominik Liahovich ("the Owner"). The Software is NOT open source.
+-------------------------------------------------------------------------------
+1. DEFINITIONS
+-------------------------------------------------------------------------------
+"Owner" means Dominik Liahovich, the sole author and copyright holder.
 
-Viewing. The Software is made visible solely so that it can be evaluated
-(for example by a hackathon jury). Viewing grants no other right.
+"Software" means the BridgeWay project in its entirety, in any form, including
+without limitation: source code, object and compiled code, build output,
+database schemas and migrations, scripts, configuration, user-interface design,
+layouts, graphics, texts and translations, documentation and specifications,
+the curated case base and its structure, selection and arrangement, the
+transfer-score model and its weights, prompts and validation logic, and every
+version, fork or portion of any of the foregoing.
 
-Without the prior written permission of the Owner, you may NOT:
-  1. copy, reproduce, fork, mirror or redistribute the Software or any part of it;
-  2. modify, adapt, translate or create derivative works based on the Software;
-  3. use the Software or any part of it, in source or compiled form, for any
-     purpose, whether commercial or non-commercial, including running it as a
-     service, deploying it, or embedding it in another product;
-  4. sublicense, sell, lease, lend or otherwise transfer the Software;
-  5. remove or alter this notice or any copyright or attribution marks;
-  6. use the Software, its code or content to train machine-learning models.
+"You" means any natural person or legal entity accessing the Software.
 
-No patent, trademark or other intellectual property rights are granted. The
-name "BridgeWay" and its branding are reserved by the Owner.
+"Evaluation" means viewing and reading the Software, and running it privately
+and temporarily on Your own device, solely to assess it (for example, as a
+member of a hackathon jury, a prospective partner, investor or employer),
+without making it available to anyone else.
 
-Third-party components (e.g. React, Leaflet, Tailwind CSS) remain under their
-own licenses, which are unaffected by this notice. Data from third parties
-(e.g. GUS BDL, OpenStreetMap tiles) remains subject to the terms of its source.
+"Derivative Work" means any work that is based on, derived from, translated
+from, adapted from or substantially similar to the Software or any part of it,
+including re-implementations that copy its structure, sequence, organisation,
+data, texts or design.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED. IN NO EVENT SHALL THE OWNER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY ARISING FROM THE SOFTWARE OR ITS USE.
+-------------------------------------------------------------------------------
+2. OWNERSHIP
+-------------------------------------------------------------------------------
+2.1 The Software is the exclusive intellectual property of the Owner and is
+    protected by copyright law, including the Polish Act of 4 February 1994 on
+    Copyright and Related Rights, the sui generis database right under
+    Directive 96/9/EC, and international treaties (including the Berne
+    Convention).
+2.2 The Software is NOT open source and NOT free software. Publication of the
+    Software in a public repository does not place it in the public domain and
+    does not grant any licence by implication, estoppel or otherwise.
+2.3 All rights not expressly granted in this License are reserved by the Owner.
 
-For licensing enquiries, contact the Owner.
+-------------------------------------------------------------------------------
+3. LIMITED EVALUATION PERMISSION
+-------------------------------------------------------------------------------
+3.1 Subject to full compliance with this License, the Owner grants You a
+    personal, non-exclusive, non-transferable, non-sublicensable, revocable,
+    royalty-free permission to perform Evaluation of the Software.
+3.2 Copies made automatically by Your browser, operating system or the hosting
+    platform while viewing the Software, and a single local copy kept strictly
+    for Evaluation, are permitted. They must be deleted when Evaluation ends
+    or on the Owner's request.
+3.3 No other use is permitted.
+
+-------------------------------------------------------------------------------
+4. RESTRICTIONS
+-------------------------------------------------------------------------------
+Unless You have the Owner's prior written permission, You may NOT, in whole or
+in part, directly or indirectly, for commercial or non-commercial purposes:
+
+  a) copy, reproduce, fork, clone into another repository, mirror, archive
+     for redistribution, or publish the Software;
+  b) modify, adapt, translate, refactor or create Derivative Works;
+  c) deploy, host, run in production, operate as a service (SaaS), white-label
+     or embed the Software in any other product, website or service;
+  d) distribute, sublicense, sell, rent, lease, lend or otherwise make the
+     Software available to any third party;
+  e) extract, re-utilise or republish the curated case base, its structure or
+     substantial parts of it;
+  f) use the Software, its code, texts or data for text and data mining, or to
+     train, fine-tune, evaluate or prompt machine-learning or AI models, or to
+     build datasets for such purposes;
+  g) reverse engineer the concept and re-implement it by reproducing the
+     Software's code, structure, texts, design or data;
+  h) use the name "BridgeWay", the slogan "Problem został już gdzieś
+     rozwiązany.", or the project's logos and branding;
+  i) remove, obscure or alter any copyright notice, this License or any
+     attribution;
+  j) circumvent any technical measure protecting the Software; or
+  k) assist, permit or encourage any third party to do any of the above.
+
+-------------------------------------------------------------------------------
+5. TEXT AND DATA MINING RESERVATION
+-------------------------------------------------------------------------------
+Under Article 4(3) of Directive (EU) 2019/790 and the corresponding provisions
+of Polish law, the Owner expressly reserves all rights to text and data mining
+of the Software. This reservation applies to all automated analysis, scraping
+and AI-training uses, including by commercial and research organisations,
+except where mandatory law provides otherwise.
+
+-------------------------------------------------------------------------------
+6. CONTRIBUTIONS AND FEEDBACK
+-------------------------------------------------------------------------------
+6.1 Pull requests, issues, suggestions or other feedback do not grant You any
+    right in the Software.
+6.2 By submitting a contribution, You grant the Owner a perpetual, worldwide,
+    irrevocable, royalty-free, transferable licence to use, modify and
+    exploit it in any field of exploitation, without any obligation to You,
+    and You confirm that You have the right to grant this licence.
+
+-------------------------------------------------------------------------------
+7. THIRD-PARTY COMPONENTS AND DATA
+-------------------------------------------------------------------------------
+7.1 The Software uses third-party open-source libraries (for example React,
+    React Router, Leaflet, react-leaflet, i18next, Tailwind CSS, Vite). Each
+    remains under its own licence, and this License does not restrict Your
+    rights under those licences in respect of those libraries alone. A list
+    is provided in docs/LICENSE.md.
+7.2 Third-party data and services, including the GUS Local Data Bank (BDL),
+    OpenStreetMap map tiles (© OpenStreetMap contributors, ODbL), DiceBear
+    avatars, and the publications cited as case sources, remain subject to
+    the terms of their respective owners. Case summaries in the Software are
+    the Owner's own short factual descriptions with links to the sources.
+7.3 Nothing in this License grants rights in third-party trademarks.
+
+-------------------------------------------------------------------------------
+8. TERMINATION
+-------------------------------------------------------------------------------
+8.1 The permission in Section 3 terminates automatically and immediately if
+    You breach any term of this License, and may be revoked by the Owner at
+    any time by notice, including by publishing a new version of this License.
+8.2 On termination You must stop all use and delete all copies of the
+    Software in Your possession or control.
+8.3 Sections 2, 4, 5, 6, 8, 9, 10 and 11 survive termination.
+
+-------------------------------------------------------------------------------
+9. ENFORCEMENT
+-------------------------------------------------------------------------------
+Any use of the Software beyond this License infringes the Owner's copyright
+and database rights. The Owner may seek all remedies available by law,
+including injunctive relief, removal of infringing copies (including by
+notices to hosting providers), damages or the remedies under Article 79 of the
+Polish Act on Copyright and Related Rights, and recovery of legal costs.
+
+-------------------------------------------------------------------------------
+10. DISCLAIMER AND LIMITATION OF LIABILITY
+-------------------------------------------------------------------------------
+THE SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE", WITHOUT WARRANTY OF ANY
+KIND, EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR
+A PARTICULAR PURPOSE, ACCURACY AND NON-INFRINGEMENT. DEMO DATA IN THE SOFTWARE
+IS ILLUSTRATIVE ONLY. TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE OWNER SHALL
+NOT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL OR CONSEQUENTIAL
+DAMAGES ARISING FROM THE SOFTWARE OR ITS USE, EXCEPT FOR LIABILITY THAT CANNOT
+BE EXCLUDED UNDER MANDATORY LAW (INCLUDING FOR WILFUL MISCONDUCT).
+
+-------------------------------------------------------------------------------
+11. GENERAL
+-------------------------------------------------------------------------------
+11.1 Governing law. This License is governed by the laws of the Republic of
+     Poland, excluding its conflict-of-law rules. The courts having
+     jurisdiction over the Owner's place of residence have exclusive
+     jurisdiction, without prejudice to mandatory consumer-protection rules.
+11.2 Severability. If any provision is held unenforceable, the remaining
+     provisions stay in full force, and the provision is replaced by a valid
+     one closest to its intent.
+11.3 Entire agreement. This License is the entire agreement on its subject.
+     Any permission beyond it must be in writing (including email) and signed
+     or sent by the Owner.
+11.4 No waiver. Failure to enforce any provision is not a waiver of it.
+11.5 Language. If this License is translated, the English version prevails.
+
+-------------------------------------------------------------------------------
+PERMISSIONS
+-------------------------------------------------------------------------------
+For licensing, partnership or any use beyond Evaluation, contact the Owner,
+Dominik Liahovich, through the repository owner's profile.
