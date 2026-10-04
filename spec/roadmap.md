@@ -136,7 +136,7 @@ Conventions:
 **Shared backend + magic-link login** for the loop report → public page → status change by another role.
 - Effort L · Value ●●○ · After: P8
 - Done when: two browsers see the same data; otherwise the demo keeps the "data is local" label. Update `architecture.md` §2, §5, §9.
-- Result: Worker + D1 (`worker/index.js`), magic-link login, public `/zgloszenia` with status timeline, responder role (env list) changes status; verified by a local `wrangler dev` curl run of the full loop (incl. token reuse, role and origin checks). Not verified: real email delivery, deployed D1, manual two-browser UI run. Only reports are shared; everything else stays local.
+- Result (+ registration with responder approval): Worker + D1 (`worker/index.js`), magic-link login, public `/zgloszenia` with status timeline, responder role (env list) changes status; verified by a local `wrangler dev` curl run of the full loop (incl. token reuse, role and origin checks). Not verified: real email delivery, deployed D1, manual two-browser UI run. Only reports are shared; everything else stays local.
 
 ### Step 17 (P16). Status: Open
 **LLM adaptation plan** strictly from loaded cases (RAG, a source link for every claim, no generated facts).

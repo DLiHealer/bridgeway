@@ -5,6 +5,7 @@ const STATUSES = ['received', 'assigned', 'inprogress', 'resolved', 'rejected'];
 const TOKEN_TTL_MS = 15 * 60 * 1000;
 const SESSION_TTL_S = 30 * 24 * 3600;
 const MAX_LINKS_PER_HOUR = 5;
+const MAX_PENDING = 200;
 const COOKIE = 'bw_session';
 
 const json = (data, status = 200, headers = {}) =>
@@ -90,6 +91,18 @@ async function api(request, env, url) {
     const email = clean(body?.email, 254).toLowerCase();
     if (!validEmail(email)) return fail(400, 'invalid_email');
     const now = Date.now();
+    // Registration: only responders and approved ("trusted") emails get a link; others become a pending request.
+    if (env.DEV_MAGIC_LINK !== 'true' && roleOf(env, email) !== 'responder') {
+      const reg = await env.DB.prepare('SELECT status FROM registrations WHERE email = ?').bind(email).first();
+      if (!reg) {
+        const { n } = await env.DB.prepare("SELECT COUNT(*) AS n FROM registrations WHERE status = 'pending'").first();
+        if (n >= MAX_PENDING) return fail(429, 'registrations_full');
+        await env.DB.prepare('INSERT INTO registrations (email, status, created_at) VALUES (?, ?, ?)').bind(email, 'pending', now).run();
+        return json({ pending: true });
+      }
+      if (reg.status === 'pending') return json({ pending: true });
+      if (reg.status === 'rejected') return fail(403, 'registration_rejected');
+    }
     const recent = await env.DB.prepare('SELECT COUNT(*) AS n FROM login_tokens WHERE email = ? AND created_at > ?').bind(email, now - 3600_000).first();
     if (recent.n >= MAX_LINKS_PER_HOUR) return fail(429, 'rate_limited');
     const token = randomToken();
@@ -122,6 +135,27 @@ async function api(request, env, url) {
     const raw = getCookie(request, COOKIE);
     if (raw) await env.DB.prepare('DELETE FROM sessions WHERE hash = ?').bind(await sha256(raw)).run();
     return json({ ok: true }, 200, { 'set-cookie': `${COOKIE}=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0` });
+  }
+
+  if (pathname === '/api/admin/registrations' && method === 'GET') {
+    const s = await session(request, env);
+    if (!s) return fail(401, 'login_required');
+    if (s.role !== 'responder') return fail(403, 'forbidden');
+    const { results } = await env.DB.prepare('SELECT email, status, created_at AS createdAt FROM registrations ORDER BY created_at DESC LIMIT 200').all();
+    return json({ registrations: results.map(r => ({ ...r, createdAt: new Date(r.createdAt).toISOString().slice(0, 10) })) });
+  }
+
+  const adm = pathname.match(/^\/api\/admin\/registrations\/decide$/);
+  if (adm && method === 'POST') {
+    const s = await session(request, env);
+    if (!s) return fail(401, 'login_required');
+    if (s.role !== 'responder') return fail(403, 'forbidden');
+    const b = await readJson(request);
+    const email = clean(b?.email, 254).toLowerCase(), decision = clean(b?.decision, 10);
+    if (!validEmail(email) || !['approved', 'rejected'].includes(decision)) return fail(400, 'bad_request');
+    const res = await env.DB.prepare('UPDATE registrations SET status = ?, decided_at = ? WHERE email = ?').bind(decision, Date.now(), email).run();
+    if (!res.meta.changes) return fail(404, 'not_found');
+    return json({ ok: true });
   }
 
   if (pathname === '/api/reports' && method === 'GET') {

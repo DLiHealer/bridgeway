@@ -43,11 +43,13 @@ const pl = {
     },
   },
   auth: {
-    title: 'Logowanie linkiem e-mail', email: 'Adres e-mail', send: 'Wyślij link', hint: 'Bez hasła: wyślemy jednorazowy link ważny 15 minut. Adres e-mail nie jest publikowany.',
+    title: 'Logowanie linkiem e-mail', email: 'Adres e-mail', send: 'Wyślij link / poproś o rejestrację', hint: 'Nowy adres? Wyślij prośbę — po zatwierdzeniu przez administratora dostaniesz link. Bez hasła, link ważny 15 minut, e-mail nie jest publikowany.',
     sent: 'Jeśli adres jest poprawny, link do logowania został wysłany.', devLink: 'Tryb lokalny (demo) — link bez wysyłki e-mail', verifying: 'Sprawdzamy link…',
+    pending: 'Prośba o rejestrację została zapisana. Po zatwierdzeniu przez administratora wróć tutaj i poproś o link do logowania.', regTitle: 'Prośby o rejestrację', regEmpty: 'Brak próśb.', approve: 'Zatwierdź', reject: 'Odrzuć',
+    reg: { pending: 'oczekuje', approved: 'zatwierdzony', rejected: 'odrzucony' },
     loggedAs: 'Zalogowano jako {{email}}', logout: 'Wyloguj', noBackend: 'Brak połączenia z serwerem — logowanie jest niedostępne, dane w tej wersji demo są tylko lokalne.',
     role: { resident: 'mieszkaniec', responder: 'urząd / odpowiadający' },
-    err: { invalid_email: 'Podaj poprawny adres e-mail.', rate_limited: 'Zbyt wiele próśb — spróbuj za godzinę.', invalid_token: 'Link jest nieprawidłowy, wygasł lub został już użyty.', email_unavailable: 'Wysyłka e-mail nie jest skonfigurowana.', unavailable: 'Serwer jest niedostępny.' },
+    err: { registration_rejected: 'Rejestracja tego adresu została odrzucona.', registrations_full: 'Zbyt wiele oczekujących próśb — spróbuj później.', invalid_email: 'Podaj poprawny adres e-mail.', rate_limited: 'Zbyt wiele próśb — spróbuj za godzinę.', invalid_token: 'Link jest nieprawidłowy, wygasł lub został już użyty.', email_unavailable: 'Wysyłka e-mail nie jest skonfigurowana.', unavailable: 'Serwer jest niedostępny.' },
   },
   reports: {
     title: 'Wspólne zgłoszenia', sharedNote: 'Dane wspólne: te same zgłoszenia widzą wszyscy użytkownicy. Status ustawia tylko zalogowany podmiot odpowiadający; nie jest to oficjalny rejestr urzędu.',
@@ -197,11 +199,13 @@ const en = {
     },
   },
   auth: {
-    title: 'Sign in with an email link', email: 'Email address', send: 'Send link', hint: 'No password: we send a one-time link valid for 15 minutes. Your email is never published.',
+    title: 'Sign in with an email link', email: 'Email address', send: 'Send link / request registration', hint: 'New address? Send a request — after an administrator approves it you get a link. No password, link valid 15 minutes, email never published.',
     sent: 'If the address is valid, a sign-in link has been sent.', devLink: 'Local (demo) mode — link shown instead of emailed', verifying: 'Checking the link…',
+    pending: 'Your registration request was saved. Once an administrator approves it, come back and request a sign-in link.', regTitle: 'Registration requests', regEmpty: 'No requests.', approve: 'Approve', reject: 'Reject',
+    reg: { pending: 'pending', approved: 'approved', rejected: 'rejected' },
     loggedAs: 'Signed in as {{email}}', logout: 'Log out', noBackend: 'No server connection — sign-in is unavailable, data in this demo version is local only.',
     role: { resident: 'resident', responder: 'authority / responder' },
-    err: { invalid_email: 'Enter a valid email address.', rate_limited: 'Too many requests — try again in an hour.', invalid_token: 'The link is invalid, expired or already used.', email_unavailable: 'Email sending is not configured.', unavailable: 'The server is unavailable.' },
+    err: { registration_rejected: 'Registration for this address was rejected.', registrations_full: 'Too many pending requests — try later.', invalid_email: 'Enter a valid email address.', rate_limited: 'Too many requests — try again in an hour.', invalid_token: 'The link is invalid, expired or already used.', email_unavailable: 'Email sending is not configured.', unavailable: 'The server is unavailable.' },
   },
   reports: {
     title: 'Shared reports', sharedNote: 'Shared data: every user sees the same reports. Only a signed-in responder sets the status; this is not an official registry of the authority.',
