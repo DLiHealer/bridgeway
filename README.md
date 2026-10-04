@@ -51,7 +51,7 @@ But that knowledge is scattered. It sits in evaluation reports, EU project summa
 - **reports go nowhere**: a resident complains, but nobody is named as responsible and nothing visible happens;
 - **the people most affected are the least heard**: seniors and people with limited mobility often can't use complex websites or deal with institutions on their own.
 
-The scale is real. A 2026 audit of local-government accessibility by the Supreme Audit Office (NIK) found that **87% of the audited units failed minimum accessibility requirements**. None of the 34 websites checked was fully compliant ([source](https://www.prawo.pl/samorzad/dostepnosc-w-samorzadach-tylko-na-papierze-krytyczne-wyniki-kontroli-nik,1547387.html), recorded in [`spec/sourcing-spike.md`](./spec/sourcing-spike.md)).
+The scale is real. A 2026 audit of local-government accessibility by the Supreme Audit Office (NIK) found that **87% of the audited units failed minimum accessibility requirements**. None of the 34 websites checked was fully compliant ([source](https://www.prawo.pl/samorzad/dostepnosc-w-samorzadach-tylko-na-papierze-krytyczne-wyniki-kontroli-nik,1547387.html), recorded in [`sourcing-spike.md`](./sourcing-spike.md)).
 
 ## Our answer
 
@@ -114,7 +114,7 @@ Anna's elderly neighbour uses a wheelchair and can no longer reach the local soc
 - **Assisted (proxy) reporting** with explicit consent, so that people excluded from the web can still be heard.
 - **WCAG 2.1 AA target**: contrast ≥ 4.5:1, labelled controls, keyboard focus management, screen-reader-friendly page titles, and respect for the "reduced motion" setting.
 - **Bilingual interface** (Polish / English), switchable at any time.
-- An **accessibility statement** published inside the app (`/dostepnosc`, details in [`spec/accessibility.md`](./spec/accessibility.md)).
+- An **accessibility statement** published inside the app (`/dostepnosc`, details in [`accessibility.md`](./accessibility.md)).
 
 ## Privacy by design
 
@@ -151,7 +151,7 @@ BridgeWay does not replace existing tools. It is the **layer of knowledge and ac
 | Crowdfunding | Raising money | Checking *what* is worth funding before the money is raised |
 | Neighbourhood social-media groups | Fast discussion | Structured knowledge that doesn't get lost |
 
-*(This comparison is a working hypothesis. See [`spec/concept_v1.0.md`](./spec/concept_v1.0.md) §11.)*
+*(This comparison is a working hypothesis. See [`concept_v1.0.md`](./concept_v1.0.md) §11.)*
 
 ## Sustainability model
 
@@ -169,10 +169,10 @@ BridgeWay does not replace existing tools. It is the **layer of knowledge and ac
 - ✅ Verified case base (real sources, evidence levels A–D), transfer score, matching, map, ideas and projects
 - ✅ Optional backend: shared reports, magic-link login with registration approval, responder workflow, per-account data
 - ✅ Guarded LLM adaptation plan, computed analytics, accessibility pass, privacy safeguards
-- ⏳ User validation interviews (postponed): the product is **not yet validated with users** ([`spec/validation.md`](./spec/validation.md))
+- ⏳ User validation interviews (postponed): the product is **not yet validated with users** ([`validation.md`](./validation.md))
 - ⏳ After the hackathon: real funding calls, a registry of responsible bodies, moderation, automated tests
 
-Seeded experts, NGOs, funding entries, ideas and projects are **demo data** and are labelled as such. Full plan: [`spec/roadmap.md`](./spec/roadmap.md).
+Seeded experts, NGOs, funding entries, ideas and projects are **demo data** and are labelled as such. Full plan: [`roadmap.md`](./roadmap.md).
 
 ---
 
@@ -184,7 +184,7 @@ Seeded experts, NGOs, funding entries, ideas and projects are **demo data** and 
 | [**Architecture**](./docs/ARCHITECTURE.md) | System context, components, request flows, storage, D1 schema, deployment, design decisions |
 | [**License**](./docs/LICENSE.md) | Copyright, what is and isn't allowed, third-party notices |
 
-Deep-dive specs live in [`spec/`](./spec/README.md). Deployment steps are in [`DEPLOYMENT.md`](./DEPLOYMENT.md).
+Deep-dive specs: [`architecture.md`](./architecture.md), [`roadmap.md`](./roadmap.md), [`concept_v1.0.md`](./concept_v1.0.md), [`sourcing-spike.md`](./sourcing-spike.md), [`accessibility.md`](./accessibility.md), [`validation.md`](./validation.md). Deployment steps are in [`DEPLOYMENT.md`](./DEPLOYMENT.md).
 
 ## Quick start
 

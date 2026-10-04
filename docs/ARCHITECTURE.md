@@ -2,7 +2,7 @@
 
 # BridgeWay: architecture
 
-> © 2026 Dominik Liahovich. All rights reserved. This page summarises the architecture. The authoritative source is [`spec/architecture.md`](../spec/architecture.md).
+> © 2026 Dominik Liahovich. All rights reserved. This page summarises the architecture. The authoritative source is [`architecture.md`](../architecture.md).
 
 ## Contents
 1. [Architectural drivers](#1-architectural-drivers)
@@ -275,7 +275,6 @@ bridgeway-app/
 ├─ worker/            index.js (API router), adaptPlan.js
 ├─ migrations/        0001–0006 D1 schema
 ├─ scripts/           fetch-bdl-context.mjs
-├─ spec/              product and technical specs, roadmap
 ├─ docs/              README tabs (tech spec, architecture, license)
 ├─ public/            static files
 ├─ wrangler.jsonc     Cloudflare config

@@ -24,7 +24,7 @@ Source: [concept_v1.0.md](./concept_v1.0.md) (approved). Steps are ordered by th
 
 Conventions:
 - Effort: S ≈ up to half a day, M ≈ 1 day, L ≈ 2–3 days, XL = post-hackathon. Value: ●●● high … ● low. Estimates are rough, for a 1–2 developer team.
-- Any change to routes, state, data model or dependencies (P5, P6, P8, P15) updates `spec/architecture.md` in the same change.
+- Any change to routes, state, data model or dependencies (P5, P6, P8, P15) updates `architecture.md` in the same change.
 - Any number shown in the UI or pitch is **real** (with a source), a **target** (labelled), or **demo** (labelled). No other kind.
 - Steps P14–P17 do not start until P1–P13 are Done or consciously cut.
 
@@ -122,7 +122,7 @@ Conventions:
 **Demo scenario and pitch.** End-to-end 90-second scenario, a before/after frame (real, or clearly labelled as staged), competitor slide (concept §11), honest statement of what is mocked.
 - Effort M · Value ●●● · After: P6, P8, P9 (P12 cut)
 - Done when: rehearsal runs without failures and every figure is labelled; a validation slide shows the real status (desk evidence + "not yet validated with users", next step: interviews/pilot).
-- Result: [pitch.md](./pitch.md) — 90 s script mapped to routes, staged (labelled) before/after plus one real measured outcome (c1, level B), competitor slide marked unverified, mocked-vs-real list, figure register, validation slide. **Human rehearsal and competitor-site check still pending** (checklist in pitch.md).
+- Result: pitch.md (`spec/pitch.md`, internal) — 90 s script mapped to routes, staged (labelled) before/after plus one real measured outcome (c1, level B), competitor slide marked unverified, mocked-vs-real list, figure register, validation slide. **Human rehearsal and competitor-site check still pending** (checklist in pitch.md).
 
 ## Layer 5 — Reinforcement if time remains (diminishing returns)
 

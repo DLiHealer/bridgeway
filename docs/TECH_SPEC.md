@@ -2,7 +2,7 @@
 
 # BridgeWay: technical specification
 
-> © 2026 Dominik Liahovich. All rights reserved. This page summarises the system. The authoritative, always-current source is [`spec/architecture.md`](../spec/architecture.md).
+> © 2026 Dominik Liahovich. All rights reserved. This page summarises the system. The authoritative, always-current source is [`architecture.md`](../architecture.md).
 
 ## Contents
 1. [Scope and goals](#1-scope-and-goals)
@@ -57,7 +57,7 @@
 ## 3. Functional modules
 
 ### 3.1 Solutions (case base)
-- Real interventions from Poland, the EU and the UK, taken from [`spec/sourcing-spike.md`](../spec/sourcing-spike.md). Every case has a source link and a graded evidence level.
+- Real interventions from Poland, the EU and the UK, taken from [`sourcing-spike.md`](../sourcing-spike.md). Every case has a source link and a graded evidence level.
 - **Evidence levels:** **A** systematic review / meta-analysis of RCTs · **B** peer-reviewed controlled or quasi-experimental study · **C** official/independent evaluation, or outcomes without a control group · **D** outputs only (money spent, people trained), no outcome measured.
 - Fields the source doesn't state are `null` and are shown as "not stated" / "not measured". Values are never estimated.
 - `kind: 'route'` entries describe a recommended process (e.g. accessibility audit → responsible body → technically approved solution) instead of a single intervention.
@@ -240,7 +240,7 @@ All endpoints are served by the Worker under `/api/`. Request and response bodie
 ### Accessibility
 - Target: WCAG 2.1 AA. Text contrast ≥ 4.5:1; icon-only buttons have translated `aria-label`s; decorative icons are `aria-hidden`; form controls are labelled.
 - On route change, focus moves to `<main>` and the tab title is updated. Animations run under `MotionConfig reducedMotion="user"`.
-- Checklist and pending manual checks: [`spec/accessibility.md`](../spec/accessibility.md).
+- Checklist and pending manual checks: [`accessibility.md`](../accessibility.md).
 
 ### Internationalisation
 - Every user-facing string goes through i18n keys in both `pl` and `en`. The language choice is saved in `localStorage`.
@@ -300,7 +300,7 @@ Full guide: [`DEPLOYMENT.md`](../DEPLOYMENT.md).
 - The GUS snapshot is static, covers the 8 demo cities, and uses one context indicator (share of residents aged 65+).
 - The LLM `action` text is a paraphrase, guarded only by the digit ban and the quote requirement. Live model quality has not been checked yet.
 - Accessibility: a manual screen-reader pass is pending, `Modal` lacks a full focus trap, and the map is only partly keyboard-accessible.
-- The product is **not yet validated with users** ([`spec/validation.md`](../spec/validation.md)).
+- The product is **not yet validated with users** ([`validation.md`](../validation.md)).
 
 ---
 
