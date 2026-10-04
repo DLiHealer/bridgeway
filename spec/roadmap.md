@@ -144,10 +144,11 @@ Conventions:
 - Done when: every statement in the plan has a source link; fields without a source stay empty.
 - Result: `POST /api/adapt-plan` (Workers AI, login, 10/h) + `worker/adaptPlan.js`: one case as the only corpus, items kept only with verbatim source quotes (server-checked, digits banned in the action text), source link from the case, missing fields listed as gaps; card on the case page. Live model run not yet verified locally; wording of `action` is still model paraphrase.
 
-### Step 18 (P17). Status: Open
+### Step 18 (P17). Status: Done
 **Honest analytics.** Rebuild Analityka on real metrics (reuse rate, time to first response) or hide the section.
 - Effort M · Value ●○○ · After: P8, P15
 - Done when: no decorative charts; only computed metrics.
+- Result: `GET /api/metrics` (public aggregate from D1) + rebuilt `/analityka`: median time to first response, share of reports with a response, reuse rate (accounts that copied a case / accounts with projects), tables by status and by case; "no data" when n = 0, n and limitations shown; map, local-count KPIs and category table removed. Linked in the header nav.
 
 ## Layer 6 — After the hackathon
 

@@ -14,6 +14,7 @@ const NAV = [
   { to: '/zgloszenia', key: 'reports' },
   { to: '/eksperci', key: 'experts' },
   { to: '/finansowanie', key: 'funding' },
+  { to: '/analityka', key: 'analytics' },
   { to: '/pomysly', key: 'ideas' },
 ];
 

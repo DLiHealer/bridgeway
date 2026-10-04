@@ -51,6 +51,43 @@ async function readJson(request) {
   try { return await request.json(); } catch { return null; }
 }
 
+// Public aggregate metrics (Step 18): counts only, no emails, ids or texts.
+async function metrics(env) {
+  const { results: reps } = await env.DB.prepare('SELECT id, created_at FROM reports').all();
+  const { results: sts } = await env.DB.prepare('SELECT report_id, status, created_at FROM report_status ORDER BY id').all();
+  const byReport = new Map();
+  for (const s of sts) (byReport.get(s.report_id) || byReport.set(s.report_id, []).get(s.report_id)).push(s);
+  const byStatus = Object.fromEntries(STATUSES.map(s => [s, 0]));
+  const waits = [];
+  for (const r of reps) {
+    const h = byReport.get(r.id) || [];
+    byStatus[h[h.length - 1]?.status || 'received']++;
+    const first = h.find(x => x.status !== 'received');
+    if (first) waits.push(Math.max(0, first.created_at - r.created_at));
+  }
+  waits.sort((a, b) => a - b);
+  const mid = waits.length >> 1;
+  const median = waits.length ? (waits.length % 2 ? waits[mid] : (waits[mid - 1] + waits[mid]) / 2) : null;
+
+  const { results: ud } = await env.DB.prepare("SELECT json FROM user_data WHERE slice = 'projects'").all();
+  let accounts = 0, projects = 0, fromCases = 0, accountsReusing = 0;
+  const byCase = {};
+  for (const row of ud) {
+    let arr; try { arr = JSON.parse(row.json); } catch { continue; }
+    if (!Array.isArray(arr) || !arr.length) continue;
+    accounts++; projects += arr.length;
+    const copies = arr.filter(p => p && typeof p.sourceSolutionId === 'string');
+    fromCases += copies.length;
+    if (copies.length) accountsReusing++;
+    for (const p of copies) { const k = p.sourceSolutionId.slice(0, 40); byCase[k] = (byCase[k] || 0) + 1; }
+  }
+  return {
+    reports: { total: reps.length, byStatus, responded: waits.length },
+    firstResponse: waits.length ? { n: waits.length, medianMs: median } : null,
+    reuse: { accounts, projects, fromCases, accountsReusing, rate: accounts ? accountsReusing / accounts : null, byCase },
+  };
+}
+
 async function history(env, id) {
   const { results } = await env.DB.prepare('SELECT status, note, actor_role AS actorRole, created_at AS date FROM report_status WHERE report_id = ? ORDER BY id').bind(id).all();
   return results.map(r => ({ ...r, date: new Date(r.date).toISOString().slice(0, 10) }));
@@ -249,6 +286,8 @@ async function api(request, env, url) {
     const r = await buildPlan(env, caseId, lang, { city }, (await getSetting(env, 'llmModel')) || DEFAULT_MODEL);
     return r.error ? fail(r.status, r.error) : json({ plan: r.plan });
   }
+
+  if (pathname === '/api/metrics' && method === 'GET') return json(await metrics(env));
 
   if (pathname === '/api/reports' && method === 'GET') {
     const { results } = await env.DB.prepare('SELECT * FROM reports ORDER BY created_at DESC LIMIT 200').all();
