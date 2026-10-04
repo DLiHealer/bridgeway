@@ -6,6 +6,9 @@ const TOKEN_TTL_MS = 15 * 60 * 1000;
 const SESSION_TTL_S = 30 * 24 * 3600;
 const MAX_LINKS_PER_HOUR = 5;
 const MAX_PENDING = 200;
+const TEST_MODE_MAX_LINKS_PER_HOUR = 50; // global cap while test mode is on (limits mail abuse)
+
+const testModeOn = async (env) => (await env.DB.prepare("SELECT value FROM settings WHERE key = 'testMode'").first())?.value === '1';
 const COOKIE = 'bw_session';
 
 const json = (data, status = 200, headers = {}) =>
@@ -94,14 +97,18 @@ async function api(request, env, url) {
     // Registration: only responders and approved ("trusted") emails get a link; others become a pending request.
     if (env.DEV_MAGIC_LINK !== 'true' && roleOf(env, email) !== 'responder') {
       const reg = await env.DB.prepare('SELECT status FROM registrations WHERE email = ?').bind(email).first();
-      if (!reg) {
+      if (reg?.status !== 'rejected' && reg?.status !== 'approved' && await testModeOn(env)) {
+        // Test mode (responder-controlled): new/pending emails are approved automatically; the link still goes to the inbox.
+        const { n } = await env.DB.prepare('SELECT COUNT(*) AS n FROM login_tokens WHERE created_at > ?').bind(now - 3600_000).first();
+        if (n >= TEST_MODE_MAX_LINKS_PER_HOUR) return fail(429, 'rate_limited');
+        await env.DB.prepare("INSERT INTO registrations (email, status, created_at, decided_at) VALUES (?, 'approved', ?, ?) ON CONFLICT(email) DO UPDATE SET status = 'approved', decided_at = excluded.decided_at").bind(email, now, now).run();
+      } else if (!reg) {
         const { n } = await env.DB.prepare("SELECT COUNT(*) AS n FROM registrations WHERE status = 'pending'").first();
         if (n >= MAX_PENDING) return fail(429, 'registrations_full');
         await env.DB.prepare('INSERT INTO registrations (email, status, created_at) VALUES (?, ?, ?)').bind(email, 'pending', now).run();
         return json({ pending: true });
-      }
-      if (reg.status === 'pending') return json({ pending: true });
-      if (reg.status === 'rejected') return fail(403, 'registration_rejected');
+      } else if (reg.status === 'pending') return json({ pending: true });
+      else if (reg.status === 'rejected') return fail(403, 'registration_rejected');
     }
     const recent = await env.DB.prepare('SELECT COUNT(*) AS n FROM login_tokens WHERE email = ? AND created_at > ?').bind(email, now - 3600_000).first();
     if (recent.n >= MAX_LINKS_PER_HOUR) return fail(429, 'rate_limited');
@@ -143,6 +150,18 @@ async function api(request, env, url) {
     if (s.role !== 'responder') return fail(403, 'forbidden');
     const { results } = await env.DB.prepare('SELECT email, status, created_at AS createdAt FROM registrations ORDER BY created_at DESC LIMIT 200').all();
     return json({ registrations: results.map(r => ({ ...r, createdAt: new Date(r.createdAt).toISOString().slice(0, 10) })) });
+  }
+
+  if (pathname === '/api/admin/settings' && (method === 'GET' || method === 'POST')) {
+    const s = await session(request, env);
+    if (!s) return fail(401, 'login_required');
+    if (s.role !== 'responder') return fail(403, 'forbidden');
+    if (method === 'POST') {
+      const b = await readJson(request);
+      if (typeof b?.testMode !== 'boolean') return fail(400, 'bad_request');
+      await env.DB.prepare("INSERT INTO settings (key, value) VALUES ('testMode', ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value").bind(b.testMode ? '1' : '0').run();
+    }
+    return json({ testMode: await testModeOn(env) });
   }
 
   const adm = pathname.match(/^\/api\/admin\/registrations\/decide$/);

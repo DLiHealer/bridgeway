@@ -67,12 +67,24 @@ export default function LoginPage() {
 function Registrations() {
   const { t } = useTranslation();
   const [rows, setRows] = useState(null);
+  const [testMode, setTestMode] = useState(null);
   const load = () => api.registrations().then(r => setRows(r.registrations)).catch(() => setRows([]));
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(); api.settings().then(r => setTestMode(r.testMode)).catch(() => {}); }, []);
+  const toggle = (v) => api.setTestMode(v).then(r => setTestMode(r.testMode));
   const decide = (email, d) => api.decide(email, d).then(load);
   return (
     <Card className="mt-6 max-w-md p-6">
       <h2 className="font-semibold">{t('auth.regTitle')}</h2>
+      {testMode !== null && (
+        <div className="mt-3 rounded-btn border border-border p-3">
+          <label className="flex items-start gap-2 text-sm font-medium">
+            <input type="checkbox" className="mt-1" checked={testMode} onChange={e => toggle(e.target.checked)} />
+            <span>{t('auth.testMode')}</span>
+          </label>
+          <p className="mt-1 text-xs text-neutral-500">{t('auth.testModeHint')}</p>
+          {testMode && <p role="status" className="mt-1 text-xs font-semibold text-red-600">{t('auth.testModeOn')}</p>}
+        </div>
+      )}
       {rows && rows.length === 0 && <p className="mt-2 text-sm text-neutral-500">{t('auth.regEmpty')}</p>}
       <ul className="mt-3 space-y-2">
         {rows?.map(r => (
