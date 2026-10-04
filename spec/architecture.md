@@ -29,7 +29,8 @@ src/
   context/AppContext.jsx   global state (see §5)
   context/AuthContext.jsx  backend availability + magic-link session (§5)
   api.js              fetch client for /api/*
-worker/index.js     API Worker (auth, reports, adapt-plan); worker/adaptPlan.js (retrieval + quote validation); migrations/ (0001 init, 0002 registrations, 0003 settings, 0004 profiles, 0005 adapt_log)
+  components/RequireAuth.jsx  route guard: with a backend and no account → redirect to /logowanie
+worker/index.js     API Worker (auth, reports, adapt-plan); worker/adaptPlan.js (retrieval + quote validation); migrations/ (0001 init, 0002 registrations, 0003 settings, 0004 profiles, 0005 adapt_log, 0006 user_data)
   data/index.js       mock datasets + category/city helpers
   data/bdlContext.json  GUS BDL snapshot (share of 65+ per city), written by scripts/fetch-bdl-context.mjs
   utils/              matching.js (keyword scoring), transferScore.js (case transfer score), privacy.js (sensitive categories, coordinate coarsening), geo.js (distanceKm), formatters.js
@@ -55,9 +56,9 @@ worker/index.js     API Worker (auth, reports, adapt-plan); worker/adaptPlan.js 
 | `/finansowanie` | FundingPage (detail component: FundingDetail) |
 | `/projekty`, `/projekty/:id` | ProjectsPage (list of projects, empty state → `/rozwiazania`), ProjectRoom |
 | `/zgloszenia`, `/zgloszenia/:id` | ReportsPage (public shared reports from the backend, status timeline; responder form for role `responder`) |
-| `/admin` | AdminPage (responder only): registration setting — radio *require approval* (default) / *test mode*, explicit descriptions + Save, current-state banner; registration requests list with approve/reject |
+| `/admin` | AdminPage (login required via `RequireAuth`; responder only): registration setting — radio *require approval* (default) / *test mode*, explicit descriptions + Save, current-state banner; registration requests list with approve/reject |
 | `/logowanie` | LoginPage (email → magic link; consumes `?token=`) |
-| `/profil` | ProfilePage |
+| `/profil` | ProfilePage (login required via `RequireAuth` when a backend exists; profile / my-* menu links hidden while logged out) |
 | `/analityka` | AnalyticsPage |
 | `/o-nas` | AboutPage |
 | `/dostepnosc` | AccessibilityPage (accessibility statement, linked from footer) |
@@ -69,7 +70,7 @@ Nav order (concept §5.5): Solutions (centre), Map, Projects, Reports (shared, S
 ## 5. State & persistence
 `AppProvider` (`useApp()`) holds: `user`, `signals`, `ideas`, `projects`, `saved`, `filters`, `toasts`, plus actions (`addSignal`, `addIdea`, `addProject` (returns the created project; defaults `responsibleBody: null`, `statusHistory: [received]`), `updateProject(id, patch|fn)`,  `saveItem`, `isSaved`, `setFilters`, `clearFilters`) and `data` (static datasets).
 - Each slice persists via `useLocalStorage` under `bridgeart-*` keys (`-user`, `-signals`, `-ideas`, `-projects`, `-saved`, `-filters`, `-toasts-placeholder`, plus `bridgeart-lang` for language).
-- Seeded from `src/data/index.js` on first load. Local slices are per-browser; no sync.
+- Seeded from `src/data/index.js` on first load. **Guests** (no login or no backend): slices per browser in localStorage. **Logged in:** `user`, `signals`, `ideas`, `projects`, `saved` are per account, held in `AppProvider` state (not localStorage), loaded from D1 on login (`GET /api/profile` + `GET /api/user-data`; missing slice = demo seed; name defaults to the email local part), saved debounced (500 ms) via `PUT /api/user-data/:slice` (table `user_data(email, slice, json)`, slices signals|ideas|projects|saved, JSON array ≤256 KB, login required, private). On logout/account switch the previous account's state is dropped (no leak between accounts; guest data untouched).
 - **Shared slice (Step 16):** only problem *reports* live in D1. `AuthProvider` (`useAuth()`: `backend` null|true|false from `GET /api/health`, `account` `{email, role}`, `login`, `logout`). Magic link: `POST /api/auth/request` (token hash in `login_tokens`, 15 min, single use, 5/h per email) → mail via Resend HTTP API (`RESEND_API_KEY`, optional `MAIL_FROM`) or the `EMAIL` binding + `MAIL_FROM` (Resend confirmed in production, Cloudflare binding untested) or, with `DEV_MAGIC_LINK=true` in `.dev.vars` only, link in the response → `/logowanie?token=` → `POST /api/auth/verify` → HttpOnly `bw_session` cookie (hash in `sessions`, 30 d). **Registration:** a link is issued only to responders and `approved` emails; any other address becomes a `pending` row in `registrations` (`{pending:true}`, max 200 pending) until a responder approves/rejects it on `/logowanie` (`GET /api/admin/registrations`, `POST /api/admin/registrations/decide`, responder only); rejected → 403. `DEV_MAGIC_LINK=true` (local only) bypasses it. **Test mode** (`settings.testMode`, default off; `GET/POST /api/admin/settings`, responder only, setting and request list on `/admin`; menu link only for responders): new and pending emails are auto-approved and get a real emailed link (rejected stay blocked; global cap 50 links/h). Intended for live demos; turn off afterwards. Roles: `responder` iff email in `RESPONDER_EMAILS`, else `resident`. API: `GET /api/reports[/:id]` public (no email/coords), `POST /api/reports` (login), `POST /api/reports/:id/status` (responder; `rejected` needs note; optional `responsibleBody`). POSTs need JSON content-type and same-origin `Origin`. **Profile:** table `profiles` (email PK; name, roleLabel ∈ Mieszkaniec/Aktywista/Ekspert/NGO/Instytut, city, bio ≤500), `GET/PUT /api/profile` (login required, private — never returned in public reports). ProfilePage form has a draft + *Save* button (disabled until changed, name ≥2 chars): logged in → saved to the account and loaded into `user` on login (`AppProvider` effect); guests → localStorage only (stated in the UI). Email is read-only (from the account). The former dead *Settings* tab was removed. SubmitPage (problem tab) additionally posts a shared copy (title, description, category, city, onBehalf) when logged in; the local signal is unchanged.
 - **Adaptation plan (Step 17):** `POST /api/adapt-plan {caseId, city, lang}` (login, JSON same-origin, 10/h per account in `adapt_log`; 404 unknown case, 503 `llm_unavailable` without the `AI` binding, 429 `rate_limited`). The only corpus is the chosen case (`src/data/index.js`); the LLM returns `{items:[{action, evidence:[{field, quote}]}]}`; `validate` keeps an item only if `action` has no digits and a quote is a substring of the cited case passage (replaced by the source text); source link = `case.source`; `gaps` = case fields that are `null`. Result is not stored.
 - Static, read-only entities (solutions, experts, ngos, fundings) are read from `data` directly.
@@ -94,7 +95,7 @@ Helpers: `categoryById`, `categoryName`, `loc` (language via `window.__i18nLang`
 - Security headers for Netlify in `netlify.toml`; Cloudflare uses `wrangler.jsonc`.
 
 ## 9. Known gaps / tech debt
-- Non-functional controls are hidden, not faked (no search, logout, drafts, join-team, chat, upload/invite in Project Room); some may return on the Step 16 backend (not done).
+- Non-functional controls are hidden, not faked (no search, drafts, join-team, chat, upload/invite in Project Room); some may return on the Step 16 backend (not done).
 - `toasts` persisted in localStorage under a placeholder key.
 - Accessibility: manual keyboard + screen-reader run pending; `Modal` has no full focus trap; map only partly keyboard-accessible.
 - GUS BDL snapshot is static (refresh manually); only the 8 demo cities, aged 65+ share is the single context indicator (population density etc. not used). Anonymous BDL quota is 100 requests/15 min.

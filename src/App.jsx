@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import RequireAuth from './components/RequireAuth.jsx';
 import { Suspense, lazy } from 'react';
 import Layout from './components/layout/Layout.jsx';
 import { Skeleton } from './components/ui';
@@ -46,9 +47,9 @@ export default function App() {
           <Route path="/projekty/:id" element={<ProjectRoom />} />
           <Route path="/zgloszenia" element={<ReportsPage />} />
           <Route path="/zgloszenia/:id" element={<ReportsPage />} />
-          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin" element={<RequireAuth><AdminPage /></RequireAuth>} />
           <Route path="/logowanie" element={<LoginPage />} />
-          <Route path="/profil" element={<ProfilePage />} />
+          <Route path="/profil" element={<RequireAuth><ProfilePage /></RequireAuth>} />
           <Route path="/analityka" element={<AnalyticsPage />} />
           <Route path="/o-nas" element={<AboutPage />} />
           <Route path="/dostepnosc" element={<AccessibilityPage />} />

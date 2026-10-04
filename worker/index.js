@@ -13,6 +13,8 @@ const TEST_MODE_MAX_LINKS_PER_HOUR = 50; // global cap while test mode is on (li
 
 const testModeOn = async (env) => (await env.DB.prepare("SELECT value FROM settings WHERE key = 'testMode'").first())?.value === '1';
 const COOKIE = 'bw_session';
+const USER_SLICES = ['signals', 'ideas', 'projects', 'saved'];
+const MAX_SLICE_BYTES = 256 * 1024;
 const MAX_PLANS_PER_HOUR = 10; // per account (LLM cost cap)
 
 const json = (data, status = 200, headers = {}) =>
@@ -167,6 +169,28 @@ async function api(request, env, url) {
     }
     const p = await env.DB.prepare('SELECT name, role_label AS roleLabel, city, bio FROM profiles WHERE email = ?').bind(s.email).first();
     return json({ profile: p || null });
+  }
+
+  // Private per-account data (local slices: signals, ideas, projects, saved). Never exposed in public endpoints.
+  if (pathname === '/api/user-data' && method === 'GET') {
+    const s = await session(request, env);
+    if (!s) return fail(401, 'login_required');
+    const { results } = await env.DB.prepare('SELECT slice, json FROM user_data WHERE email = ?').bind(s.email).all();
+    const slices = {};
+    for (const r of results) { try { slices[r.slice] = JSON.parse(r.json); } catch { /* skip corrupt */ } }
+    return json({ slices });
+  }
+  const ud = pathname.match(/^\/api\/user-data\/([a-z]+)$/);
+  if (ud && method === 'PUT') {
+    const s = await session(request, env);
+    if (!s) return fail(401, 'login_required');
+    if (!USER_SLICES.includes(ud[1])) return fail(404, 'not_found');
+    const b = await readJson(request);
+    if (!b || !Array.isArray(b.value)) return fail(400, 'bad_request');
+    const text = JSON.stringify(b.value);
+    if (text.length > MAX_SLICE_BYTES) return fail(413, 'too_large');
+    await env.DB.prepare('INSERT INTO user_data (email, slice, json, updated_at) VALUES (?, ?, ?, ?) ON CONFLICT(email, slice) DO UPDATE SET json = excluded.json, updated_at = excluded.updated_at').bind(s.email, ud[1], text, Date.now()).run();
+    return json({ ok: true });
   }
 
   if (pathname === '/api/admin/settings' && (method === 'GET' || method === 'POST')) {

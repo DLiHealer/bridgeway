@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo } from 'react';
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useAuth } from './AuthContext.jsx';
 import { api } from '../api.js';
 import { useLocalStorage } from '../hooks/useLocalStorage.js';
@@ -6,24 +6,75 @@ import * as data from '../data';
 
 const AppContext = createContext(null);
 
+const GUEST = { name: 'Gość', role: 'Mieszkaniec', email: 'gosc@example.com', city: 'Warszawa' };
+const SLICES = ['signals', 'ideas', 'projects', 'saved'];
+const SEEDS = { signals: data.signals, ideas: data.ideas, projects: data.projects, saved: [] };
+
 export function AppProvider({ children }) {
-  const [user, setUser] = useLocalStorage('bridgeart-user', { name: 'Gość', role: 'Mieszkaniec', email: 'gosc@example.com', city: 'Warszawa' });
-  const [signals, setSignals] = useLocalStorage('bridgeart-signals', data.signals);
-  const [ideas, setIdeas] = useLocalStorage('bridgeart-ideas', data.ideas);
-  const [projects, setProjects] = useLocalStorage('bridgeart-projects', data.projects);
-  const [saved, setSaved] = useLocalStorage('bridgeart-saved', []);
+  // Guest data: per browser (localStorage). Logged in: the same slices live in D1 per account (`acct`), never in localStorage.
+  const [guestUser, setGuestUser] = useLocalStorage('bridgeart-user', GUEST);
+  const [gSignals, setGSignals] = useLocalStorage('bridgeart-signals', data.signals);
+  const [gIdeas, setGIdeas] = useLocalStorage('bridgeart-ideas', data.ideas);
+  const [gProjects, setGProjects] = useLocalStorage('bridgeart-projects', data.projects);
+  const [gSaved, setGSaved] = useLocalStorage('bridgeart-saved', []);
   const [filters, setFiltersState] = useLocalStorage('bridgeart-filters', { type: 'all', categories: [], city: '', urgency: 'all', q: '' });
   const [toasts, setToasts] = useLocalStorage('bridgeart-toasts-placeholder', []);
 
-  // Logged in: email comes from the account, profile fields from the server (per account, follows the login)
   const { account } = useAuth();
+  const email = account?.email || null;
+  const [acct, setAcct] = useState(null); // { email, user, signals, ideas, projects, saved } of the logged-in account
+  const lastSaved = useRef({});
+  const cur = email && acct?.email === email ? acct : null;
+
+  // Account change (login / logout / switch): drop the previous account's state, then load this account's profile and data from the server.
   useEffect(() => {
-    if (!account) return;
-    api.profile().then(({ profile }) => setUser(u => ({
-      ...u, email: account.email,
-      ...(profile ? { name: profile.name, role: profile.roleLabel, city: profile.city, bio: profile.bio } : {}),
-    }))).catch(() => {});
-  }, [account?.email]);
+    setAcct(null);
+    if (!email) return;
+    let dead = false;
+    Promise.all([api.profile(), api.userData()]).then(([{ profile }, { slices }]) => {
+      if (dead) return;
+      const next = {
+        email,
+        user: { email, name: profile?.name || email.split('@')[0], role: profile?.roleLabel || 'Mieszkaniec', city: profile?.city || '', bio: profile?.bio || '' },
+      };
+      lastSaved.current = {};
+      for (const k of SLICES) {
+        next[k] = Array.isArray(slices[k]) ? slices[k] : SEEDS[k];
+        lastSaved.current[k] = JSON.stringify(next[k]);
+      }
+      setAcct(next);
+    }).catch(() => {});
+    return () => { dead = true; };
+  }, [email]);
+
+  // Save changed slices of the logged-in account (debounced).
+  useEffect(() => {
+    if (!cur) return;
+    const t = setTimeout(() => {
+      for (const k of SLICES) {
+        const text = JSON.stringify(cur[k]);
+        if (text === lastSaved.current[k]) continue;
+        lastSaved.current[k] = text;
+        api.saveUserData(k, cur[k]).catch(() => { lastSaved.current[k] = null; });
+      }
+    }, 500);
+    return () => clearTimeout(t);
+  }, [cur?.signals, cur?.ideas, cur?.projects, cur?.saved]);
+
+  const mk = (k, guestSet) => (v) => {
+    if (!email) return guestSet(v);
+    setAcct(a => (a && a.email === email ? { ...a, [k]: typeof v === 'function' ? v(a[k]) : v } : a));
+  };
+  const user = email ? (cur?.user || { email, name: email.split('@')[0], role: 'Mieszkaniec', city: '', bio: '' }) : guestUser;
+  const setUser = (v) => {
+    if (!email) return setGuestUser(v);
+    setAcct(a => (a && a.email === email ? { ...a, user: typeof v === 'function' ? v(a.user) : v } : a));
+  };
+  const signals = email ? (cur?.signals ?? SEEDS.signals) : gSignals;
+  const ideas = email ? (cur?.ideas ?? SEEDS.ideas) : gIdeas;
+  const projects = email ? (cur?.projects ?? SEEDS.projects) : gProjects;
+  const saved = email ? (cur?.saved ?? SEEDS.saved) : gSaved;
+  const setSignals = mk('signals', setGSignals), setIdeas = mk('ideas', setGIdeas), setProjects = mk('projects', setGProjects), setSaved = mk('saved', setGSaved);
 
   const value = useMemo(() => ({
     user, setUser,
@@ -45,7 +96,7 @@ export function AppProvider({ children }) {
     updateProject: (id, patch) => setProjects(list => list.map(x => x.id === id ? { ...x, ...(typeof patch === 'function' ? patch(x) : patch) } : x)),
     data,
     toasts, setToasts,
-  }), [user, signals, ideas, projects, saved, filters, toasts]);
+  }), [email, acct, guestUser, gSignals, gIdeas, gProjects, gSaved, filters, toasts]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }

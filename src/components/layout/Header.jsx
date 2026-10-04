@@ -36,6 +36,7 @@ export default function Header() {
   const { t } = useTranslation();
   const { user } = useApp();
   const { backend, account, logout } = useAuth();
+  const showProfile = !backend || !!account; // with a backend, profile pages need a login
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [avatarOpen, setAvatarOpen] = useState(false);
@@ -97,15 +98,15 @@ export default function Header() {
               </button>
               {avatarOpen && (
                 <div onMouseLeave={() => setAvatarOpen(false)} className="absolute right-0 mt-2 w-52 rounded-card border border-border bg-white py-2 shadow-md">
-                  <div className="px-3 py-2 text-xs text-neutral-400">{user.name} · {user.role}</div>
+                  {showProfile && <div className="px-3 py-2 text-xs text-neutral-400">{user.name} · {user.role}</div>}
                   {backend && (account
                     ? <button onClick={() => { setAvatarOpen(false); logout(); }} className="block w-full px-3 py-2 text-left text-sm hover:bg-neutral-100">{t('nav.logout')} ({account.email})</button>
                     : <Link to="/logowanie" onClick={() => setAvatarOpen(false)} className="block px-3 py-2 text-sm hover:bg-neutral-100">{t('nav.login')}</Link>)}
                   {account?.role === 'responder' && <Link to="/admin" onClick={() => setAvatarOpen(false)} className="block px-3 py-2 text-sm hover:bg-neutral-100">{t('admin.menu')}</Link>}
-                  <Link to="/profil" onClick={() => setAvatarOpen(false)} className="block px-3 py-2 text-sm hover:bg-neutral-100">{t('nav.profile')}</Link>
-                  <Link to="/profil?tab=signals" onClick={() => setAvatarOpen(false)} className="block px-3 py-2 text-sm hover:bg-neutral-100">{t('nav.mySignals')}</Link>
-                  <Link to="/profil?tab=ideas" onClick={() => setAvatarOpen(false)} className="block px-3 py-2 text-sm hover:bg-neutral-100">{t('nav.myIdeas')}</Link>
-                  <Link to="/profil?tab=projects" onClick={() => setAvatarOpen(false)} className="block px-3 py-2 text-sm hover:bg-neutral-100">{t('nav.myProjects')}</Link>
+                  {showProfile && <Link to="/profil" onClick={() => setAvatarOpen(false)} className="block px-3 py-2 text-sm hover:bg-neutral-100">{t('nav.profile')}</Link>}
+                  {showProfile && <Link to="/profil?tab=signals" onClick={() => setAvatarOpen(false)} className="block px-3 py-2 text-sm hover:bg-neutral-100">{t('nav.mySignals')}</Link>}
+                  {showProfile && <Link to="/profil?tab=ideas" onClick={() => setAvatarOpen(false)} className="block px-3 py-2 text-sm hover:bg-neutral-100">{t('nav.myIdeas')}</Link>}
+                  {showProfile && <Link to="/profil?tab=projects" onClick={() => setAvatarOpen(false)} className="block px-3 py-2 text-sm hover:bg-neutral-100">{t('nav.myProjects')}</Link>}
                 </div>
               )}
             </div>
@@ -127,6 +128,7 @@ export default function Header() {
 
             <div className="mt-auto border-t border-border pt-4">
               {/* Профиль-карточка */}
+              {showProfile && (
               <Link to="/profil" onClick={() => setMenuOpen(false)} className="mb-3 flex items-center gap-3 rounded-btn bg-neutral-100 p-3 hover:bg-neutral-200">
                 <div className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-brand-primary text-sm font-semibold text-white">
                   {user.name?.[0] || 'G'}
@@ -136,6 +138,7 @@ export default function Header() {
                   <p className="truncate text-xs text-neutral-400">{user.role} · {user.city}</p>
                 </div>
               </Link>
+              )}
 
               {/* Ссылки профиля */}
               <nav aria-label={t('a11y.profileNav')} className="flex flex-col gap-1">
@@ -143,18 +146,26 @@ export default function Header() {
                 {backend && (account
                   ? <button onClick={() => { setMenuOpen(false); logout(); }} className="rounded-btn px-3 py-2.5 text-left text-sm font-medium hover:bg-neutral-100">{t('nav.logout')} ({account.email})</button>
                   : <Link to="/logowanie" onClick={() => setMenuOpen(false)} className="rounded-btn px-3 py-2.5 text-sm font-medium hover:bg-neutral-100">{t('nav.login')}</Link>)}
+                {showProfile && (
                 <Link to="/profil" onClick={() => setMenuOpen(false)} className="rounded-btn px-3 py-2.5 text-sm font-medium hover:bg-neutral-100">
                   {t('nav.profile')}
                 </Link>
+                )}
+                {showProfile && (
                 <Link to="/profil?tab=signals" onClick={() => setMenuOpen(false)} className="rounded-btn px-3 py-2.5 text-sm font-medium hover:bg-neutral-100">
                   {t('nav.mySignals')}
                 </Link>
+                )}
+                {showProfile && (
                 <Link to="/profil?tab=ideas" onClick={() => setMenuOpen(false)} className="rounded-btn px-3 py-2.5 text-sm font-medium hover:bg-neutral-100">
                   {t('nav.myIdeas')}
                 </Link>
+                )}
+                {showProfile && (
                 <Link to="/profil?tab=projects" onClick={() => setMenuOpen(false)} className="rounded-btn px-3 py-2.5 text-sm font-medium hover:bg-neutral-100">
                   {t('nav.myProjects')}
                 </Link>
+                )}
               </nav>
 
               {/* Переключатель языка */}

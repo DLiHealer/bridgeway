@@ -138,7 +138,7 @@ const pl = {
     demo: 'Prototyp: dokument roboczy, nie jest poradą prawną ani zatwierdzonym regulaminem.',
     privacyTitle: 'Polityka prywatności',
     privacy: [
-      { h: 'Kto przetwarza dane', p: 'BridgeWay to prototyp bez serwera. Zgłoszenia, pomysły i projekty są zapisywane wyłącznie w pamięci przeglądarki (localStorage) na Twoim urządzeniu. Nie wysyłamy ich do nas ani do osób trzecich.' },
+      { h: 'Kto przetwarza dane', p: 'BridgeWay to prototyp. Bez logowania zgłoszenia, pomysły i projekty są zapisywane wyłącznie w pamięci przeglądarki (localStorage) na Twoim urządzeniu. Po zalogowaniu te dane (oraz profil) są zapisywane na Twoim koncie w bazie BridgeWay (Cloudflare D1), widoczne tylko dla Ciebie; udostępniane publicznie są wyłącznie zgłoszenia problemów wysłane do wspólnej listy.' },
       { h: 'Jakie dane zbieramy', p: 'Treść zgłoszenia, miasto, kategoria, tagi i pilność. Nie prosimy o imię, adres ani telefon osób, których sprawa dotyczy. W zgłoszeniu w imieniu innej osoby zapisujemy tylko znacznik i czas zgody.' },
       { h: 'Mapa i dane wrażliwe', p: 'Zgłoszenia w kategoriach wrażliwych (opieka nad seniorami, mieszkanie) oraz zgłoszenia składane w imieniu innej osoby pokazujemy na mapie jako przybliżony obszar, a nie dokładny punkt. Dokładne adresy nie są zbierane ani publikowane.' },
       { h: 'Dane osób trzecich', p: 'Nie wpisuj danych osobowych ani zdrowotnych innych osób. Zgłaszając w imieniu kogoś, potrzebujesz jego zgody.' },
@@ -318,7 +318,7 @@ const en = {
     demo: 'Prototype: a working draft, not legal advice or an approved set of terms.',
     privacyTitle: 'Privacy policy',
     privacy: [
-      { h: 'Who processes the data', p: 'BridgeWay is a prototype without a server. Reports, ideas and projects are stored only in your browser (localStorage) on your device. We do not send them to us or to third parties.' },
+      { h: 'Who processes the data', p: 'BridgeWay is a prototype. When logged out, reports, ideas and projects are stored only in your browser (localStorage) on your device. When you are logged in, this data (and your profile) is saved to your account in the BridgeWay database (Cloudflare D1), visible only to you; only problem reports submitted to the shared list are public.' },
       { h: 'What we collect', p: 'Report text, city, category, tags and urgency. We do not ask for the name, address or phone of the people concerned. For a report on behalf of someone else we store only a flag and the time of consent.' },
       { h: 'Map and sensitive data', p: 'Reports in sensitive categories (senior care, housing) and reports made on behalf of another person are shown on the map as an approximate area, not an exact point. Exact addresses are neither collected nor published.' },
       { h: 'Third-party data', p: 'Do not enter personal or health data of other people. To report on someone\'s behalf you need their consent.' },
