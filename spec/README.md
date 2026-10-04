@@ -13,6 +13,7 @@ Reference for project specs. **Keep this index and the linked specs in sync with
 | [pitch.md](./pitch.md) | Step 14: 90-second demo script, staged/real before-after, competitor slide (unverified), mocked-vs-real, figure register, rehearsal checklist |
 | [scripts/fetch-bdl-context.mjs](../scripts/fetch-bdl-context.mjs) | Step 15: build-time GUS BDL snapshot fetcher (variable ids built in) (writes `src/data/bdlContext.json`) |
 | [worker/index.js](../worker/index.js), [migrations/](../migrations/) | Step 16/17: API Worker (magic-link auth, shared reports, LLM adaptation plan in `worker/adaptPlan.js`) and D1 schema |
+| [../README.md](../README.md), [../docs/](../docs/) | Public project description; condensed TECH_SPEC / ARCHITECTURE / LICENSE tabs (link to the specs here), proprietary `LICENSE` (© Dominik Liahovich) |
 | [roadmap.md](./roadmap.md) | MVP roadmap steps and statuses (Open / In progress / Blocked / Postponed / Done) |
 
 ## Maintenance rules

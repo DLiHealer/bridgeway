@@ -1,6 +1,8 @@
 {
   "name": "bridgeway",
   "private": true,
+  "license": "SEE LICENSE IN LICENSE",
+  "author": "Dominik Liahovich",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
