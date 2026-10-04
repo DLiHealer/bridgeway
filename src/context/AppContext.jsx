@@ -1,4 +1,6 @@
-import { createContext, useContext, useMemo } from 'react';
+import { createContext, useContext, useEffect, useMemo } from 'react';
+import { useAuth } from './AuthContext.jsx';
+import { api } from '../api.js';
 import { useLocalStorage } from '../hooks/useLocalStorage.js';
 import * as data from '../data';
 
@@ -12,6 +14,16 @@ export function AppProvider({ children }) {
   const [saved, setSaved] = useLocalStorage('bridgeart-saved', []);
   const [filters, setFiltersState] = useLocalStorage('bridgeart-filters', { type: 'all', categories: [], city: '', urgency: 'all', q: '' });
   const [toasts, setToasts] = useLocalStorage('bridgeart-toasts-placeholder', []);
+
+  // Logged in: email comes from the account, profile fields from the server (per account, follows the login)
+  const { account } = useAuth();
+  useEffect(() => {
+    if (!account) return;
+    api.profile().then(({ profile }) => setUser(u => ({
+      ...u, email: account.email,
+      ...(profile ? { name: profile.name, role: profile.roleLabel, city: profile.city, bio: profile.bio } : {}),
+    }))).catch(() => {});
+  }, [account?.email]);
 
   const value = useMemo(() => ({
     user, setUser,

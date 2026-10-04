@@ -1,6 +1,7 @@
 // BridgeWay API (Cloudflare Worker + D1): magic-link login and shared problem reports.
 // Everything outside /api/* is served by the static assets binding.
 
+const ROLE_LABELS = ['Mieszkaniec', 'Aktywista', 'Ekspert', 'NGO', 'Instytut'];
 const STATUSES = ['received', 'assigned', 'inprogress', 'resolved', 'rejected'];
 const TOKEN_TTL_MS = 15 * 60 * 1000;
 const SESSION_TTL_S = 30 * 24 * 3600;
@@ -82,7 +83,7 @@ async function api(request, env, url) {
   const method = request.method;
   if (pathname === '/api/health') return json({ ok: true });
 
-  if (method === 'POST' && !sameOriginJson(request)) return fail(400, 'bad_request');
+  if ((method === 'POST' || method === 'PUT') && !sameOriginJson(request)) return fail(400, 'bad_request');
 
   if (pathname === '/api/me' && method === 'GET') {
     const s = await session(request, env);
@@ -150,6 +151,19 @@ async function api(request, env, url) {
     if (s.role !== 'responder') return fail(403, 'forbidden');
     const { results } = await env.DB.prepare('SELECT email, status, created_at AS createdAt FROM registrations ORDER BY created_at DESC LIMIT 200').all();
     return json({ registrations: results.map(r => ({ ...r, createdAt: new Date(r.createdAt).toISOString().slice(0, 10) })) });
+  }
+
+  if (pathname === '/api/profile' && (method === 'GET' || method === 'PUT')) {
+    const s = await session(request, env);
+    if (!s) return fail(401, 'login_required');
+    if (method === 'PUT') {
+      const b = await readJson(request);
+      const name = clean(b?.name, 60), city = clean(b?.city, 60), bio = clean(b?.bio, 500), roleLabel = clean(b?.roleLabel, 20);
+      if (name.length < 2 || !ROLE_LABELS.includes(roleLabel)) return fail(400, 'invalid_profile');
+      await env.DB.prepare('INSERT INTO profiles (email, name, role_label, city, bio, updated_at) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT(email) DO UPDATE SET name = excluded.name, role_label = excluded.role_label, city = excluded.city, bio = excluded.bio, updated_at = excluded.updated_at').bind(s.email, name, roleLabel, city, bio, Date.now()).run();
+    }
+    const p = await env.DB.prepare('SELECT name, role_label AS roleLabel, city, bio FROM profiles WHERE email = ?').bind(s.email).first();
+    return json({ profile: p || null });
   }
 
   if (pathname === '/api/admin/settings' && (method === 'GET' || method === 'POST')) {

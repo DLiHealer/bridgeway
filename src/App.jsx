@@ -22,6 +22,7 @@ const AccessibilityPage = lazy(() => import('./pages/AccessibilityPage.jsx'));
 const LegalPage = lazy(() => import('./pages/LegalPage.jsx'));
 const LoginPage = lazy(() => import('./pages/LoginPage.jsx'));
 const ReportsPage = lazy(() => import('./pages/ReportsPage.jsx'));
+const AdminPage = lazy(() => import('./pages/AdminPage.jsx'));
 const NotFound = lazy(() => import('./pages/NotFound.jsx'));
 
 const Loading = () => <div className="container-app py-12"><Skeleton className="h-64 w-full" /></div>;
@@ -45,6 +46,7 @@ export default function App() {
           <Route path="/projekty/:id" element={<ProjectRoom />} />
           <Route path="/zgloszenia" element={<ReportsPage />} />
           <Route path="/zgloszenia/:id" element={<ReportsPage />} />
+          <Route path="/admin" element={<AdminPage />} />
           <Route path="/logowanie" element={<LoginPage />} />
           <Route path="/profil" element={<ProfilePage />} />
           <Route path="/analityka" element={<AnalyticsPage />} />
