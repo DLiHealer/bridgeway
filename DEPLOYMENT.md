@@ -113,4 +113,4 @@ A real backend (Cloudflare Pages Functions + D1, replacing the mocked `src/data/
 - Test mode: responder can enable "send links to new addresses without approval" on `/admin` (stored in D1, default off, 50 links/h cap). Links are still emailed, so address ownership is verified. Disable after demos.
 
 ### Adaptation plan (Step 17)
-Uses the Workers AI binding `AI` (declared in `wrangler.jsonc`, no secret). Apply the new migration (`wrangler d1 migrations apply bridgeway --remote`) before deploying; locally `npm run db:migrate:local`. `wrangler dev` runs AI calls remotely (needs `wrangler login`); without the binding the endpoint returns `llm_unavailable`.
+Uses OpenRouter: secret `OPENROUTER_API_KEY` (`wrangler secret put OPENROUTER_API_KEY`); the model is chosen on `/admin` (D1 `settings.llmModel`). Apply the new migration (`wrangler d1 migrations apply bridgeway --remote`) before deploying; locally `npm run db:migrate:local`. Locally put `OPENROUTER_API_KEY` in `.dev.vars`; without it the endpoint returns `llm_unavailable`.

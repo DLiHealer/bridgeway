@@ -68,11 +68,12 @@ const pl = {
   },
   admin: {
     title: 'Panel administratora', menu: 'Panel administratora', open: 'Otwórz panel administratora', denied: 'Ta strona jest dostępna tylko dla administratora (podmiotu odpowiadającego).',
+    llmTitle: 'Model LLM (OpenRouter)', llmIntro: 'Model używany do planu adaptacji. Wpisz, by filtrować listę; ceny w USD za 1 mln tokenów (wejście / wyjście).', llmCurrent: 'Aktualny model', llmDefault: 'domyślny', llmLabel: 'Model', llmLoading: 'Ładowanie listy modeli…', llmNone: 'Brak dopasowań', llmIn: 'wej.', llmOut: 'wyj.', llmFail: 'Nie udało się pobrać listy modeli.',
     saved: 'Ustawienie zapisane.', save: 'Zapisz ustawienie', regTitle: 'Rejestracja nowych użytkowników',
     regIntro: 'Wybierz, co dzieje się, gdy ktoś poda nowy adres e-mail na stronie logowania. To ustawienie dotyczy wszystkich użytkowników i działa od razu po zapisaniu.',
     current: 'Obecnie', currentApproval: 'rejestracja wymaga Twojego zatwierdzenia', currentTest: 'TRYB TESTOWY — nowe adresy dostają link bez zatwierdzenia',
     approvalTitle: 'Wymagaj zatwierdzenia (zalecane)', approvalBody: 'Nowy adres trafia na listę próśb poniżej. Link do logowania dostaje dopiero po Twoim zatwierdzeniu. Odrzucone adresy są blokowane.',
-    testTitle: 'Tryb testowy: wysyłaj linki bez zatwierdzania', testBody: 'Każdy nowy adres od razu dostaje link do logowania na swoją skrzynkę i zostaje zatwierdzony automatycznie (oczekujące prośby też). Link trafia tylko na podany adres, więc właściciel adresu jest weryfikowany, ale KAŻDY może założyć konto. Limit: 50 linków na godzinę. Odrzucone adresy nadal są blokowane. Używaj na pokazie i wyłącz po nim — konta założone w tym czasie zostają zatwierdzone.',
+    testTitle: 'Tryb testowy: wysyłaj linki bez zatwierdzania', testBody: 'Każdy nowy adres od razu dostaje link do logowania na swoją skrzynkę i zostaje zatwierdzony automatycznie (oczekujące prośby też). Link trafia tylko na podany adres, więc właściciel adresu jest weryfikowany, ale KAŻDY może założyć konto. Odrzucone adresy nadal są blokowane. Używaj na pokazie i wyłącz po nim — konta założone w tym czasie zostają zatwierdzone.',
   },
   submit: {
     pageTitle: 'Zgłoś problem lub pomysł', tabProblem: 'Problem', tabIdea: 'Pomysł', fTitle: 'Tytuł *', fTitlePh: 'Krótki tytuł', fDesc: 'Opis *', fDescPh: 'Opisz problem lub pomysł…',
@@ -247,11 +248,12 @@ const en = {
   },
   admin: {
     title: 'Admin panel', menu: 'Admin panel', open: 'Open the admin panel', denied: 'This page is only available to the administrator (responder).',
+    llmTitle: 'LLM model (OpenRouter)', llmIntro: 'Model used for the adaptation plan. Type to filter the list; prices in USD per 1M tokens (input / output).', llmCurrent: 'Current model', llmDefault: 'default', llmLabel: 'Model', llmLoading: 'Loading model list…', llmNone: 'No matches', llmIn: 'in', llmOut: 'out', llmFail: 'Could not load the model list.',
     saved: 'Setting saved.', save: 'Save setting', regTitle: 'Registration of new users',
     regIntro: 'Choose what happens when someone enters a new email address on the sign-in page. The setting applies to all users and takes effect as soon as you save it.',
     current: 'Currently', currentApproval: 'registration needs your approval', currentTest: 'TEST MODE — new addresses get a link without approval',
     approvalTitle: 'Require approval (recommended)', approvalBody: 'A new address goes to the request list below. It only receives a sign-in link after you approve it. Rejected addresses are blocked.',
-    testTitle: 'Test mode: send links without approval', testBody: 'Every new address immediately gets a sign-in link in its own inbox and is approved automatically (pending requests too). The link only goes to the given address, so the owner of the address is verified, but ANYONE can create an account. Limit: 50 links per hour. Rejected addresses stay blocked. Use it for a demo and turn it off afterwards — accounts created meanwhile stay approved.',
+    testTitle: 'Test mode: send links without approval', testBody: 'Every new address immediately gets a sign-in link in its own inbox and is approved automatically (pending requests too). The link only goes to the given address, so the owner of the address is verified, but ANYONE can create an account. Rejected addresses stay blocked. Use it for a demo and turn it off afterwards — accounts created meanwhile stay approved.',
   },
   submit: {
     pageTitle: 'Report a problem or an idea', tabProblem: 'Problem', tabIdea: 'Idea', fTitle: 'Title *', fTitlePh: 'Short title', fDesc: 'Description *', fDescPh: 'Describe the problem or idea…',

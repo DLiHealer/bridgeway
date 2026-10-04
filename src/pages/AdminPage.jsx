@@ -49,6 +49,62 @@ function RegistrationSetting() {
   );
 }
 
+const price = (v) => (v == null ? '?' : `$${v}`);
+
+function LlmSetting() {
+  const { t } = useTranslation();
+  const [saved, setSaved] = useState(null); // { model, isDefault }
+  const [models, setModels] = useState(null);
+  const [q, setQ] = useState('');
+  const [sel, setSel] = useState('');
+  const [open, setOpen] = useState(false);
+  const [msg, setMsg] = useState('');
+  useEffect(() => {
+    api.llm().then(r => { setSaved(r); setSel(r.model); setQ(r.model); }).catch(() => setMsg(t('auth.err.unavailable')));
+    api.llmModels().then(r => setModels(r.models)).catch(() => setMsg(t('admin.llmFail')));
+  }, []);
+  const needle = q.trim().toLowerCase();
+  const list = (models || []).filter(m => !needle || sel === q || (m.id + ' ' + m.name).toLowerCase().includes(needle)).slice(0, 50);
+  const choose = (m) => { setSel(m.id); setQ(m.id); setOpen(false); setMsg(''); };
+  const save = async () => {
+    setMsg('');
+    try { const r = await api.setLlm(sel); setSaved(r); setMsg(t('admin.saved')); }
+    catch { setMsg(t('auth.err.unavailable')); }
+  };
+  return (
+    <Card className="p-6">
+      <h2 className="text-lg font-semibold">{t('admin.llmTitle')}</h2>
+      <p className="mt-1 text-sm text-neutral-600">{t('admin.llmIntro')}</p>
+      {saved && <p role="status" className="mt-3 rounded-btn bg-neutral-100 p-3 text-sm font-semibold text-neutral-800">{t('admin.llmCurrent')}: {saved.model}{saved.isDefault ? ` (${t('admin.llmDefault')})` : ''}</p>}
+      <label htmlFor="llm-model" className="mt-4 block text-sm font-medium">{t('admin.llmLabel')}</label>
+      <div className="relative mt-1">
+        <input
+          id="llm-model" role="combobox" aria-expanded={open} aria-controls="llm-list" aria-autocomplete="list" autoComplete="off"
+          className="w-full rounded-btn border border-border px-3 py-2 text-sm" value={q} disabled={!models}
+          onChange={e => { setQ(e.target.value); setSel(''); setOpen(true); }} onFocus={() => setOpen(true)}
+          onKeyDown={e => { if (e.key === 'Escape') setOpen(false); }}
+        />
+        {!models && !msg && <p role="status" className="mt-1 text-xs text-neutral-500">{t('admin.llmLoading')}</p>}
+        {open && models && (
+          <ul id="llm-list" role="listbox" className="absolute z-10 mt-1 max-h-72 w-full overflow-auto rounded-btn border border-border bg-white text-sm shadow-lg">
+            {list.length === 0 && <li className="p-3 text-neutral-500">{t('admin.llmNone')}</li>}
+            {list.map(m => (
+              <li key={m.id} role="option" aria-selected={m.id === sel} tabIndex={-1} className="cursor-pointer px-3 py-2 hover:bg-neutral-100" onMouseDown={e => { e.preventDefault(); choose(m); }}>
+                <span className="block font-medium">{m.name}</span>
+                <span className="block text-xs text-neutral-600">{m.id} · {t('admin.llmIn')} {price(m.in)} / {t('admin.llmOut')} {price(m.out)}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <div className="mt-4 flex flex-wrap items-center gap-3">
+        <Button onClick={save} disabled={!sel || sel === saved?.model}>{t('admin.save')}</Button>
+        {msg && <span role="status" className="text-sm text-neutral-600">{msg}</span>}
+      </div>
+    </Card>
+  );
+}
+
 function Registrations() {
   const { t } = useTranslation();
   const [rows, setRows] = useState(null);
@@ -82,7 +138,7 @@ export default function AdminPage() {
       {backend === null && <p role="status" className="mt-4 text-sm">{t('common.loading')}</p>}
       {backend === false && <p className="mt-4 text-sm">{t('auth.noBackend')}</p>}
       {backend && !allowed && <p role="alert" className="mt-4 text-sm">{t('admin.denied')} <Link className="underline" to="/logowanie">{t('nav.login')}</Link></p>}
-      {allowed && <div className="mt-6 grid max-w-2xl gap-6"><RegistrationSetting /><Registrations /></div>}
+      {allowed && <div className="mt-6 grid max-w-2xl gap-6"><RegistrationSetting /><LlmSetting /><Registrations /></div>}
     </div>
   );
 }

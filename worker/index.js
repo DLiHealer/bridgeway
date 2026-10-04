@@ -1,16 +1,15 @@
 // BridgeWay API (Cloudflare Worker + D1): magic-link login and shared problem reports.
 // Everything outside /api/* is served by the static assets binding.
 
-import { buildPlan } from './adaptPlan.js';
+import { buildPlan, DEFAULT_MODEL, listModels } from './adaptPlan.js';
 
 const ROLE_LABELS = ['Mieszkaniec', 'Aktywista', 'Ekspert', 'NGO', 'Instytut'];
 const STATUSES = ['received', 'assigned', 'inprogress', 'resolved', 'rejected'];
 const TOKEN_TTL_MS = 15 * 60 * 1000;
 const SESSION_TTL_S = 30 * 24 * 3600;
-const MAX_LINKS_PER_HOUR = 5;
 const MAX_PENDING = 200;
-const TEST_MODE_MAX_LINKS_PER_HOUR = 50; // global cap while test mode is on (limits mail abuse)
 
+const getSetting = async (env, key) => (await env.DB.prepare('SELECT value FROM settings WHERE key = ?').bind(key).first())?.value ?? null;
 const testModeOn = async (env) => (await env.DB.prepare("SELECT value FROM settings WHERE key = 'testMode'").first())?.value === '1';
 const COOKIE = 'bw_session';
 const USER_SLICES = ['signals', 'ideas', 'projects', 'saved'];
@@ -105,8 +104,6 @@ async function api(request, env, url) {
       const reg = await env.DB.prepare('SELECT status FROM registrations WHERE email = ?').bind(email).first();
       if (reg?.status !== 'rejected' && reg?.status !== 'approved' && await testModeOn(env)) {
         // Test mode (responder-controlled): new/pending emails are approved automatically; the link still goes to the inbox.
-        const { n } = await env.DB.prepare('SELECT COUNT(*) AS n FROM login_tokens WHERE created_at > ?').bind(now - 3600_000).first();
-        if (n >= TEST_MODE_MAX_LINKS_PER_HOUR) return fail(429, 'rate_limited');
         await env.DB.prepare("INSERT INTO registrations (email, status, created_at, decided_at) VALUES (?, 'approved', ?, ?) ON CONFLICT(email) DO UPDATE SET status = 'approved', decided_at = excluded.decided_at").bind(email, now, now).run();
       } else if (!reg) {
         const { n } = await env.DB.prepare("SELECT COUNT(*) AS n FROM registrations WHERE status = 'pending'").first();
@@ -116,8 +113,6 @@ async function api(request, env, url) {
       } else if (reg.status === 'pending') return json({ pending: true });
       else if (reg.status === 'rejected') return fail(403, 'registration_rejected');
     }
-    const recent = await env.DB.prepare('SELECT COUNT(*) AS n FROM login_tokens WHERE email = ? AND created_at > ?').bind(email, now - 3600_000).first();
-    if (recent.n >= MAX_LINKS_PER_HOUR) return fail(429, 'rate_limited');
     const token = randomToken();
     await env.DB.prepare('INSERT INTO login_tokens (hash, email, expires_at, created_at) VALUES (?, ?, ?, ?)').bind(await sha256(token), email, now + TOKEN_TTL_MS, now).run();
     const base = env.PUBLIC_URL || url.origin;
@@ -205,6 +200,29 @@ async function api(request, env, url) {
     return json({ testMode: await testModeOn(env) });
   }
 
+  // LLM model (OpenRouter), chosen by a responder; stored in D1 `settings.llmModel`.
+  if (pathname === '/api/admin/llm' && (method === 'GET' || method === 'POST')) {
+    const s = await session(request, env);
+    if (!s) return fail(401, 'login_required');
+    if (s.role !== 'responder') return fail(403, 'forbidden');
+    if (method === 'POST') {
+      const b = await readJson(request);
+      const model = clean(b?.model, 120);
+      if (!model) return fail(400, 'bad_request');
+      let models;
+      try { models = await listModels(); } catch { return fail(502, 'models_unavailable'); }
+      if (!models.some(m => m.id === model)) return fail(400, 'unknown_model');
+      await env.DB.prepare("INSERT INTO settings (key, value) VALUES ('llmModel', ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value").bind(model).run();
+    }
+    return json({ model: (await getSetting(env, 'llmModel')) || DEFAULT_MODEL, isDefault: !(await getSetting(env, 'llmModel')) });
+  }
+  if (pathname === '/api/admin/llm/models' && method === 'GET') {
+    const s = await session(request, env);
+    if (!s) return fail(401, 'login_required');
+    if (s.role !== 'responder') return fail(403, 'forbidden');
+    try { return json({ models: await listModels() }); } catch { return fail(502, 'models_unavailable'); }
+  }
+
   const adm = pathname.match(/^\/api\/admin\/registrations\/decide$/);
   if (adm && method === 'POST') {
     const s = await session(request, env);
@@ -228,7 +246,7 @@ async function api(request, env, url) {
     const n = (await env.DB.prepare('SELECT COUNT(*) AS n FROM adapt_log WHERE email = ? AND created_at > ?').bind(s.email, since).first()).n;
     if (n >= MAX_PLANS_PER_HOUR) return fail(429, 'rate_limited');
     await env.DB.prepare('INSERT INTO adapt_log (email, created_at) VALUES (?, ?)').bind(s.email, Date.now()).run();
-    const r = await buildPlan(env, caseId, lang, { city });
+    const r = await buildPlan(env, caseId, lang, { city }, (await getSetting(env, 'llmModel')) || DEFAULT_MODEL);
     return r.error ? fail(r.status, r.error) : json({ plan: r.plan });
   }
 

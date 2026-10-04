@@ -2,7 +2,23 @@
 // every plan item must carry verbatim quotes from that case, otherwise it is dropped server-side.
 import { solutions } from '../src/data/index.js';
 
-export const MODEL = '@cf/meta/llama-3.3-70b-instruct-fp8-fast';
+export const DEFAULT_MODEL = 'openai/gpt-4o-mini';
+const OPENROUTER = 'https://openrouter.ai/api/v1';
+
+// OpenRouter catalogue (public endpoint): id, name, USD per 1M tokens in/out. Cached per isolate for 10 min.
+let cache = { at: 0, models: null };
+export async function listModels() {
+  if (cache.models && Date.now() - cache.at < 600_000) return cache.models;
+  const res = await fetch(`${OPENROUTER}/models`);
+  if (!res.ok) throw new Error('models');
+  const { data } = await res.json();
+  const per1M = (v) => { const n = Number(v); return Number.isFinite(n) && n >= 0 ? Math.round(n * 1e6 * 1e4) / 1e4 : null; };
+  const models = (data || []).filter(m => m.id && /text/.test(m.architecture?.output_modalities?.join(',') || 'text'))
+    .map(m => ({ id: m.id, name: m.name || m.id, in: per1M(m.pricing?.prompt), out: per1M(m.pricing?.completion) }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+  cache = { at: Date.now(), models };
+  return models;
+}
 const FIELDS = ['problem', 'solution', 'cost', 'duration', 'outcome', 'outcomeMethod', 'context'];
 const MAX_ITEMS = 6;
 
@@ -73,21 +89,31 @@ export function validate(raw, c, lang) {
 
 export const findCase = (id) => solutions.find(s => s.id === id) || null;
 
-export async function buildPlan(env, caseId, lang, input) {
+export async function buildPlan(env, caseId, lang, input, model = DEFAULT_MODEL) {
   const c = findCase(caseId);
   if (!c) return { status: 404, error: 'not_found' };
-  if (!env.AI) return { status: 503, error: 'llm_unavailable' };
-  const res = await env.AI.run(MODEL, {
-    messages: buildMessages(c, lang, input),
-    response_format: { type: 'json_schema', json_schema: SCHEMA },
-    max_tokens: 900,
-    temperature: 0,
-  });
-  const { items, dropped } = validate(res?.response ?? res, c, lang);
+  if (!env.OPENROUTER_API_KEY) return { status: 503, error: 'llm_unavailable' };
+  let res;
+  try {
+    const r = await fetch(`${OPENROUTER}/chat/completions`, {
+      method: 'POST',
+      headers: { authorization: `Bearer ${env.OPENROUTER_API_KEY}`, 'content-type': 'application/json' },
+      body: JSON.stringify({
+        model,
+        messages: buildMessages(c, lang, input),
+        response_format: { type: 'json_schema', json_schema: { name: 'plan', strict: false, schema: SCHEMA } },
+        max_tokens: 900,
+        temperature: 0,
+      }),
+    });
+    if (!r.ok) return { status: 502, error: 'llm_failed' };
+    res = (await r.json())?.choices?.[0]?.message?.content;
+  } catch { return { status: 502, error: 'llm_failed' }; }
+  const { items, dropped } = validate(res, c, lang);
   return {
     status: 200,
     plan: {
-      caseId: c.id, model: MODEL, lang, items, dropped,
+      caseId: c.id, model, lang, items, dropped,
       source: c.source,
       gaps: gaps(c),
     },
