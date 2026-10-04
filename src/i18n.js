@@ -98,6 +98,13 @@ const pl = {
     explain: 'Jak liczymy wynik',
   },
   cases: {
+    plan: {
+      title: 'Plan adaptacji (LLM, eksperyment)', hint: 'Model językowy wybiera tylko fragmenty tego przypadku. Każdy punkt ma dosłowny cytat ze źródła; punkty bez cytatu są odrzucane. To nie jest porada ani gwarancja.',
+      city: 'Twoja miejscowość (opcjonalnie)', generate: 'Wygeneruj plan', loading: 'Generowanie…', quote: 'Cytat ze źródła', gaps: 'Brak w źródle (pole zostaje puste)',
+      empty: 'Model nie zwrócił żadnego punktu z cytatem — nic nie wyświetlamy.', dropped: 'Odrzucono punktów bez weryfikowalnego cytatu: {{n}}.',
+      login: 'Zaloguj się, aby wygenerować plan.', noServer: 'Wymaga serwera (dane lokalne).', unavailable: 'Model niedostępny.', rate: 'Limit planów na godzinę wyczerpany.', error: 'Nie udało się wygenerować planu.',
+      fields: { problem: 'Problem', solution: 'Rozwiązanie', cost: 'Koszt', duration: 'Czas', outcome: 'Wynik', outcomeMethod: 'Jak zmierzono', context: 'Kontekst' },
+    },
     subtitle: 'Zweryfikowane przypadki ze źródłem i poziomem dowodów. Nie są to „sprawdzone gwarancje” — poziom dowodów mówi, jak mocno poparto wynik.',
     evidence: 'Dowody', source: 'Źródło', organisation: 'Organizacja', cost: 'Koszt', duration: 'Czas', outcome: 'Wynik', outcomeMethod: 'Jak zmierzono', context: 'Kontekst', year: 'Rok',
     notStated: 'nie podano w źródle', notMeasured: 'nie zmierzono', route: 'Ścieżka', stepsTitle: 'Kroki', problem: 'Problem', solution: 'Rozwiązanie', similar: 'Podobne przypadki',
@@ -271,6 +278,13 @@ const en = {
     explain: 'How the score is computed',
   },
   cases: {
+    plan: {
+      title: 'Adaptation plan (LLM, experiment)', hint: 'The language model only picks passages of this case. Every item carries a verbatim quote from the source; items without a quote are discarded. Not advice, not a guarantee.',
+      city: 'Your place (optional)', generate: 'Generate plan', loading: 'Generating…', quote: 'Quote from the source', gaps: 'Not stated in the source (left empty)',
+      empty: 'The model returned no item with a quote — nothing is shown.', dropped: 'Items discarded for lacking a verifiable quote: {{n}}.',
+      login: 'Log in to generate a plan.', noServer: 'Needs the server (data is local).', unavailable: 'Model unavailable.', rate: 'Hourly plan limit reached.', error: 'Could not generate the plan.',
+      fields: { problem: 'Problem', solution: 'Solution', cost: 'Cost', duration: 'Duration', outcome: 'Outcome', outcomeMethod: 'How measured', context: 'Context' },
+    },
     subtitle: 'Verified cases with a source and an evidence level. These are not “proven guarantees” — the level shows how strongly the outcome is supported.',
     evidence: 'Evidence', source: 'Source', organisation: 'Organisation', cost: 'Cost', duration: 'Duration', outcome: 'Outcome', outcomeMethod: 'How measured', context: 'Context', year: 'Year',
     notStated: 'not stated in the source', notMeasured: 'not measured', route: 'Route', stepsTitle: 'Steps', problem: 'Problem', solution: 'Solution', similar: 'Similar cases',

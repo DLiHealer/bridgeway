@@ -1,4 +1,5 @@
 import { useParams, Link, useSearchParams } from 'react-router-dom';
+import AdaptPlan from '../components/cases/AdaptPlan.jsx';
 import ScoreBreakdown from '../components/cases/ScoreBreakdown.jsx';
 import { scoreCase } from '../utils/transferScore';
 import { useApp } from '../context/AppContext.jsx';
@@ -85,6 +86,8 @@ export default function SolutionDetail() {
               </ol>
             </Card>
           )}
+
+          <AdaptPlan caseId={s.id} source={s.source} />
 
           <p className="rounded-btn bg-neutral-100 p-3 text-xs text-neutral-500">{t('cases.legend')}</p>
         </div>

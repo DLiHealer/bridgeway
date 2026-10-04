@@ -138,10 +138,11 @@ Conventions:
 - Done when: two browsers see the same data; otherwise the demo keeps the "data is local" label. Update `architecture.md` §2, §5, §9.
 - Result (+ registration with responder approval): Worker + D1 (`worker/index.js`), magic-link login, public `/zgloszenia` with status timeline, responder role (env list) changes status; verified by a local `wrangler dev` curl run of the full loop (incl. token reuse, role and origin checks). Later verified: local two-client UI run, production deploy (https://bridgeway.najvendo.workers.dev) and real email delivery via Resend. Only reports are shared; everything else stays local.
 
-### Step 17 (P16). Status: Open
+### Step 17 (P16). Status: Done
 **LLM adaptation plan** strictly from loaded cases (RAG, a source link for every claim, no generated facts).
 - Effort L · Value ●○○ · After: P5, P6
 - Done when: every statement in the plan has a source link; fields without a source stay empty.
+- Result: `POST /api/adapt-plan` (Workers AI, login, 10/h) + `worker/adaptPlan.js`: one case as the only corpus, items kept only with verbatim source quotes (server-checked, digits banned in the action text), source link from the case, missing fields listed as gaps; card on the case page. Live model run not yet verified locally; wording of `action` is still model paraphrase.
 
 ### Step 18 (P17). Status: Open
 **Honest analytics.** Rebuild Analityka on real metrics (reuse rate, time to first response) or hide the section.

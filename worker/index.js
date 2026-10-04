@@ -1,6 +1,8 @@
 // BridgeWay API (Cloudflare Worker + D1): magic-link login and shared problem reports.
 // Everything outside /api/* is served by the static assets binding.
 
+import { buildPlan } from './adaptPlan.js';
+
 const ROLE_LABELS = ['Mieszkaniec', 'Aktywista', 'Ekspert', 'NGO', 'Instytut'];
 const STATUSES = ['received', 'assigned', 'inprogress', 'resolved', 'rejected'];
 const TOKEN_TTL_MS = 15 * 60 * 1000;
@@ -11,6 +13,7 @@ const TEST_MODE_MAX_LINKS_PER_HOUR = 50; // global cap while test mode is on (li
 
 const testModeOn = async (env) => (await env.DB.prepare("SELECT value FROM settings WHERE key = 'testMode'").first())?.value === '1';
 const COOKIE = 'bw_session';
+const MAX_PLANS_PER_HOUR = 10; // per account (LLM cost cap)
 
 const json = (data, status = 200, headers = {}) =>
   new Response(JSON.stringify(data), { status, headers: { 'content-type': 'application/json', 'cache-control': 'no-store', ...headers } });
@@ -189,6 +192,20 @@ async function api(request, env, url) {
     const res = await env.DB.prepare('UPDATE registrations SET status = ?, decided_at = ? WHERE email = ?').bind(decision, Date.now(), email).run();
     if (!res.meta.changes) return fail(404, 'not_found');
     return json({ ok: true });
+  }
+
+  if (pathname === '/api/adapt-plan' && method === 'POST') {
+    const s = await session(request, env);
+    if (!s) return fail(401, 'login_required');
+    const b = await readJson(request);
+    const caseId = clean(b?.caseId, 40), city = clean(b?.city, 60), lang = b?.lang === 'en' ? 'en' : 'pl';
+    if (!caseId) return fail(400, 'invalid_request');
+    const since = Date.now() - 3600 * 1000;
+    const n = (await env.DB.prepare('SELECT COUNT(*) AS n FROM adapt_log WHERE email = ? AND created_at > ?').bind(s.email, since).first()).n;
+    if (n >= MAX_PLANS_PER_HOUR) return fail(429, 'rate_limited');
+    await env.DB.prepare('INSERT INTO adapt_log (email, created_at) VALUES (?, ?)').bind(s.email, Date.now()).run();
+    const r = await buildPlan(env, caseId, lang, { city });
+    return r.error ? fail(r.status, r.error) : json({ plan: r.plan });
   }
 
   if (pathname === '/api/reports' && method === 'GET') {

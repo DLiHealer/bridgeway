@@ -111,3 +111,6 @@ A real backend (Cloudflare Pages Functions + D1, replacing the mocked `src/data/
 - Registration with approval: new emails are stored as pending; a responder approves them on `/logowanie`. With Resend's shared test sender only the Resend account owner's inbox receives links, so approved residents can't log in until `MAIL_FROM` is on a verified domain (Resend or Cloudflare Email Service).
 - Production sender: `MAIL_FROM = BridgeWay <login@mail.processtotool.com>` (wrangler.jsonc vars; subdomain verified in Resend), so approved addresses can receive links. Real-inbox delivery confirmed by the owner (2026-10-04).
 - Test mode: responder can enable "send links to new addresses without approval" on `/admin` (stored in D1, default off, 50 links/h cap). Links are still emailed, so address ownership is verified. Disable after demos.
+
+### Adaptation plan (Step 17)
+Uses the Workers AI binding `AI` (declared in `wrangler.jsonc`, no secret). Apply the new migration (`wrangler d1 migrations apply bridgeway --remote`) before deploying; locally `npm run db:migrate:local`. `wrangler dev` runs AI calls remotely (needs `wrangler login`); without the binding the endpoint returns `llm_unavailable`.

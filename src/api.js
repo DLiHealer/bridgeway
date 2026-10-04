@@ -24,6 +24,7 @@ export const api = {
   setTestMode: (testMode) => call('/api/admin/settings', { method: 'POST', body: { testMode } }),
   registrations: () => call('/api/admin/registrations'),
   decide: (email, decision) => call('/api/admin/registrations/decide', { method: 'POST', body: { email, decision } }),
+  adaptPlan: (caseId, city, lang) => call('/api/adapt-plan', { method: 'POST', body: { caseId, city, lang } }),
   reports: () => call('/api/reports'),
   report: (id) => call(`/api/reports/${id}`),
   createReport: (r) => call('/api/reports', { method: 'POST', body: r }),
