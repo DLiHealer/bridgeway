@@ -9,6 +9,7 @@
     "not_found_handling": "single-page-application",
     "run_worker_first": ["/api/*"]
   },
+  "vars": { "MAIL_FROM": "BridgeWay <login@mail.processtotool.com>" },
   "d1_databases": [
     { "binding": "DB", "database_name": "bridgeway", "database_id": "db0dbd3d-f7c3-4d4b-8c9f-6a2220d18d1c", "migrations_dir": "migrations" }
   ]
